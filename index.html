@@ -49,36 +49,138 @@ body.rtl .restaurant-info h1,body.rtl .banner-name{font-family:'Noto Kufi Arabic
 .banner-name{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:26px;font-weight:700;color:#fff;text-shadow:0 1px 6px rgba(0,0,0,.5)}
 .banner-desc{font-size:13px;color:rgba(255,255,255,.82);margin-top:4px;text-shadow:0 1px 4px rgba(0,0,0,.4)}
 
-/* HEADER — always LTR layout regardless of language */
+/* ═══════════════════════════════════════════════
+   HEADER
+   Mobile (<540px): column layout
+     Row 1: [logo] [name + desc]  — full width, no wrapping
+     Row 2: buttons — full width, all pushed to the RIGHT
+   Desktop (≥540px): single row — logo+name left, buttons right
+   ═══════════════════════════════════════════════ */
 .site-header{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);transition:box-shadow .3s;direction:ltr}
 .site-header.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.10)}
-.header-inner{display:flex;align-items:center;padding:12px 18px;gap:12px;min-height:64px;transition:min-height .35s,padding .35s;direction:ltr}
-.header-inner.big{min-height:76px;padding:14px 22px}
-.logo-wrap{flex-shrink:0;width:50px;height:50px;transition:width .35s,height .35s}
-.logo-wrap.big{width:64px;height:64px}
-.logo-circle{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--acc));display:flex;align-items:center;justify-content:center;font-size:22px;border:3px solid rgba(201,168,76,.4);overflow:hidden;transition:font-size .35s,border-width .35s}
-.logo-wrap.big .logo-circle{font-size:30px;border-width:4px;border-color:rgba(201,168,76,.6)}
+
+/* Outer wrapper — COLUMN on mobile */
+.header-inner{
+  display:flex;
+  flex-direction:column;
+  padding:10px 14px 8px;
+  gap:6px;
+  transition:padding .3s;
+  direction:ltr;
+}
+.header-inner.big{padding:12px 16px 10px}
+
+/* Row 1: logo + name/desc — full width, single line */
+.hdr-row1{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:100%;
+  min-width:0;
+  overflow:hidden;
+}
+
+/* Row 2: buttons — full width, ALL buttons to the RIGHT */
+.hdr-row2{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  flex-shrink:0;
+  flex-wrap:nowrap;
+  justify-content:flex-end;   /* ← always right */
+  width:100%;
+}
+
+/* Logo */
+.logo-wrap{flex-shrink:0;width:40px;height:40px;transition:width .3s,height .3s}
+.logo-wrap.big{width:50px;height:50px}
+.logo-circle{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--acc));display:flex;align-items:center;justify-content:center;font-size:19px;border:3px solid rgba(201,168,76,.4);overflow:hidden;transition:font-size .3s}
+.logo-wrap.big .logo-circle{font-size:24px;border-width:4px;border-color:rgba(201,168,76,.6)}
 .logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
-.restaurant-info{flex:1;min-width:0;direction:ltr}
-.restaurant-info p{font-size:12px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}.restinfo-name-row{display:flex;align-items:center;gap:6px;min-width:0;direction:ltr}
-.restaurant-info h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:17px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .35s;min-width:0;text-align:left}
-.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
+
+/* Restaurant info — never wraps, always ellipsis */
+.restaurant-info{flex:1 1 0;min-width:0;overflow:hidden;direction:ltr}
+.restinfo-name-row{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;direction:ltr}
+.restaurant-info h1{
+  font-family:'Playfair Display',Georgia,'Times New Roman',serif;
+  font-size:15px;
+  font-weight:700;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  transition:font-size .3s;
+  min-width:0;
+  text-align:left;
+  line-height:1.2;
+}
+.restaurant-info p{
+  font-size:11px;
+  color:var(--muted);
+  margin-top:2px;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  text-align:left;
+}
+.header-inner.big .restaurant-info h1{font-size:17px}
+.header-inner.big .restaurant-info p{font-size:12px}
+
+/* Location icon */
+.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
 .location-link:hover{background:var(--g1);color:var(--white);border-color:var(--g1)}
 
-.header-inner.big .restaurant-info h1{font-size:21px}
-.header-inner.big .restaurant-info p{font-size:13px}
-.hdr-actions{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0}.hdr-bottom-row{display:flex;flex-direction:row;gap:6px;align-items:center}
-.icon-btn{border:2px solid var(--border);border-radius:10px;padding:8px 12px;background:var(--white);cursor:pointer;font-size:18px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center}
+/* Action buttons */
+.icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:5px 9px;background:var(--white);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px}
 .icon-btn:hover{background:var(--g3);border-color:var(--g1)}
-.cat-toggle-btn{border:2px solid var(--txt);border-radius:8px;padding:8px 14px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:13px;font-weight:500;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap}
+
+.cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 10px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:30px}
 .cat-toggle-btn:hover{background:var(--txt);color:var(--white)}
 
-/* LANG TOGGLE */
-.lang-btn{border:2px solid var(--gold);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;width:70px;text-align:center;direction:ltr}
+/* Lang toggle */
+.lang-btn{border:1.5px solid var(--gold);border-radius:8px;padding:4px 9px;font-size:10px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;text-align:center;direction:ltr;height:30px}
 .lang-btn:hover{background:var(--gold);color:var(--white)}
 .lang-btn.ar-active{background:var(--gold);color:#fff;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 
-@media(min-width:768px){.header-inner{padding:14px 32px}.header-inner.big{padding:16px 32px}}
+/* OLD class stubs kept for JS compatibility */
+.hdr-actions{display:contents}
+.hdr-bottom-row{display:contents}
+
+/* ── DESKTOP (≥540px): flip to single row ── */
+@media(min-width:540px){
+  .header-inner{
+    flex-direction:row;
+    align-items:center;
+    padding:10px 20px;
+    gap:10px;
+    min-height:60px;
+  }
+  .header-inner.big{min-height:70px;padding:12px 24px}
+  /* row1 takes remaining space, row2 stays right naturally */
+  .hdr-row1{flex:1;width:auto}
+  .hdr-row2{width:auto}
+  .logo-wrap{width:48px;height:48px}
+  .logo-wrap.big{width:60px;height:60px}
+  .logo-circle{font-size:22px}
+  .logo-wrap.big .logo-circle{font-size:28px}
+  .restaurant-info h1{font-size:17px}
+  .header-inner.big .restaurant-info h1{font-size:20px}
+  .restaurant-info p{font-size:12px}
+  .icon-btn{padding:7px 12px;font-size:17px;height:34px}
+  .view-toggle-btn{width:32px}
+  .view-toggle-wrap{height:34px}
+  .cat-toggle-btn{font-size:13px;padding:6px 13px;height:34px}
+  .lang-btn{font-size:12px;padding:6px 11px;height:34px}
+}
+@media(min-width:768px){
+  .header-inner{padding:12px 32px}
+  .header-inner.big{padding:14px 32px}
+}
+@media(min-width:1024px){
+  .header-inner{padding:12px 48px}
+  .header-inner.big{padding:14px 48px}
+  .restaurant-info h1{font-size:19px}
+  .header-inner.big .restaurant-info h1{font-size:22px}
+}
 
 /* DIVIDER */
 .divider-bar{height:7px;background:linear-gradient(90deg,#1a5c3a,#2e8b57,#c9a84c,#2e8b57,#1a5c3a)}
@@ -131,7 +233,9 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 
 /* MAIN */
 .items-section{padding:14px 14px 130px}
-@media(min-width:768px){.items-section{padding:20px 32px 130px}}
+@media(min-width:540px) and (max-width:767px){.items-section{padding:16px 18px 130px}}
+@media(min-width:768px) and (max-width:834px){.items-section{padding:18px 22px 130px}}
+@media(min-width:835px) and (max-width:1023px){.items-section{padding:20px 28px 130px}}
 @media(min-width:1024px){.items-section{padding:24px 48px 130px}}
 .section-heading{font-size:17px;font-weight:700;color:var(--txt);margin:22px 0 12px;display:flex;align-items:center;gap:10px;scroll-margin-top:160px}
 @media(min-width:768px){.section-heading{font-size:20px;margin:30px 0 16px}}
@@ -140,25 +244,110 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 .section-heading.offer-heading .label-bar{background:var(--offer)}
 
 /* GRID */
-.items-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
-@media(max-width:359px){.items-grid{grid-template-columns:1fr;gap:10px}}
-@media(min-width:360px) and (max-width:479px){.items-grid{grid-template-columns:1fr 1fr;gap:10px}}
-@media(min-width:480px) and (max-width:767px){.items-grid{grid-template-columns:1fr 1fr;gap:14px}}
-@media(min-width:768px) and (max-width:1023px){.items-grid{grid-template-columns:repeat(3,1fr);gap:16px}}
-@media(min-width:1024px) and (max-width:1279px){.items-grid{grid-template-columns:repeat(4,1fr);gap:18px}}
-@media(min-width:1280px){.items-grid{grid-template-columns:repeat(5,1fr);gap:20px}}
+.items-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
 
-/* ITEM CARD */
-.item-card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border);display:flex;flex-direction:column;transition:transform .18s,box-shadow .18s;position:relative}
+/* Small phones — single column */
+@media(max-width:359px){
+  .items-grid{grid-template-columns:1fr;gap:10px}
+}
+
+/* Standard phones (360–539px) — 2 columns */
+@media(min-width:360px) and (max-width:539px){
+  .items-grid{grid-template-columns:repeat(2,1fr);gap:10px}
+}
+
+/* Large / flip phones (540–767px) — 3 columns */
+@media(min-width:540px) and (max-width:767px){
+  .items-grid{grid-template-columns:repeat(3,1fr);gap:12px}
+}
+
+/* iPad mini (768–834px) — 3 columns */
+@media(min-width:768px) and (max-width:834px){
+  .items-grid{grid-template-columns:repeat(3,1fr);gap:14px}
+}
+
+/* iPad / iPad Air (835–1023px) — 4 columns */
+@media(min-width:835px) and (max-width:1023px){
+  .items-grid{grid-template-columns:repeat(4,1fr);gap:16px}
+}
+
+/* iPad Pro / small laptops (1024–1279px) — 4 columns */
+@media(min-width:1024px) and (max-width:1279px){
+  .items-grid{grid-template-columns:repeat(4,1fr);gap:18px}
+}
+
+/* Desktop (1280px+) — 5 columns */
+@media(min-width:1280px){
+  .items-grid{grid-template-columns:repeat(5,1fr);gap:20px}
+}
+
+/* ═══════════════════════════════════════════════
+   ITEM CARD — DEFAULT (grid / tile view)
+   Card is a column: image on top, body below.
+   Used when .items-grid does NOT have .bar-view class.
+   ═══════════════════════════════════════════════ */
+.item-card{
+  background:var(--card);
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  display:flex;
+  flex-direction:column;
+  transition:transform .18s,box-shadow .18s;
+  position:relative;
+}
 .item-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,92,58,.12)}
-.item-thumb{width:100%;aspect-ratio:1/.9;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden;background:#eceae7}
+
+/* Thumbnail — full-width square-ish image for grid view */
+.item-thumb{
+  width:100%;
+  aspect-ratio:1/.9;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:52px;
+  position:relative;
+  overflow:hidden;
+  background:#eceae7;
+}
 .item-thumb img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
 .item-thumb .thumb-emoji{position:relative;z-index:1;font-size:52px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.10))}
+
+/* Offer badge — rotated sticker on top-right of thumb */
 .offer-badge{position:absolute;top:8px;right:8px;z-index:5;background:linear-gradient(135deg,#d84315,#e53935);color:#fff;font-size:10px;font-weight:700;padding:4px 8px;border-radius:20px;transform:rotate(3deg);box-shadow:0 2px 8px rgba(229,57,53,.4);letter-spacing:.3px}
 body.rtl .offer-badge{right:auto;left:8px;transform:rotate(-3deg)}
-.item-tags{position:absolute;top:8px;left:8px;z-index:5;display:flex;flex-direction:column;gap:3px}
-body.rtl .item-tags{left:auto;right:8px}
-.tag{font-size:9px;font-weight:700;padding:2px 6px;border-radius:8px;letter-spacing:.3px;white-space:nowrap}
+
+/* ── Tag chips — GRID VIEW ──
+   Small absolute tags stacked in top-left corner of thumb.
+   In bar view: overridden to vertically centered pill column on left of circle. */
+.item-tags{
+  position:absolute;
+  top:8px;
+  left:8px;
+  z-index:5;
+  display:flex;
+  flex-direction:column;
+  gap:3px;
+  align-items:flex-start;
+}
+body.rtl .item-tags{left:auto;right:8px;align-items:flex-end;}
+
+/* Base tag — compact pill for grid view */
+.tag{
+  display:inline-flex;
+  align-items:center;
+  gap:4px;
+  font-size:9px;
+  font-weight:700;
+  padding:2px 7px;
+  border-radius:20px;
+  letter-spacing:.3px;
+  white-space:nowrap;
+  line-height:1.3;
+  box-shadow:0 1px 4px rgba(0,0,0,.18);
+}
+
+/* Tag colors */
 .tag.new{background:#1565c0;color:#fff}
 .tag.popular{background:#f57c00;color:#fff}
 .tag.spicy{background:#c62828;color:#fff}
@@ -166,6 +355,7 @@ body.rtl .item-tags{left:auto;right:8px}
 .tag.non-veg,.tag.nonveg{background:#bf360c;color:#fff}
 .tag.most-selling,.tag.bestseller,.tag.best-seller{background:#7b1fa2;color:#fff}
 
+/* Card body — sits below the thumbnail */
 .item-body{padding:10px 12px 12px;display:flex;flex-direction:column;flex:1}
 .item-name{font-size:13px;font-weight:700;color:var(--txt);line-height:1.3}
 @media(min-width:768px){.item-name{font-size:15px}}
@@ -177,6 +367,227 @@ body.rtl .item-tags{left:auto;right:8px}
 .item-price.offer-price{color:var(--offer)}
 .item-old-price{font-size:11px;color:var(--muted);text-decoration:line-through;line-height:1}
 .save-label{font-size:9px;font-weight:700;color:var(--offer);margin-top:1px}
+
+
+
+
+/* ═══════════════════════════════════════════════
+   BAR VIEW — .bar-view on .items-grid
+   Layout: card is a row with image at a FIXED left offset (52px margin)
+   so ALL images always start at the same X position.
+   Tags are absolutely positioned in that 52px left zone.
+   Cards without tags just have clean empty left space — images stay aligned.
+   ═══════════════════════════════════════════════ */
+
+.items-grid.bar-view{
+  grid-template-columns:1fr !important;
+  gap:10px;
+}
+@media(min-width:540px){
+  .items-grid.bar-view{ grid-template-columns:repeat(2,1fr) !important; gap:12px; }
+}
+@media(min-width:1024px){
+  .items-grid.bar-view{ grid-template-columns:repeat(3,1fr) !important; gap:14px; }
+}
+@media(min-width:1280px){
+  .items-grid.bar-view{ grid-template-columns:repeat(4,1fr) !important; gap:16px; }
+}
+
+/* Card */
+.items-grid.bar-view .item-card{
+  flex-direction:row;
+  align-items:stretch;
+  border-radius:16px;
+  border:1px solid var(--border);
+  background:var(--card);
+  box-shadow:0 2px 12px rgba(0,0,0,.07);
+  min-height:120px;
+  padding:0;
+  gap:0;
+  overflow:hidden;
+  position:relative;
+}
+.items-grid.bar-view .item-card:hover{
+  transform:translateY(-2px);
+  box-shadow:0 6px 24px rgba(26,92,58,.13);
+}
+
+/* Tags: absolutely placed in the 52px left zone — no column, no border, no bg */
+.items-grid.bar-view .item-tags{
+  position:absolute;
+  top:0;
+  left:0;
+  width:52px;
+  height:100%;
+  z-index:4;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  padding:8px 4px;
+  pointer-events:none;
+}
+body.rtl .items-grid.bar-view .item-tags{
+  left:auto;
+  right:0;
+}
+
+/* Tag pill */
+.items-grid.bar-view .tag{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:8.5px;
+  font-weight:700;
+  padding:3px 6px;
+  border-radius:20px;
+  white-space:nowrap;
+  letter-spacing:.2px;
+  width:44px;
+  text-align:center;
+  box-shadow:0 1px 4px rgba(0,0,0,.22);
+  pointer-events:auto;
+}
+
+/* Image: always starts at 52px from left — fixed offset guarantees vertical alignment */
+.items-grid.bar-view .item-thumb{
+  width:120px;
+  min-width:120px;
+  flex:0 0 120px;
+  height:auto;
+  aspect-ratio:unset;
+  border-radius:0;
+  background:#eceae7;
+  position:relative;
+  overflow:hidden;
+  align-self:stretch;
+  margin-left:52px;         /* ← THIS is what aligns all images in one column */
+}
+body.rtl .items-grid.bar-view .item-thumb{
+  margin-left:0;
+  margin-right:52px;
+}
+.items-grid.bar-view .item-thumb img{
+  border-radius:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  position:absolute;
+  inset:0;
+}
+.items-grid.bar-view .item-thumb .thumb-emoji{
+  font-size:36px;
+  position:relative;
+  z-index:1;
+}
+
+/* Offer badge */
+.items-grid.bar-view .offer-badge{
+  top:8px;
+  right:10px;
+  transform:rotate(0deg);
+  font-size:9px;
+  padding:3px 7px;
+  z-index:5;
+}
+body.rtl .items-grid.bar-view .offer-badge{
+  right:auto;
+  left:10px;
+}
+
+/* Body */
+.items-grid.bar-view .item-body{
+  padding:12px 14px;
+  flex:1;
+  min-width:0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+  text-align:left;
+}
+
+/* Name */
+.items-grid.bar-view .item-name{
+  font-size:13px;
+  font-weight:700;
+  line-height:1.35;
+  white-space:normal;
+  overflow:hidden;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  width:100%;
+  text-align:left;
+}
+@media(min-width:540px){
+  .items-grid.bar-view .item-name{ font-size:14px; }
+}
+
+/* Desc */
+.items-grid.bar-view .item-desc{
+  font-size:11px;
+  margin-top:3px;
+  color:var(--muted);
+  -webkit-line-clamp:2;
+  display:-webkit-box;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  width:100%;
+  text-align:left;
+  line-height:1.4;
+}
+
+/* Footer */
+.items-grid.bar-view .item-footer{
+  margin-top:8px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:nowrap;
+  gap:8px;
+  width:100%;
+}
+
+
+/* ═══════════════════════════════════════════════
+   VIEW TOGGLE BUTTON GROUP  ▦ ▬
+   2 buttons: grid / bar
+   .active = currently selected view (green fill).
+   Toggle logic: viewToggle() in script section.
+   ═══════════════════════════════════════════════ */
+.view-toggle-wrap{
+  display:flex;
+  gap:0;
+  border:2px solid var(--border);
+  border-radius:10px;
+  overflow:hidden;
+  height:32px;
+}
+.view-toggle-btn{
+  width:32px;
+  height:100%;
+  border:none;
+  background:var(--white);
+  cursor:pointer;
+  font-size:14px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s,color .15s;
+  color:var(--muted);
+}
+.view-toggle-btn:hover{background:var(--g3);color:var(--g1)}
+/* Active state: green fill */
+.view-toggle-btn.active{
+  background:var(--g1);
+  color:var(--white);
+}
+/* Dividers between buttons */
+.view-toggle-btn:not(:last-child){
+  border-right:1.5px solid var(--border);
+}
 
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
@@ -241,12 +652,13 @@ body.rtl .item-tags{left:auto;right:8px}
 .no-results .big-icon{font-size:40px;margin-bottom:10px}
 .error-state{text-align:center;padding:60px 20px;color:var(--muted)}
 
-/* RESPONSIVE */
+/* RESPONSIVE extra-small fallback */
 @media(max-width:359px){
-  .cat-toggle-btn{padding:6px 9px;font-size:11px}
-  .hdr-actions{gap:4px}
+  .header-inner{padding:8px 10px 6px}
+  .hdr-row2{gap:4px;justify-content:flex-end}
+  .cat-toggle-btn{padding:4px 7px;font-size:10px}
+  .lang-btn{padding:4px 7px;font-size:9px}
   .item-body{padding:8px 8px 10px}
-  .lang-btn{padding:6px 8px;font-size:11px}
 }
 @media(min-width:768px){
   .modal-overlay{align-items:center}
@@ -297,22 +709,28 @@ body.rtl .item-tags{left:auto;right:8px}
 <!-- STICKY HEADER -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner" id="headerInner">
-    <div class="logo-wrap" id="logoWrap"><div class="logo-circle" id="logoCircle">🍽️</div></div>
-    <div class="restaurant-info">
-      <div class="restinfo-name-row">
-        <h1 id="restaurantName">Loading…</h1>
-        <a id="locationLink" class="location-link" href="#" target="_blank" rel="noopener" title="Open in Maps" style="display:none">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-        </a>
+    <!-- Row 1: Logo + Restaurant Name/Desc/Location -->
+    <div class="hdr-row1">
+      <div class="logo-wrap" id="logoWrap"><div class="logo-circle" id="logoCircle">🍽️</div></div>
+      <div class="restaurant-info">
+        <div class="restinfo-name-row">
+          <h1 id="restaurantName">Loading…</h1>
+          <a id="locationLink" class="location-link" href="#" target="_blank" rel="noopener" title="Open in Maps" style="display:none">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </a>
+        </div>
+        <p id="restaurantDesc"></p>
       </div>
-      <p id="restaurantDesc"></p>
     </div>
-    <div class="hdr-actions">
+    <!-- Row 2: All action buttons in one line -->
+    <div class="hdr-row2">
       <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
-      <div class="hdr-bottom-row">
-        <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
-        <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
+      <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
+      <div class="view-toggle-wrap">
+        <button class="view-toggle-btn active" id="viewBtnGrid" title="Grid view" onclick="viewToggle('grid')">▦</button>
+        <button class="view-toggle-btn" id="viewBtnBar" title="Bar view" onclick="viewToggle('bar')">▬</button>
       </div>
+      <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
     </div>
   </div>
   <div class="divider-bar"></div>
@@ -734,6 +1152,32 @@ function selectCat(btn,catId){
 // ═══════════════════════════════════════════════════
 //  SEARCH
 // ═══════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════
+// VIEW TOGGLE — switches between 2 views: grid / bar
+// viewMode: 'grid' | 'bar'
+//
+// grid → default tile cards (image top, body bottom)
+// bar  → horizontal bar, circle image left, 2-col on desktop
+//
+// Adds/removes .bar-view on every .items-grid.
+// Re-render is NOT needed — CSS handles the switch instantly.
+// ═══════════════════════════════════════════════════
+let viewMode = 'grid'; // default view on load
+
+function viewToggle(mode){
+  if(viewMode === mode) return;          // already in that mode, do nothing
+  viewMode = mode;
+
+  // Apply correct class to all .items-grid elements currently in DOM
+  document.querySelectorAll('.items-grid').forEach(grid => {
+    grid.classList.toggle('bar-view', mode === 'bar');
+  });
+
+  // Update toggle button active states
+  document.getElementById('viewBtnGrid').classList.toggle('active', mode === 'grid');
+  document.getElementById('viewBtnBar').classList.toggle('active',  mode === 'bar');
+}
+
 function toggleSearch(){
   const wrap=document.getElementById('searchWrap');
   wrap.classList.toggle('hidden');
@@ -769,7 +1213,7 @@ function renderSearch(q){
     container.innerHTML=`<div class="no-results"><div class="big-icon">🔍</div><p>${T[lang].noItems} "<strong>${e(q)}</strong>"</p></div>`;
     return;
   }
-  container.innerHTML=`<div class="section-heading"><span class="label-bar"></span>${T[lang].noItems.replace('لا توجد نتائج لـ','نتائج:').replace('No items found for','Results for')} "${e(q)}"</div><div class="items-grid">${results.map(itemCardHtml).join('')}</div>`;
+  container.innerHTML=`<div class="section-heading"><span class="label-bar"></span>${T[lang].noItems.replace('لا توجد نتائج لـ','نتائج:').replace('No items found for','Results for')} "${e(q)}"</div><div class="items-grid${viewMode==='bar'?' bar-view':''}">${results.map(itemCardHtml).join('')}</div>`;
 }
 
 // ═══════════════════════════════════════════════════
@@ -784,7 +1228,7 @@ function renderAllSections(){
   if(OFFERS.length){
     html+=`<div class="cat-section offer-section" data-section-cat="__offers__" id="section-__offers__">
       <div class="section-heading offer-heading"><span class="label-bar"></span>🔥 ${isAr?'عروض اليوم':"Today's Offers"}</div>
-      <div class="items-grid">${OFFERS.map(itemCardHtml).join('')}</div>
+      <div class="items-grid${viewMode==='bar'?' bar-view':''}">${OFFERS.map(itemCardHtml).join('')}</div>
     </div>`;
   }
   CATEGORIES.forEach(cat=>{
@@ -793,7 +1237,7 @@ function renderAllSections(){
     const label=(isAr&&cat.name_ar)?cat.name_ar:cat.name;
     html+=`<div class="cat-section" data-section-cat="${e(cat.id)}" id="section-${e(cat.id)}">
       <div class="section-heading"><span class="label-bar"></span>${e(label)}</div>
-      <div class="items-grid">${items.map(itemCardHtml).join('')}</div>
+      <div class="items-grid${viewMode==='bar'?' bar-view':''}">${items.map(itemCardHtml).join('')}</div>
     </div>`;
   });
   container.innerHTML=html||`<div class="empty-state"><div class="big-icon">🍽️</div><p>${T[lang].empty}</p></div>`;
@@ -810,7 +1254,7 @@ function renderOffersSection(){
   }
   container.innerHTML=`<div class="cat-section offer-section" data-section-cat="__offers__" id="section-__offers__">
     <div class="section-heading offer-heading"><span class="label-bar"></span>🔥 ${isAr?'جميع العروض':'All Offers'}</div>
-    <div class="items-grid">${OFFERS.map(itemCardHtml).join('')}</div>
+    <div class="items-grid${viewMode==='bar'?' bar-view':''}">${OFFERS.map(itemCardHtml).join('')}</div>
   </div>`;
 }
 
@@ -827,7 +1271,7 @@ function renderSingleSection(catId){
   const label=cat ? ((isAr&&cat.name_ar)?cat.name_ar:cat.name) : catId;
   container.innerHTML=`<div class="cat-section" data-section-cat="${e(catId)}" id="section-${e(catId)}">
     <div class="section-heading"><span class="label-bar"></span>${e(label)}</div>
-    <div class="items-grid">${items.map(itemCardHtml).join('')}</div>
+    <div class="items-grid${viewMode==='bar'?' bar-view':''}">${items.map(itemCardHtml).join('')}</div>
   </div>`;
 }
 
@@ -864,9 +1308,17 @@ function itemCardHtml(item){
     ?`<div class="qty-control"><button class="qty-btn" onclick="changeQty('${e(item.id)}',-1)">-</button><span class="qty-num">${qty}</span><button class="qty-btn" onclick="changeQty('${e(item.id)}',1)">+</button></div>`
     :`<button class="qty-btn add-only" onclick="changeQty('${e(item.id)}',1)">+</button>`;
 
+  // Tags:
+  // grid view → absolute overlay, only rendered if tags exist
+  // bar view  → fixed-width left column, ALWAYS rendered (even empty)
+  //             so cards without tags still hold the 52px column → perfect alignment
+  const tagsHtml = (viewMode === 'bar')
+    ? `<div class="item-tags">${tagHtml}</div>`
+    : (tagHtml ? `<div class="item-tags">${tagHtml}</div>` : '');
+
   return`<div class="item-card" id="card-${e(item.id)}">
     ${offerBadge}
-    ${tagHtml?`<div class="item-tags">${tagHtml}</div>`:''}
+    ${tagsHtml}
     <div class="item-thumb">${thumb}</div>
     <div class="item-body">
       <div class="item-name">${e(nm)}</div>
@@ -1000,6 +1452,9 @@ function refreshCart(){
 function closeCart(){ document.getElementById('cartModal').classList.remove('open'); }
 function closeCartOnBackdrop(ev){ if(ev.target===document.getElementById('cartModal')) closeCart(); }
 
+
+<!--
+
 // ═══════════════════════════════════════════════════
 //  WHATSAPP
 // ═══════════════════════════════════════════════════
@@ -1039,6 +1494,130 @@ function sendToWhatsApp(){
   closeCart();
   renderCurrentView();
 }
+-->
+
+
+
+function generateOrderNumber(total){
+  const now = new Date();
+
+  // TIME → HHMM
+  const time =
+    String(now.getHours()).padStart(2,'0') +
+    String(now.getMinutes()).padStart(2,'0');
+
+  // DATE → DDMM
+  const date =
+    String(now.getDate()).padStart(2,'0') +
+    String(now.getMonth()+1).padStart(2,'0');
+
+  // AMOUNT → ROUND
+  const amount = Math.round(total);
+
+  return `RAS${time}${amount}${date}`;
+}
+
+
+
+// ═══════════════════════════════════════════════════
+//  WHATSAPP
+// ═══════════════════════════════════════════════════
+function sendToWhatsApp(){
+  const entries = Object.entries(cart);
+
+  if(!entries.length){
+    alert(T[lang].emptyCart);
+    return;
+  }
+
+  const customerName = (document.getElementById('customerName').value || '').trim();
+  const customerNote = (document.getElementById('customerNote').value || '').trim();
+
+  const isAr = lang === 'ar';
+  let total = 0;
+
+  const lines = isAr
+    ? [`🍽️ *طلب جديد — ${INFO.name_ar || INFO.name || 'المطعم'}*`]
+    : [`🍽️ *New Order — ${INFO.name || 'Restaurant'}*`];
+
+  if(customerName){
+    lines.push(`👤 *${customerName}*`);
+  }
+
+  lines.push('');
+
+  // ITEMS
+  entries.forEach(([id, qty])=>{
+    const item = MENU.find(i => i.id === id);
+    if(!item) return;
+
+    const sub = item.finalPrice * qty;
+    total += sub;
+
+    const nm = isAr && item.name_ar ? item.name_ar : item.name;
+    lines.push(`• ${nm} × ${qty}  —  ${CUR} ${sub.toFixed(2)}`);
+  });
+
+  // 🧾 GENERATE ORDER NUMBER AFTER TOTAL IS READY
+  const orderNo = generateOrderNumber(total);
+
+  // ADD ORDER NUMBER
+  lines.unshift(
+    isAr
+      ? `🧾 رقم الطلب: *${orderNo}*`
+      : `🧾 Order No: *${orderNo}*`
+  );
+
+  // NOTE
+  if(customerNote){
+    lines.push('');
+    lines.push(
+      isAr
+        ? `📝 *ملاحظة:* ${customerNote}`
+        : `📝 *Note:* ${customerNote}`
+    );
+  }
+
+  // TOTAL
+  lines.push('');
+  lines.push(
+    isAr
+      ? `💰 *المجموع: ${CUR} ${total.toFixed(2)}*`
+      : `💰 *Total: ${CUR} ${total.toFixed(2)}*`
+  );
+
+  const dest = INFO.cafeteria_wa || '';
+
+  if(!dest){
+    alert(T[lang].waNumMissing);
+    return;
+  }
+
+  const phone = dest.replace(/\D/g,'');
+  const text = encodeURIComponent(lines.join('\n'));
+
+  window.open(`https://api.whatsapp.com/send?phone=${phone}&text=${text}`, '_blank');
+
+
+  // RESET CART
+  cart = {};
+  updateFooter();
+  closeCart();
+  renderCurrentView();
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // ═══════════════════════════════════════════════════
 //  UTIL
