@@ -1,10 +1,11 @@
+
 const HARDCODED_INFO = [
-  ['name','description','location','logo','banner','cafeteria number','rider number','track url','name_ar','description_ar'],
-  [
-   'Salamlek Restaurant','A Taste Journey Takes you back to the atmosphere of Old Damascus','Al Rawda | Jeddah','https://menus.sfo3.cdn.digitaloceanspaces.com/49b96e74ebebf0ec5e3b4068e88d7831/1766741459-28blXZ41YiSy0pvaRXOjxF3BtEp84fYCUZagi73WmS9la99DeEQiwNlClucPlmlkdZbetUf8gcV059g2c3Y7Ul8aJLFcmHc8yhNn.jpg',
-   'https://menus.sfo3.cdn.digitaloceanspaces.com/6d2b2e02c779ed4ec9b7d47762f19098/1766742123-XHr5Webo73pJESPMzCE8iedowThZ16CYPVIrm4rSC08I232RXQodpAf1OqAP7K2AOEErGdyjuU7waemIfAuvd162x2zt4eERuqnc.jpg','971509517012','971522847006','https://wa.me/971522847006',
-   'سلاملك','رحلة تذوق عيدك إلى أجواء دمشق القديمة '
-  ]
+['name','description','location','logo','banner','cafeteria number','rider number','track url','name_ar','description_ar'],
+[
+'Salamlek Restaurant','A Taste Journey Takes you back to the atmosphere of Old Damascus','Al Rawda | Jeddah','https://menus.sfo3.cdn.digitaloceanspaces.com/49b96e74ebebf0ec5e3b4068e88d7831/1766741459-28blXZ41YiSy0pvaRXOjxF3BtEp84fYCUZagi73WmS9la99DeEQiwNlClucPlmlkdZbetUf8gcV059g2c3Y7Ul8aJLFcmHc8yhNn.jpg',
+'https://menus.sfo3.cdn.digitaloceanspaces.com/6d2b2e02c779ed4ec9b7d47762f19098/1766742123-XHr5Webo73pJESPMzCE8iedowThZ16CYPVIrm4rSC08I232RXQodpAf1OqAP7K2AOEErGdyjuU7waemIfAuvd162x2zt4eERuqnc.jpg','971509517012','971522847006','https://wa.me/971522847006',
+'سلاملك','رحلة تذوق عيدك إلى أجواء دمشق القديمة '
+]
 ];
 
 const HARDCODED_ITEMS = [
@@ -99,3 +100,4 @@ const HARDCODED_ITEMS = [
 ['Soft Drinks And Water','Mojito','Pomegranate, Syrian Berries, Or Hibiscus','18','','https://menus.sfo3.cdn.digitaloceanspaces.com/49b96e74ebebf0ec5e3b4068e88d7831/1766741459-28blXZ41YiSy0pvaRXOjxF3BtEp84fYCUZagi73WmS9la99DeEQiwNlClucPlmlkdZbetUf8gcV059g2c3Y7Ul8aJLFcmHc8yhNn.jpg','https://menus.sfo3.cdn.digitaloceanspaces.com/3a8f32117706aa76f6b2fd62928f40c5/gjkznBqI8vg4C4SZXdRUVsZYtxFXB1DpVDXdF4OF2dd5ADs9gITJHjh2GPPlNLeRqPRKWJSkxJecfIfLk9PqTOqzt400MXkY69IAl3WXC4u7iQJutQg03qde48MCXw4Vcdv1ruBUizv8VElQqg9FLA.jpg','','المشروبات الغازية والماء','موهيتو','الرمان، أو التوت السوري، أو الكركديه'],
 ['Soft Drinks And Water','Water','','2','','https://menus.sfo3.cdn.digitaloceanspaces.com/49b96e74ebebf0ec5e3b4068e88d7831/1766741459-28blXZ41YiSy0pvaRXOjxF3BtEp84fYCUZagi73WmS9la99DeEQiwNlClucPlmlkdZbetUf8gcV059g2c3Y7Ul8aJLFcmHc8yhNn.jpg','https://menus.sfo3.cdn.digitaloceanspaces.com/994a225ba9c62c025921a239dcfb6530/AnO3xsthfAfEopL188TqKVdXumJ8nX4w04sDVL4XfSkCDhQBuBu1U3zsLkmun83Ho4Gl8SS5vaGHLQTxScO5HApEl11MEOdwVxfzMcafvjxYoTFeYuAeOLpmifHa5NPbxVrq419dtgFEQRs2ZdGkjd.png','','المشروبات الغازية والماء','ماء','']
 ];
+
