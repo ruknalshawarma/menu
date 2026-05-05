@@ -11,7 +11,50 @@
   --g1:#1a5c3a;--g2:#1d6e46;--g3:#e8f4ec;--acc:#2e8b57;
   --gold:#c9a84c;--red:#e53935;--offer:#d84315;
   --txt:#1a1a1a;--muted:#6b7280;--border:rgba(0,0,0,0.09);
-  --white:#fff;--bg:#f0f0eb;--card:#f7f7f4;
+  --white:#fff;--bg:#fff;--card:#f7f7f4;
+}
+body.dark-mode{
+  --txt:#e8e8e8;--muted:#9ca3af;--border:rgba(255,255,255,0.10);
+  --white:#1e1e1e;--bg:#121212;--card:#242424;--g3:#0d2e1c;
+}
+body.dark-mode .site-header{background:#1e1e1e}
+body.dark-mode .banner-fallback{background:linear-gradient(135deg,#071a10,#0d2e1c 40%,#091f14 70%,#040f08)}
+body.dark-mode .footer-bar{background:#1e1e1e}
+body.dark-mode .cart-modal{background:#1e1e1e}
+body.dark-mode .customer-input{background:#2a2a2a;color:#e8e8e8}
+body.dark-mode .modal-handle-bar{background:#444}
+body.dark-mode .icon-btn{background:#2a2a2a;color:#e8e8e8}
+body.dark-mode .cat-toggle-btn{background:#2a2a2a;color:#e8e8e8;border-color:#555}
+body.dark-mode .lang-btn{background:#2a2a2a}
+body.dark-mode .logo-circle{border-color:rgba(201,168,76,.5)}
+body.dark-mode .qty-btn{background:#2a2a2a}
+body.dark-mode .cqty-btn{background:#2a2a2a}
+body.dark-mode .qty-num{background:#2a2a2a}
+body.dark-mode .cqty-num{background:#2a2a2a}
+body.dark-mode .modal-overlay{background:rgba(0,0,0,.7)}
+body.dark-mode .offers-strip{background:#1e1e1e}
+body.dark-mode .categories-bar{background:#1e1e1e}
+body.dark-mode .search-wrap{background:#1e1e1e}
+body.dark-mode .offer-chip{background:linear-gradient(135deg,#2a1a14,#261a10);border-color:#7a4530}
+body.dark-mode .cat-pill{background:#2a2a2a;color:#9ca3af;border-color:#444}
+/* Dark mode toggle button — top-left of banner */
+.dark-toggle-btn{
+  position:absolute;top:12px;left:12px;z-index:10;
+  width:34px;height:34px;border-radius:50%;
+  background:rgba(255,255,255,.85);backdrop-filter:blur(6px);
+  border:1.5px solid rgba(255,255,255,.6);
+  cursor:pointer;font-size:16px;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .2s,transform .15s,box-shadow .2s;
+  color:#1a1a1a;line-height:1;
+  box-shadow:0 2px 8px rgba(0,0,0,.25);
+}
+.dark-toggle-btn:hover{background:rgba(255,255,255,1);transform:scale(1.08)}
+body.dark-mode .dark-toggle-btn{
+  background:#111;
+  border-color:rgba(255,255,255,.25);
+  color:#f0c040;
+  box-shadow:0 2px 12px rgba(0,0,0,.6);
 }
 html{scroll-behavior:smooth}
 body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;overflow-x:hidden}
@@ -27,6 +70,10 @@ body.rtl .search-input-row{flex-direction:row-reverse}
 body.rtl .lang-btn{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 body.rtl .item-name,body.rtl .item-desc,body.rtl .section-heading{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 body.rtl .restaurant-info h1,body.rtl .banner-name{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
+/* Arabic section headings — Amiri for elegance */
+body.rtl .section-heading{font-family:'Amiri','Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:20px;letter-spacing:0}
+/* Arabic cat pills */
+body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:13px}
 
 /* LOADING */
 #loadingOverlay{position:fixed;inset:0;z-index:9999;background:var(--white);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px}
@@ -166,8 +213,6 @@ body.rtl .restaurant-info h1,body.rtl .banner-name{font-family:'Noto Kufi Arabic
   .header-inner.big .restaurant-info h1{font-size:20px}
   .restaurant-info p{font-size:12px}
   .icon-btn{padding:7px 12px;font-size:17px;height:34px}
-  .view-toggle-btn{width:32px}
-  .view-toggle-wrap{height:34px}
   .cat-toggle-btn{font-size:13px;padding:6px 13px;height:34px}
   .lang-btn{font-size:12px;padding:6px 11px;height:34px}
 }
@@ -243,111 +288,154 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 .section-heading .label-bar{width:5px;height:20px;background:var(--gold);border-radius:3px;flex-shrink:0;display:inline-block}
 .section-heading.offer-heading .label-bar{background:var(--offer)}
 
-/* GRID */
-.items-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+/* GRID — single column on mobile, 2-col on tablet+ */
+.items-grid{display:grid;grid-template-columns:1fr;gap:10px}
+@media(min-width:540px){.items-grid{grid-template-columns:repeat(2,1fr);gap:12px}}
+@media(min-width:1024px){.items-grid{grid-template-columns:repeat(3,1fr);gap:14px}}
+@media(min-width:1280px){.items-grid{grid-template-columns:repeat(4,1fr);gap:16px}}
 
-/* Small phones — single column */
-@media(max-width:359px){
-  .items-grid{grid-template-columns:1fr;gap:10px}
-}
+/* ═══════════════════════════════════════
+   ITEM CARD
+   Light mode: white card, dark text, green price
+   Dark mode:  dark card (#2a2a2a), white text, orange price
+   Image: right side, padded box, contain (never cropped)
+   ═══════════════════════════════════════ */
 
-/* Standard phones (360–539px) — 2 columns */
-@media(min-width:360px) and (max-width:539px){
-  .items-grid{grid-template-columns:repeat(2,1fr);gap:10px}
-}
-
-/* Large / flip phones (540–767px) — 3 columns */
-@media(min-width:540px) and (max-width:767px){
-  .items-grid{grid-template-columns:repeat(3,1fr);gap:12px}
-}
-
-/* iPad mini (768–834px) — 3 columns */
-@media(min-width:768px) and (max-width:834px){
-  .items-grid{grid-template-columns:repeat(3,1fr);gap:14px}
-}
-
-/* iPad / iPad Air (835–1023px) — 4 columns */
-@media(min-width:835px) and (max-width:1023px){
-  .items-grid{grid-template-columns:repeat(4,1fr);gap:16px}
-}
-
-/* iPad Pro / small laptops (1024–1279px) — 4 columns */
-@media(min-width:1024px) and (max-width:1279px){
-  .items-grid{grid-template-columns:repeat(4,1fr);gap:18px}
-}
-
-/* Desktop (1280px+) — 5 columns */
-@media(min-width:1280px){
-  .items-grid{grid-template-columns:repeat(5,1fr);gap:20px}
-}
-
-/* ═══════════════════════════════════════════════
-   ITEM CARD — DEFAULT (grid / tile view)
-   Card is a column: image on top, body below.
-   Used when .items-grid does NOT have .bar-view class.
-   ═══════════════════════════════════════════════ */
+/* ── BASE CARD (light mode) ── */
 .item-card{
-  background:var(--card);
-  border-radius:16px;
-  overflow:hidden;
-  border:1px solid var(--border);
+  background:#fff;
+  border-radius:14px;
+  overflow:visible;
+  border:1px solid rgba(0,0,0,.07);
+  display:flex;
+  flex-direction:row;
+  align-items:stretch;
+  position:relative;
+  min-height:110px;
+  box-shadow:0 1px 6px rgba(0,0,0,.07);
+  transition:transform .18s,box-shadow .18s;
+}
+.item-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.11)}
+
+/* ── CARD BODY — right side in LTR (image is left) ── */
+.item-body{
+  flex:1;
+  min-width:0;
+  padding:14px 16px 14px 10px;
   display:flex;
   flex-direction:column;
-  transition:transform .18s,box-shadow .18s;
-  position:relative;
+  justify-content:center;
 }
-.item-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(26,92,58,.12)}
 
-/* Thumbnail — full-width square-ish image for grid view */
+/* ── ITEM NAME (light) ── */
+.item-name{
+  font-size:14px;
+  font-weight:700;
+  color:#1a1a1a;
+  line-height:1.3;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+@media(min-width:540px){.item-name{font-size:15px}}
+
+/* ── ITEM DESC (light) ── */
+.item-desc{
+  font-size:11.5px;
+  color:#6b7280;
+  margin-top:4px;
+  line-height:1.45;
+  display:-webkit-box;
+  -webkit-line-clamp:2;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+}
+
+/* ── PRICE ROW ── */
+.item-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:10px;
+  gap:6px;
+}
+.price-block{display:flex;flex-direction:column;gap:1px}
+
+/* Light mode: green price */
+.item-price{font-size:15px;font-weight:800;color:#1a5c3a;line-height:1.1}
+.item-price.offer-price{color:#d84315}
+.item-old-price{font-size:11px;color:#9ca3af;text-decoration:line-through;line-height:1}
+.save-label{font-size:9.5px;font-weight:700;color:#d84315;margin-top:1px}
+
+/* ── IMAGE BOX — left side in LTR, right side in RTL ──
+   object-fit:contain = full image visible, never cropped. */
 .item-thumb{
-  width:100%;
-  aspect-ratio:1/.9;
+  flex:0 0 108px;
+  width:108px;
+  margin:8px 0 8px 8px;
+  border-radius:10px;
+  background:#f3f4f6;
+  overflow:hidden;
   display:flex;
   align-items:center;
   justify-content:center;
-  font-size:52px;
   position:relative;
-  overflow:hidden;
-  background:#eceae7;
+  flex-shrink:0;
+  order:-1;
 }
-.item-thumb img{width:100%;height:100%;object-fit:cover;display:block;position:absolute;inset:0}
-.item-thumb .thumb-emoji{position:relative;z-index:1;font-size:52px;filter:drop-shadow(0 4px 10px rgba(0,0,0,.10))}
+.item-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  padding:4px;
+}
+.item-thumb .thumb-emoji{font-size:36px}
 
-/* Offer badge — rotated sticker on top-right of thumb */
-.offer-badge{position:absolute;top:8px;right:8px;z-index:5;background:linear-gradient(135deg,#d84315,#e53935);color:#fff;font-size:10px;font-weight:700;padding:4px 8px;border-radius:20px;transform:rotate(3deg);box-shadow:0 2px 8px rgba(229,57,53,.4);letter-spacing:.3px}
-body.rtl .offer-badge{right:auto;left:8px;transform:rotate(-3deg)}
+/* ── OFFER BADGE — top-right of image box ── */
+.offer-badge{
+  position:absolute;
+  top:-4px;
+  right:-4px;
+  z-index:6;
+  background:linear-gradient(135deg,#e53935,#d84315);
+  color:#fff;
+  font-size:9.5px;
+  font-weight:700;
+  padding:3px 8px;
+  border-radius:20px;
+  letter-spacing:.2px;
+  box-shadow:0 2px 6px rgba(229,57,53,.45);
+  white-space:nowrap;
+}
+body.rtl .offer-badge{right:auto;left:-4px}
 
-/* ── Tag chips — GRID VIEW ──
-   Small absolute tags stacked in top-left corner of thumb.
-   In bar view: overridden to vertically centered pill column on left of circle. */
+/* ── TAGS — inside image box, bottom-left ── */
 .item-tags{
   position:absolute;
-  top:8px;
-  left:8px;
+  bottom:5px;
+  left:5px;
   z-index:5;
   display:flex;
   flex-direction:column;
   gap:3px;
   align-items:flex-start;
+  pointer-events:none;
 }
-body.rtl .item-tags{left:auto;right:8px;align-items:flex-end;}
+body.rtl .item-tags{left:auto;right:5px;align-items:flex-end}
 
-/* Base tag — compact pill for grid view */
 .tag{
   display:inline-flex;
   align-items:center;
-  gap:4px;
-  font-size:9px;
+  font-size:8px;
   font-weight:700;
-  padding:2px 7px;
+  padding:2px 6px;
   border-radius:20px;
-  letter-spacing:.3px;
+  letter-spacing:.2px;
   white-space:nowrap;
-  line-height:1.3;
-  box-shadow:0 1px 4px rgba(0,0,0,.18);
+  box-shadow:0 1px 3px rgba(0,0,0,.25);
 }
-
-/* Tag colors */
 .tag.new{background:#1565c0;color:#fff}
 .tag.popular{background:#f57c00;color:#fff}
 .tag.spicy{background:#c62828;color:#fff}
@@ -355,239 +443,48 @@ body.rtl .item-tags{left:auto;right:8px;align-items:flex-end;}
 .tag.non-veg,.tag.nonveg{background:#bf360c;color:#fff}
 .tag.most-selling,.tag.bestseller,.tag.best-seller{background:#7b1fa2;color:#fff}
 
-/* Card body — sits below the thumbnail */
-.item-body{padding:10px 12px 12px;display:flex;flex-direction:column;flex:1}
-.item-name{font-size:13px;font-weight:700;color:var(--txt);line-height:1.3}
-@media(min-width:768px){.item-name{font-size:15px}}
-.item-desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-@media(min-width:768px){.item-desc{font-size:12px}}
-.item-footer{display:flex;align-items:center;justify-content:space-between;margin-top:10px}
-.price-block{display:flex;flex-direction:column}
-.item-price{font-size:14px;font-weight:700;color:var(--g1)}
-.item-price.offer-price{color:var(--offer)}
-.item-old-price{font-size:11px;color:var(--muted);text-decoration:line-through;line-height:1}
-.save-label{font-size:9px;font-weight:700;color:var(--offer);margin-top:1px}
-
-
-
-
-/* ═══════════════════════════════════════════════
-   BAR VIEW — .bar-view on .items-grid
-   Layout: card is a row with image at a FIXED left offset (52px margin)
-   so ALL images always start at the same X position.
-   Tags are absolutely positioned in that 52px left zone.
-   Cards without tags just have clean empty left space — images stay aligned.
-   ═══════════════════════════════════════════════ */
-
-.items-grid.bar-view{
-  grid-template-columns:1fr !important;
-  gap:10px;
+/* ── DARK MODE CARD OVERRIDES ── */
+body.dark-mode .item-card{
+  background:#2a2a2a;
+  border-color:rgba(255,255,255,.06);
+  box-shadow:0 2px 10px rgba(0,0,0,.35);
 }
-@media(min-width:540px){
-  .items-grid.bar-view{ grid-template-columns:repeat(2,1fr) !important; gap:12px; }
-}
-@media(min-width:1024px){
-  .items-grid.bar-view{ grid-template-columns:repeat(3,1fr) !important; gap:14px; }
-}
-@media(min-width:1280px){
-  .items-grid.bar-view{ grid-template-columns:repeat(4,1fr) !important; gap:16px; }
-}
+body.dark-mode .item-card:hover{box-shadow:0 6px 22px rgba(0,0,0,.5)}
+body.dark-mode .item-name{color:#f0f0f0}
+body.dark-mode .item-desc{color:rgba(255,255,255,.48)}
+body.dark-mode .item-price{color:#e87b35}
+body.dark-mode .item-price.offer-price{color:#e87b35}
+body.dark-mode .item-old-price{color:rgba(255,255,255,.32)}
+body.dark-mode .save-label{color:#e87b35}
+body.dark-mode .item-thumb{background:#3a3a3a}
 
-/* Card */
-.items-grid.bar-view .item-card{
-  flex-direction:row;
-  align-items:stretch;
-  border-radius:16px;
-  border:1px solid var(--border);
-  background:var(--card);
-  box-shadow:0 2px 12px rgba(0,0,0,.07);
-  min-height:120px;
-  padding:0;
-  gap:0;
-  overflow:hidden;
-  position:relative;
-}
-.items-grid.bar-view .item-card:hover{
-  transform:translateY(-2px);
-  box-shadow:0 6px 24px rgba(26,92,58,.13);
-}
+/* ── RTL / ARABIC — image on right, text on left ── */
+body.rtl .item-body{padding:14px 10px 14px 16px;text-align:right}
+body.rtl .item-name{text-align:right}
+body.rtl .item-desc{text-align:right}
+body.rtl .item-footer{flex-direction:row-reverse}
+body.rtl .item-thumb{order:1;margin:8px 8px 8px 0}
 
-/* Tags: absolutely placed in the 52px left zone — no column, no border, no bg */
-.items-grid.bar-view .item-tags{
-  position:absolute;
-  top:0;
-  left:0;
-  width:52px;
-  height:100%;
-  z-index:4;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  gap:5px;
-  padding:8px 4px;
-  pointer-events:none;
-}
-body.rtl .items-grid.bar-view .item-tags{
-  left:auto;
-  right:0;
-}
-
-/* Tag pill */
-.items-grid.bar-view .tag{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:8.5px;
+/* Arabic item name — larger, bolder, Kufi font for elegance */
+body.rtl .item-name{
+  font-family:'Noto Kufi Arabic','Amiri',Tahoma,Arial,sans-serif;
+  font-size:15px;
   font-weight:700;
-  padding:3px 6px;
-  border-radius:20px;
-  white-space:nowrap;
-  letter-spacing:.2px;
-  width:44px;
-  text-align:center;
-  box-shadow:0 1px 4px rgba(0,0,0,.22);
-  pointer-events:auto;
+  line-height:1.5;
+  letter-spacing:0;
 }
+body.rtl .item-desc{
+  font-family:'Noto Kufi Arabic','Amiri',Tahoma,Arial,sans-serif;
+  font-size:12px;
+  line-height:1.6;
+}
+/* Arabic price — slightly larger for visual balance */
+body.rtl .item-price{font-size:15px}
 
-/* Image: always starts at 52px from left — fixed offset guarantees vertical alignment */
-.items-grid.bar-view .item-thumb{
-  width:120px;
-  min-width:120px;
-  flex:0 0 120px;
-  height:auto;
-  aspect-ratio:unset;
-  border-radius:0;
-  background:#eceae7;
-  position:relative;
-  overflow:hidden;
-  align-self:stretch;
-  margin-left:52px;         /* ← THIS is what aligns all images in one column */
-}
-body.rtl .items-grid.bar-view .item-thumb{
-  margin-left:0;
-  margin-right:52px;
-}
-.items-grid.bar-view .item-thumb img{
-  border-radius:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  position:absolute;
-  inset:0;
-}
-.items-grid.bar-view .item-thumb .thumb-emoji{
-  font-size:36px;
-  position:relative;
-  z-index:1;
-}
-
-/* Offer badge */
-.items-grid.bar-view .offer-badge{
-  top:8px;
-  right:10px;
-  transform:rotate(0deg);
-  font-size:9px;
-  padding:3px 7px;
-  z-index:5;
-}
-body.rtl .items-grid.bar-view .offer-badge{
-  right:auto;
-  left:10px;
-}
-
-/* Body */
-.items-grid.bar-view .item-body{
-  padding:12px 14px;
-  flex:1;
-  min-width:0;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:flex-start;
-  text-align:left;
-}
-
-/* Name */
-.items-grid.bar-view .item-name{
-  font-size:13px;
-  font-weight:700;
-  line-height:1.35;
-  white-space:normal;
-  overflow:hidden;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  width:100%;
-  text-align:left;
-}
-@media(min-width:540px){
-  .items-grid.bar-view .item-name{ font-size:14px; }
-}
-
-/* Desc */
-.items-grid.bar-view .item-desc{
-  font-size:11px;
-  margin-top:3px;
-  color:var(--muted);
-  -webkit-line-clamp:2;
-  display:-webkit-box;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
-  width:100%;
-  text-align:left;
-  line-height:1.4;
-}
-
-/* Footer */
-.items-grid.bar-view .item-footer{
-  margin-top:8px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  flex-wrap:nowrap;
-  gap:8px;
-  width:100%;
-}
+/* Responsive image box */
+@media(min-width:540px){.item-thumb{flex:0 0 118px;width:118px}}
 
 
-/* ═══════════════════════════════════════════════
-   VIEW TOGGLE BUTTON GROUP  ▦ ▬
-   2 buttons: grid / bar
-   .active = currently selected view (green fill).
-   Toggle logic: viewToggle() in script section.
-   ═══════════════════════════════════════════════ */
-.view-toggle-wrap{
-  display:flex;
-  gap:0;
-  border:2px solid var(--border);
-  border-radius:10px;
-  overflow:hidden;
-  height:32px;
-}
-.view-toggle-btn{
-  width:32px;
-  height:100%;
-  border:none;
-  background:var(--white);
-  cursor:pointer;
-  font-size:14px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  transition:background .15s,color .15s;
-  color:var(--muted);
-}
-.view-toggle-btn:hover{background:var(--g3);color:var(--g1)}
-/* Active state: green fill */
-.view-toggle-btn.active{
-  background:var(--g1);
-  color:var(--white);
-}
-/* Dividers between buttons */
-.view-toggle-btn:not(:last-child){
-  border-right:1.5px solid var(--border);
-}
 
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
@@ -652,6 +549,95 @@ body.rtl .items-grid.bar-view .offer-badge{
 .no-results .big-icon{font-size:40px;margin-bottom:10px}
 .error-state{text-align:center;padding:60px 20px;color:var(--muted)}
 
+/* ═══════════════════════════════════════
+   IMAGE LIGHTBOX
+   ═══════════════════════════════════════ */
+#imgLightbox{
+  position:fixed;inset:0;z-index:999;
+  display:none;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0);
+  backdrop-filter:blur(0px);-webkit-backdrop-filter:blur(0px);
+  transition:background .32s ease, backdrop-filter .32s ease,-webkit-backdrop-filter .32s ease;
+  touch-action:none;
+}
+#imgLightbox.lb-open{
+  display:flex;
+  background:rgba(0,0,0,.82);
+  backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+}
+#imgLightbox.lb-closing{
+  background:rgba(0,0,0,0)!important;
+  backdrop-filter:blur(0px)!important;-webkit-backdrop-filter:blur(0px)!important;
+}
+.lb-wrap{
+  position:relative;
+  display:flex;flex-direction:column;align-items:center;
+  max-width:min(92vw,520px);width:100%;
+  will-change:transform,opacity;
+  user-select:none;
+}
+.lb-img-box{
+  width:100%;
+  border-radius:20px;
+  overflow:hidden;
+  background:#111;
+  box-shadow:0 24px 80px rgba(0,0,0,.6);
+  position:relative;
+  max-height:60vh;
+  display:flex;align-items:center;justify-content:center;
+}
+.lb-img-box img{
+  width:100%;max-height:60vh;
+  object-fit:contain;
+  display:block;
+  border-radius:20px;
+}
+.lb-emoji{font-size:80px;padding:40px}
+.lb-info{
+  width:100%;
+  padding:16px 4px 0;
+  color:#fff;
+  text-align:center;
+}
+.lb-name{
+  font-family:'Playfair Display',Georgia,serif;
+  font-size:20px;font-weight:700;
+  line-height:1.3;
+  text-shadow:0 2px 10px rgba(0,0,0,.5);
+}
+.lb-desc{
+  font-size:13px;color:rgba(255,255,255,.72);
+  margin-top:6px;line-height:1.5;
+  max-height:60px;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;
+}
+.lb-price-row{
+  margin-top:10px;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+}
+.lb-price{font-size:22px;font-weight:800;color:#4ade80}
+.lb-price.offer{color:#fb923c}
+.lb-old-price{font-size:14px;color:rgba(255,255,255,.45);text-decoration:line-through}
+.lb-badge{background:linear-gradient(135deg,#e53935,#d84315);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
+.lb-close-btn{
+  position:absolute;top:12px;right:12px;
+  width:36px;height:36px;border-radius:50%;
+  background:rgba(0,0,0,.55);backdrop-filter:blur(6px);
+  border:1.5px solid rgba(255,255,255,.2);
+  color:#fff;font-size:18px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  z-index:5;
+  transition:background .15s,transform .15s;
+}
+.lb-close-btn:hover{background:rgba(255,255,255,.2);transform:scale(1.08)}
+.lb-swipe-hint{
+  margin-top:12px;
+  font-size:11px;color:rgba(255,255,255,.35);
+  letter-spacing:.3px;
+}
+/* item-thumb gets cursor pointer */
+.item-thumb{cursor:zoom-in}
+
 /* RESPONSIVE extra-small fallback */
 @media(max-width:359px){
   .header-inner{padding:8px 10px 6px}
@@ -673,15 +659,12 @@ body.rtl .items-grid.bar-view .offer-badge{
   .offers-strip{padding:12px 48px}
 }
 </style>
-
-  
-  
 <script>
 (function(){
   try{
     var l=document.createElement('link');
     l.rel='stylesheet';
-    l.href='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@400;700&display=swap';
+    l.href='https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Noto+Kufi+Arabic:wght@400;600;700&family=Amiri:wght@400;700&display=swap';
     document.head.appendChild(l);
   }catch(ex){}
 })();
@@ -689,14 +672,12 @@ body.rtl .items-grid.bar-view .offer-badge{
 </head>
 <body>
 
-  
-<script src="data.js"></script>
-  
 <!-- LOADING -->
 <div id="loadingOverlay"><div class="spin"></div><p id="loadingText">Loading menu…</p></div>
 
 <!-- BANNER -->
 <div class="banner" id="banner">
+  <button class="dark-toggle-btn" id="darkToggleBtn" onclick="toggleDarkMode()" title="Toggle dark/light mode">🌙</button>
   <div class="banner-inner" id="bannerInner">
     <div class="banner-fallback" id="bannerFallback">
       <div class="banner-plate">🍽️</div>
@@ -732,10 +713,6 @@ body.rtl .items-grid.bar-view .offer-badge{
     <div class="hdr-row2">
       <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
       <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
-      <div class="view-toggle-wrap">
-        <button class="view-toggle-btn active" id="viewBtnGrid" title="Grid view" onclick="viewToggle('grid')">▦</button>
-        <button class="view-toggle-btn" id="viewBtnBar" title="Bar view" onclick="viewToggle('bar')">▬</button>
-      </div>
       <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
     </div>
   </div>
@@ -756,8 +733,8 @@ body.rtl .items-grid.bar-view .offer-badge{
     <div class="offers-strip-inner" id="offersChipsTop"></div>
   </div>
 
-  <!-- CATEGORIES BAR — starts hidden, toggled by button -->
-  <div class="categories-bar cat-hidden" id="categoryBar"></div>
+  <!-- CATEGORIES BAR — open by default, toggled by button -->
+  <div class="categories-bar" id="categoryBar"></div>
 
   <!-- OFFERS STRIP — shown when categories visible -->
   <div class="offers-strip" id="offersStripBottom" style="display:none">
@@ -775,6 +752,17 @@ body.rtl .items-grid.bar-view .offer-badge{
 <div class="footer-bar">
   <div class="total-label"><span id="totalLabel">Total:</span> <span class="total-amount" id="totalAmount">AED 0.00</span></div>
   <button class="cart-btn" onclick="showCart()">🛒 <span id="cartLabel">Cart</span> <span class="cart-badge" id="cartBadge">0</span></button>
+</div>
+
+<!-- IMAGE LIGHTBOX -->
+<div id="imgLightbox" role="dialog" aria-modal="true" aria-label="Image preview">
+  <div class="lb-wrap" id="lbWrap">
+    <div class="lb-img-box" id="lbImgBox">
+      <button class="lb-close-btn" onclick="closeLightbox()" aria-label="Close">✕</button>
+    </div>
+    <div class="lb-info" id="lbInfo"></div>
+    <div class="lb-swipe-hint" id="lbHint">Swipe down or tap outside to close</div>
+  </div>
 </div>
 
 <!-- CART MODAL -->
@@ -805,7 +793,7 @@ body.rtl .items-grid.bar-view .offer-badge{
     </div>
   </div>
 </div>
-  
+
 <script>
 // ═══════════════════════════════════════════════════
 //  CONSTANTS
@@ -817,7 +805,7 @@ const CUR = 'AED';
 //  STATE
 // ═══════════════════════════════════════════════════
 let MENU=[], CATEGORIES=[], OFFERS=[], INFO={};
-let cart={}, currentCat='all', catBarVisible=false;
+let cart={}, currentCat='all', catBarVisible=true;
 let scrollSpyObserver=null;
 let lang='en'; // 'en' or 'ar'
 
@@ -868,7 +856,7 @@ function toggleLang(){
   document.body.classList.toggle('rtl', isAr);
   document.getElementById('langBtn').textContent = T[lang].langBtn;
   document.getElementById('langBtn').classList.toggle('ar-active', isAr);
-  document.getElementById('catToggleBtn').textContent = T[lang].menu;
+ // document.getElementById('catToggleBtn').textContent = T[lang].menu;
   document.getElementById('searchInput').placeholder = T[lang].search;
   document.getElementById('offersLabelTop').textContent = T[lang].offers;
   document.getElementById('offersLabelBottom').textContent = T[lang].offers;
@@ -1114,9 +1102,27 @@ function syncOffersStripVisibility(){
   if(!top||!bot) return;
   if(!OFFERS.length){ top.style.display='none'; bot.style.display='none'; return; }
   const catHidden=document.getElementById('categoryBar').classList.contains('cat-hidden');
+  const bannerHidden=document.getElementById('banner').classList.contains('hidden');
+  // Only show offer strips when banner is scrolled away
+  if(!bannerHidden){ top.style.display='none'; bot.style.display='none'; return; }
   top.style.display=catHidden?'block':'none';
   bot.style.display=catHidden?'none':'block';
 }
+
+// ═══════════════════════════════════════════════════
+//  DARK MODE TOGGLE
+// ═══════════════════════════════════════════════════
+function toggleDarkMode(){
+  const isDark=document.body.classList.toggle('dark-mode');
+  document.getElementById('darkToggleBtn').textContent=isDark?'☀️':'🌙';
+  // Dark mode is NEVER persisted — light mode is always the default on next load
+  try{ localStorage.removeItem('menuDarkMode'); }catch(ex){}
+}
+// Always force light mode on load — clear any previously saved dark preference
+(function(){
+  try{ localStorage.removeItem('menuDarkMode'); }catch(ex){}
+  document.body.classList.remove('dark-mode');
+})();
 
 // ═══════════════════════════════════════════════════
 //  SCROLL SPY
@@ -1168,21 +1174,8 @@ function selectCat(btn,catId){
 // Adds/removes .bar-view on every .items-grid.
 // Re-render is NOT needed — CSS handles the switch instantly.
 // ═══════════════════════════════════════════════════
-let viewMode = 'grid'; // default view on load
+const viewMode = 'bar'; // always bar view — grid removed
 
-function viewToggle(mode){
-  if(viewMode === mode) return;          // already in that mode, do nothing
-  viewMode = mode;
-
-  // Apply correct class to all .items-grid elements currently in DOM
-  document.querySelectorAll('.items-grid').forEach(grid => {
-    grid.classList.toggle('bar-view', mode === 'bar');
-  });
-
-  // Update toggle button active states
-  document.getElementById('viewBtnGrid').classList.toggle('active', mode === 'grid');
-  document.getElementById('viewBtnBar').classList.toggle('active',  mode === 'bar');
-}
 
 function toggleSearch(){
   const wrap=document.getElementById('searchWrap');
@@ -1314,18 +1307,17 @@ function itemCardHtml(item){
     ?`<div class="qty-control"><button class="qty-btn" onclick="changeQty('${e(item.id)}',-1)">-</button><span class="qty-num">${qty}</span><button class="qty-btn" onclick="changeQty('${e(item.id)}',1)">+</button></div>`
     :`<button class="qty-btn add-only" onclick="changeQty('${e(item.id)}',1)">+</button>`;
 
-  // Tags:
-  // grid view → absolute overlay, only rendered if tags exist
-  // bar view  → fixed-width left column, ALWAYS rendered (even empty)
-  //             so cards without tags still hold the 52px column → perfect alignment
-  const tagsHtml = (viewMode === 'bar')
-    ? `<div class="item-tags">${tagHtml}</div>`
-    : (tagHtml ? `<div class="item-tags">${tagHtml}</div>` : '');
+  // Tags inside the image box
+  const tagsHtml = tagHtml ? `<div class="item-tags">${tagHtml}</div>` : '';
 
-  return`<div class="item-card" id="card-${e(item.id)}">
+  // Image box: offer badge + tags overlaid on top of image
+  const thumbBox = `<div class="item-thumb" onclick="openLightbox('${e(item.id)}',this)" role="button" tabindex="0" aria-label="View image of ${e(nm)}">
     ${offerBadge}
     ${tagsHtml}
-    <div class="item-thumb">${thumb}</div>
+    ${thumb}
+  </div>`;
+
+  return`<div class="item-card" id="card-${e(item.id)}">
     <div class="item-body">
       <div class="item-name">${e(nm)}</div>
       <div class="item-desc">${e(dsc)}</div>
@@ -1334,6 +1326,7 @@ function itemCardHtml(item){
         ${qtyHtml}
       </div>
     </div>
+    ${thumbBox}
   </div>`;
 }
 
@@ -1346,22 +1339,44 @@ function itemCardHtml(item){
   const hInner=document.getElementById('headerInner');
   const logoW=document.getElementById('logoWrap');
   let bannerHidden=false;
+  function getBannerThreshold(){
+    return Math.max(banner.offsetHeight - 10, 40);
+  }
   window.addEventListener('scroll',()=>{
     const y=window.scrollY;
-    if(y>60 && !bannerHidden){
+    const threshold=getBannerThreshold();
+    if(y>threshold && !bannerHidden){
       bannerHidden=true;
       banner.classList.add('hidden');
       hInner.classList.add('big');
       logoW.classList.add('big');
       header.classList.add('scrolled');
-    } else if(y<=60 && bannerHidden){
+      syncOffersStripOnScroll(true);
+    } else if(y<=10 && bannerHidden){
       bannerHidden=false;
       banner.classList.remove('hidden');
       hInner.classList.remove('big');
       logoW.classList.remove('big');
       header.classList.remove('scrolled');
+      syncOffersStripOnScroll(false);
     }
   },{passive:true});
+  function syncOffersStripOnScroll(bannerIsHidden){
+    if(!OFFERS.length) return;
+    const top=document.getElementById('offersStripTop');
+    const bot=document.getElementById('offersStripBottom');
+    if(!top||!bot) return;
+    const catHidden=document.getElementById('categoryBar').classList.contains('cat-hidden');
+    if(bannerIsHidden){
+      // Banner gone: show whichever strip is correct for current cat-bar state
+      top.style.display=catHidden?'block':'none';
+      bot.style.display=catHidden?'none':'block';
+    } else {
+      // Banner visible: hide both offer strips
+      top.style.display='none';
+      bot.style.display='none';
+    }
+  }
 })();
 
 // ═══════════════════════════════════════════════════
@@ -1623,6 +1638,8 @@ function sendToWhatsApp(){
 
 
 
+
+
 // ═══════════════════════════════════════════════════
 //  UTIL
 // ═══════════════════════════════════════════════════
@@ -1644,6 +1661,246 @@ function showFatalError(msg){
 }
 
 
+
+
+// ═══════════════════════════════════════════════════
+//  IMAGE LIGHTBOX — zoom-from-source with swipe dismiss
+// ═══════════════════════════════════════════════════
+(function(){
+  const lb      = document.getElementById('imgLightbox');
+  const lbWrap  = document.getElementById('lbWrap');
+  const lbBox   = document.getElementById('lbImgBox');
+  const lbInfo  = document.getElementById('lbInfo');
+  const lbHint  = document.getElementById('lbHint');
+
+  let _isOpen = false;
+  let _originRect = null; // bounding rect of the thumb that was tapped
+  let _raf = null;
+
+  // ── Touch / swipe state ──
+  let _touchStartY = 0;
+  let _touchStartX = 0;
+  let _dragging    = false;
+  let _dragDy      = 0;
+
+  // ── Pinch-zoom state ──
+  let _pinchDist0  = 0;
+  let _pinchScale  = 1;
+
+  /* ─── Open ─── */
+  window.openLightbox = function(itemId, thumbEl){
+    if(_isOpen) return;
+    const item = MENU.find(i => i.id === itemId);
+    if(!item) return;
+    const isAr = lang === 'ar';
+
+    // Measure where the thumbnail is on screen right now
+    _originRect = thumbEl.getBoundingClientRect();
+
+    // Build image / emoji
+    lbBox.innerHTML = '';
+
+    // Close button
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'lb-close-btn';
+    closeBtn.setAttribute('aria-label','Close');
+    closeBtn.innerHTML = '✕';
+    closeBtn.onclick = closeLightbox;
+    lbBox.appendChild(closeBtn);
+
+    if(item.image_url){
+      const img = document.createElement('img');
+      img.src   = item.image_url;
+      img.alt   = isAr && item.name_ar ? item.name_ar : item.name;
+      img.style.transform = 'scale(1)';
+      img.draggable = false;
+      lbBox.appendChild(img);
+    } else {
+      const em = document.createElement('div');
+      em.className = 'lb-emoji';
+      em.textContent = '🍽️';
+      lbBox.appendChild(em);
+    }
+
+    // Info panel
+    const nm  = isAr && item.name_ar ? item.name_ar : item.name;
+    const dsc = isAr && item.desc_ar ? item.desc_ar : item.desc;
+    const priceHtml = item.hasOffer
+      ? `<span class="lb-price offer">${CUR} ${item.finalPrice.toFixed(2)}</span>
+         <span class="lb-old-price">${CUR} ${item.oldPrice.toFixed(2)}</span>
+         <span class="lb-badge">${item.discLabel}</span>`
+      : `<span class="lb-price">${CUR} ${item.finalPrice.toFixed(2)}</span>`;
+
+    lbInfo.innerHTML = `
+      <div class="lb-name">${e(nm)}</div>
+      ${dsc ? `<div class="lb-desc">${e(dsc)}</div>` : ''}
+      <div class="lb-price-row">${priceHtml}</div>`;
+
+    // Swipe hint — hide on desktop
+    lbHint.style.display = ('ontouchstart' in window) ? 'block' : 'none';
+
+    // Show overlay (triggers CSS transition on backdrop)
+    lb.style.display = 'flex';
+
+    // Force a reflow so the transition fires
+    lb.offsetHeight;
+
+    // Compute origin transform: scale down from thumb position to center
+    const vpW = window.innerWidth;
+    const vpH = window.innerHeight;
+    const wrapW = Math.min(vpW * 0.92, 520);
+    // Rough center of the wrap in viewport
+    const destCX = vpW / 2;
+    const destCY = vpH / 2;
+    // Center of the origin thumb
+    const origCX = _originRect.left + _originRect.width  / 2;
+    const origCY = _originRect.top  + _originRect.height / 2;
+    // Scale factor: thumb width vs lightbox width
+    const scaleFrom = _originRect.width / wrapW;
+
+    // Apply starting transform (snap instantly)
+    lbWrap.style.transition = 'none';
+    lbWrap.style.transformOrigin = 'center center';
+    lbWrap.style.transform =
+      `translate(${origCX - destCX}px, ${origCY - destCY}px) scale(${scaleFrom})`;
+    lbWrap.style.opacity = '0.4';
+
+    lb.classList.add('lb-open');
+
+    // Animate to center
+    requestAnimationFrame(()=>{
+      requestAnimationFrame(()=>{
+        lbWrap.style.transition = 'transform .38s cubic-bezier(.22,1,.36,1), opacity .28s ease';
+        lbWrap.style.transform  = 'translate(0,0) scale(1)';
+        lbWrap.style.opacity    = '1';
+      });
+    });
+
+    _isOpen = true;
+    _pinchScale = 1;
+    document.body.style.overflow = 'hidden';
+  };
+
+  /* ─── Close ─── */
+  window.closeLightbox = function(toOrigin){
+    if(!_isOpen) return;
+    _isOpen = false;
+    _dragging = false;
+
+    const vpW = window.innerWidth;
+    const vpH = window.innerHeight;
+    const wrapW = Math.min(vpW * 0.92, 520);
+    const destCX = vpW / 2;
+    const destCY = vpH / 2;
+
+    if(_originRect && toOrigin !== false){
+      const origCX = _originRect.left + _originRect.width  / 2;
+      const origCY = _originRect.top  + _originRect.height / 2;
+      const scaleTo = _originRect.width / wrapW;
+
+      lbWrap.style.transition = 'transform .3s cubic-bezier(.4,0,1,1), opacity .22s ease';
+      lbWrap.style.transform  =
+        `translate(${origCX - destCX}px, ${origCY - destCY}px) scale(${scaleTo})`;
+      lbWrap.style.opacity    = '0';
+    } else {
+      lbWrap.style.transition = 'transform .25s cubic-bezier(.4,0,1,1), opacity .2s ease';
+      lbWrap.style.transform  = 'translate(0, 60px) scale(0.9)';
+      lbWrap.style.opacity    = '0';
+    }
+
+    lb.classList.add('lb-closing');
+    lb.classList.remove('lb-open');
+
+    setTimeout(()=>{
+      lb.style.display = 'none';
+      lb.classList.remove('lb-closing');
+      // Reset wrap for next open
+      lbWrap.style.transition = 'none';
+      lbWrap.style.transform  = '';
+      lbWrap.style.opacity    = '1';
+      document.body.style.overflow = '';
+    }, 340);
+  };
+
+  /* ─── Tap backdrop to close ─── */
+  lb.addEventListener('click', ev=>{
+    if(ev.target === lb) closeLightbox();
+  });
+
+  /* ─── ESC key ─── */
+  document.addEventListener('keydown', ev=>{
+    if(ev.key === 'Escape' && _isOpen) closeLightbox();
+  });
+
+  /* ─── Touch: swipe-down to dismiss ─── */
+  lbWrap.addEventListener('touchstart', ev=>{
+    if(ev.touches.length === 2){
+      // Pinch start
+      _pinchDist0 = Math.hypot(
+        ev.touches[0].clientX - ev.touches[1].clientX,
+        ev.touches[0].clientY - ev.touches[1].clientY
+      );
+      return;
+    }
+    _touchStartY = ev.touches[0].clientY;
+    _touchStartX = ev.touches[0].clientX;
+    _dragging = false;
+    _dragDy   = 0;
+  }, {passive:true});
+
+  lbWrap.addEventListener('touchmove', ev=>{
+    if(ev.touches.length === 2){
+      // Pinch zoom
+      const dist = Math.hypot(
+        ev.touches[0].clientX - ev.touches[1].clientX,
+        ev.touches[0].clientY - ev.touches[1].clientY
+      );
+      _pinchScale = Math.min(Math.max(dist / _pinchDist0, 0.5), 3);
+      lbWrap.style.transition = 'none';
+      lbWrap.style.transform = `scale(${_pinchScale})`;
+      return;
+    }
+    const dy = ev.touches[0].clientY - _touchStartY;
+    const dx = ev.touches[0].clientX - _touchStartX;
+    if(!_dragging && Math.abs(dy) > 8 && Math.abs(dy) > Math.abs(dx)){
+      _dragging = true;
+    }
+    if(_dragging){
+      _dragDy = dy;
+      const progress = Math.max(0, dy / 280); // 0→1
+      const scale    = 1 - progress * 0.12;
+      const opacity  = 1 - progress * 0.7;
+      lbWrap.style.transition = 'none';
+      lbWrap.style.transform  = `translate(0, ${Math.max(0,dy)}px) scale(${scale})`;
+      lbWrap.style.opacity    = String(opacity);
+      // Dim backdrop
+      lb.style.background = `rgba(0,0,0,${0.82 * (1 - progress * 0.85)})`;
+    }
+  }, {passive:true});
+
+  lbWrap.addEventListener('touchend', ev=>{
+    if(_pinchScale !== 1 && ev.touches.length === 0){
+      // Snap back pinch
+      lbWrap.style.transition = 'transform .3s cubic-bezier(.22,1,.36,1)';
+      lbWrap.style.transform  = 'translate(0,0) scale(1)';
+      _pinchScale = 1;
+      return;
+    }
+    if(!_dragging) return;
+    _dragging = false;
+    if(_dragDy > 100){
+      // Dismiss — fall down instead of snap to origin
+      closeLightbox(false);
+    } else {
+      // Snap back
+      lbWrap.style.transition = 'transform .35s cubic-bezier(.22,1,.36,1), opacity .2s ease';
+      lbWrap.style.transform  = 'translate(0,0) scale(1)';
+      lbWrap.style.opacity    = '1';
+      lb.style.background     = 'rgba(0,0,0,.82)';
+    }
+  }, {passive:true});
+
+})();
 
 // ═══════════════════════════════════════════════════
 //  BOOT — load directly from hardcoded data
