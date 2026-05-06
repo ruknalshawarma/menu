@@ -27,10 +27,12 @@ body.dark-mode .icon-btn{background:#2a2a2a;color:#e8e8e8}
 body.dark-mode .cat-toggle-btn{background:#2a2a2a;color:#e8e8e8;border-color:#555}
 body.dark-mode .lang-btn{background:#2a2a2a}
 body.dark-mode .logo-circle{border-color:rgba(201,168,76,.5)}
-body.dark-mode .qty-btn{background:#2a2a2a}
-body.dark-mode .cqty-btn{background:#2a2a2a}
-body.dark-mode .qty-num{background:#2a2a2a}
-body.dark-mode .cqty-num{background:#2a2a2a}
+body.dark-mode .qty-btn{background:#2a5c3a;color:#fff;border-color:#3a8c5a}
+body.dark-mode .qty-btn.add-only{background:#2e8b57;color:#fff}
+body.dark-mode .qty-control{border-color:#2e8b57}
+body.dark-mode .cqty-btn{background:#2a5c3a;color:#fff;border-color:#3a8c5a}
+body.dark-mode .qty-num{background:#1a3a28;color:#4ade80;font-weight:800}
+body.dark-mode .cqty-num{background:#1a3a28;color:#4ade80;font-weight:800}
 body.dark-mode .modal-overlay{background:rgba(0,0,0,.7)}
 body.dark-mode .offers-strip{background:#1e1e1e}
 body.dark-mode .categories-bar{background:#1e1e1e}
@@ -638,6 +640,100 @@ body.rtl .item-price{font-size:15px}
 /* item-thumb gets cursor pointer */
 .item-thumb{cursor:zoom-in}
 
+/* ═══════════════════════════════════════
+   DELIVERY BUTTONS — inline in hdr-row2
+   ═══════════════════════════════════════ */
+.hdr-delivery-btn{
+  display:flex;align-items:center;gap:4px;
+  padding:4px 8px;border-radius:20px;
+  border:1.5px solid var(--border);
+  background:var(--white);cursor:pointer;
+  text-decoration:none;color:var(--txt);
+  font-size:10px;font-weight:600;
+  transition:transform .15s,box-shadow .15s,border-color .15s;
+  flex-shrink:0;white-space:nowrap;
+  height:28px;
+}
+.hdr-delivery-btn:hover{transform:translateY(-2px);box-shadow:0 3px 10px rgba(0,0,0,.13)}
+.hdr-delivery-btn img{width:14px;height:14px;border-radius:3px;object-fit:contain;flex-shrink:0}
+.hdr-delivery-btn.noon{border-color:#f5a623;color:#d4891a}
+.hdr-delivery-btn.talabat{border-color:#ff6000;color:#ff6000}
+.hdr-delivery-btn.deliveroo{border-color:#00ccbc;color:#009688}
+.hdr-delivery-btn.keeta{border-color:#e31c25;color:#e31c25}
+body.dark-mode .hdr-delivery-btn{background:#2a2a2a;border-color:#444;color:#e8e8e8}
+body.dark-mode .hdr-delivery-btn.noon{border-color:#f5a623;color:#f5a623}
+body.dark-mode .hdr-delivery-btn.talabat{border-color:#ff6000;color:#ff6000}
+body.dark-mode .hdr-delivery-btn.deliveroo{border-color:#00ccbc;color:#00ccbc}
+body.dark-mode .hdr-delivery-btn.keeta{border-color:#e31c25;color:#e31c25}
+@media(min-width:540px){
+  .hdr-delivery-btn{font-size:11px;padding:5px 10px;height:30px}
+  .hdr-delivery-btn img{width:16px;height:16px}
+}
+
+/* ═══════════════════════════════════════
+   LIGHTBOX ADD-TO-CART + TAGS + OFFER
+   ═══════════════════════════════════════ */
+.lb-tags-row{
+  display:flex;gap:6px;flex-wrap:wrap;
+  justify-content:center;margin-top:10px;
+}
+.lb-tag{
+  display:inline-flex;align-items:center;
+  font-size:10px;font-weight:700;
+  padding:3px 9px;border-radius:20px;
+  letter-spacing:.2px;
+  box-shadow:0 1px 4px rgba(0,0,0,.25);
+}
+.lb-tag.new{background:#1565c0;color:#fff}
+.lb-tag.popular{background:#f57c00;color:#fff}
+.lb-tag.spicy{background:#c62828;color:#fff}
+.lb-tag.veg{background:#2e7d32;color:#fff}
+.lb-tag.non-veg,.lb-tag.nonveg{background:#bf360c;color:#fff}
+.lb-tag.most-selling,.lb-tag.bestseller,.lb-tag.best-seller{background:#7b1fa2;color:#fff}
+.lb-offer-strip{
+  margin-top:8px;
+  background:linear-gradient(135deg,rgba(229,57,53,.18),rgba(216,67,21,.18));
+  border:1px solid rgba(229,57,53,.35);
+  border-radius:10px;padding:6px 12px;
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-size:12px;color:#ff8a65;font-weight:700;
+}
+.lb-add-btn{
+  margin-top:14px;
+  width:100%;padding:13px;
+  background:linear-gradient(135deg,var(--g1),var(--acc));
+  color:#fff;border:none;border-radius:14px;
+  font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  font-size:16px;font-weight:700;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  transition:background .15s,transform .1s;
+  box-shadow:0 4px 18px rgba(26,92,58,.4);
+}
+.lb-add-btn:hover{background:linear-gradient(135deg,#0f3d25,var(--g1))}
+.lb-add-btn:active{transform:scale(.97)}
+.lb-qty-row{
+  margin-top:14px;
+  display:flex;align-items:center;justify-content:center;gap:0;
+  border:2px solid var(--g1);border-radius:24px;overflow:hidden;
+  width:140px;margin-left:auto;margin-right:auto;
+}
+.lb-qty-btn{
+  width:40px;height:40px;border:none;
+  background:var(--g1);color:#fff;
+  font-size:20px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background .12s;
+}
+.lb-qty-btn:hover{background:#0f3d25}
+.lb-qty-num{
+  flex:1;text-align:center;
+  font-size:16px;font-weight:700;
+  color:var(--g1);background:#fff;
+  padding:0 4px;
+}
+body.dark-mode .lb-qty-num{background:#1e1e1e;color:#4ade80}
+body.dark-mode .lb-qty-btn{background:#2e8b57}
+
 /* RESPONSIVE extra-small fallback */
 @media(max-width:359px){
   .header-inner{padding:8px 10px 6px}
@@ -725,17 +821,33 @@ body.rtl .item-price{font-size:15px}
     </div>
     <!-- Row 2: All action buttons in one line -->
     <div class="hdr-row2">
-	
-	<button class="icon-btn" title="Back to Menu" 
-        onclick="window.location.href='https://ruknalshawarma.github.io/main'" 
-        style="margin-right: auto;">
-	  ⬅️
-	</button>	
-	
+
+      <button class="icon-btn" title="Back to Menu"
+        onclick="window.location.href='https://ruknalshawarma.github.io/main'">
+        ⬅️
+      </button>
+
+      <a class="hdr-delivery-btn noon" href="#" target="_blank" rel="noopener" id="noonBtn" title="Order on Noon Food">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Noon_%28e-commerce%29_logo.svg/200px-Noon_%28e-commerce%29_logo.svg.png" alt="Noon" onerror="this.style.display='none'">
+        <span>Noon</span>
+      </a>
+      <a class="hdr-delivery-btn talabat" href="#" target="_blank" rel="noopener" id="talabatBtn" title="Order on Talabat">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Talabat_logo.svg/200px-Talabat_logo.svg.png" alt="Talabat" onerror="this.style.display='none'">
+        <span>Talabat</span>
+      </a>
+      <a class="hdr-delivery-btn deliveroo" href="#" target="_blank" rel="noopener" id="deliverooBtn" title="Order on Deliveroo">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Deliveroo_logo.svg/200px-Deliveroo_logo.svg.png" alt="Deliveroo" onerror="this.style.display='none'">
+        <span>Deliveroo</span>
+      </a>
+      <a class="hdr-delivery-btn keeta" href="#" target="_blank" rel="noopener" id="keetaBtn" title="Order on Keeta">
+        <img src="https://play-lh.googleusercontent.com/Yf7Q5sYoZDNH5cz8nFWJA1pBMzIc8kNy0P2sWoV8eFVgC7QdIXO8qmfZkAkRAGcfhg=w240-h480" alt="Keeta" onerror="this.style.display='none'">
+        <span>Keeta</span>
+      </a>
+
       <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
       <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
       <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
-	  
+
     </div>
   </div>
   <div class="divider-bar"></div>
@@ -763,6 +875,7 @@ body.rtl .item-price{font-size:15px}
     <div class="offers-strip-label" id="offersLabelBottom">🔥 Today's Offers</div>
     <div class="offers-strip-inner" id="offersChipsBottom"></div>
   </div>
+
 </header>
 
 <!-- ITEMS -->
@@ -1801,10 +1914,36 @@ const HARDCODED_ITEMS = [
          <span class="lb-badge">${item.discLabel}</span>`
       : `<span class="lb-price">${CUR} ${item.finalPrice.toFixed(2)}</span>`;
 
+    // Tags
+    const tagsHtml = item.tags.filter(t=>TAG_CONFIG[t]).map(t=>{
+      const cfg=TAG_CONFIG[t];
+      return`<span class="lb-tag ${cfg.cls}">${isAr?cfg.label_ar:cfg.label}</span>`;
+    }).join('');
+
+    // Offer strip
+    const offerStripHtml = item.hasOffer
+      ? `<div class="lb-offer-strip">🎉 ${isAr?'وفّر':'Save'} ${CUR} ${item.saveAmt} — ${item.discLabel}</div>`
+      : '';
+
+    // Qty / Add button
+    const qty = cart[item.id]||0;
+    const qtyOrAddHtml = qty > 0
+      ? `<div class="lb-qty-row">
+           <button class="lb-qty-btn" onclick="changeQty('${item.id}',-1);refreshLbQty('${item.id}')">−</button>
+           <span class="lb-qty-num" id="lb-qty-num">${qty}</span>
+           <button class="lb-qty-btn" onclick="changeQty('${item.id}',1);refreshLbQty('${item.id}')">+</button>
+         </div>`
+      : `<button class="lb-add-btn" id="lb-add-btn" onclick="changeQty('${item.id}',1);refreshLbQty('${item.id}')">
+           <span>🛒</span> ${isAr?'أضف إلى السلة':'Add to Cart'}
+         </button>`;
+
     lbInfo.innerHTML = `
       <div class="lb-name">${e(nm)}</div>
       ${dsc ? `<div class="lb-desc">${e(dsc)}</div>` : ''}
-      <div class="lb-price-row">${priceHtml}</div>`;
+      ${tagsHtml ? `<div class="lb-tags-row">${tagsHtml}</div>` : ''}
+      <div class="lb-price-row">${priceHtml}</div>
+      ${offerStripHtml}
+      <div id="lb-action">${qtyOrAddHtml}</div>`;
 
     // Swipe hint — hide on desktop
     lbHint.style.display = ('ontouchstart' in window) ? 'block' : 'none';
@@ -1849,6 +1988,25 @@ const HARDCODED_ITEMS = [
     _isOpen = true;
     _pinchScale = 1;
     document.body.style.overflow = 'hidden';
+  };
+
+  /* ─── Refresh qty display inside lightbox ─── */
+  window.refreshLbQty = function(itemId){
+    const actionDiv = document.getElementById('lb-action');
+    if(!actionDiv) return;
+    const item = MENU.find(i=>i.id===itemId);
+    if(!item) return;
+    const isAr = lang==='ar';
+    const qty = cart[itemId]||0;
+    actionDiv.innerHTML = qty > 0
+      ? `<div class="lb-qty-row">
+           <button class="lb-qty-btn" onclick="changeQty('${itemId}',-1);refreshLbQty('${itemId}')">−</button>
+           <span class="lb-qty-num" id="lb-qty-num">${qty}</span>
+           <button class="lb-qty-btn" onclick="changeQty('${itemId}',1);refreshLbQty('${itemId}')">+</button>
+         </div>`
+      : `<button class="lb-add-btn" onclick="changeQty('${itemId}',1);refreshLbQty('${itemId}')">
+           <span>🛒</span> ${isAr?'أضف إلى السلة':'Add to Cart'}
+         </button>`;
   };
 
   /* ─── Close ─── */
