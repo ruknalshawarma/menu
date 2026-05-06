@@ -658,6 +658,19 @@ body.rtl .item-price{font-size:15px}
   .search-wrap{padding:10px 48px}
   .offers-strip{padding:12px 48px}
 }
+
+
+/* Ensure the row is a flex container */
+.header-row {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+/* The back button stays left, others move right */
+.icon-btn:first-child {
+    margin-right: auto;
+}
 </style>
 <script>
 (function(){
@@ -671,7 +684,7 @@ body.rtl .item-price{font-size:15px}
 </script>
 </head>
 <body>
-<script src="data.js"></script>
+
 <!-- LOADING -->
 <div id="loadingOverlay"><div class="spin"></div><p id="loadingText">Loading menu…</p></div>
 
@@ -698,6 +711,7 @@ body.rtl .item-price{font-size:15px}
   <div class="header-inner" id="headerInner">
     <!-- Row 1: Logo + Restaurant Name/Desc/Location -->
     <div class="hdr-row1">
+	
       <div class="logo-wrap" id="logoWrap"><div class="logo-circle" id="logoCircle">🍽️</div></div>
       <div class="restaurant-info">
         <div class="restinfo-name-row">
@@ -711,9 +725,17 @@ body.rtl .item-price{font-size:15px}
     </div>
     <!-- Row 2: All action buttons in one line -->
     <div class="hdr-row2">
+	
+	<button class="icon-btn" title="Back to Menu" 
+        onclick="window.location.href='https://ruknalshawarma.github.io/main'" 
+        style="margin-right: auto;">
+	  ⬅️
+	</button>	
+	
       <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
       <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
       <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
+	  
     </div>
   </div>
   <div class="divider-bar"></div>
@@ -1115,13 +1137,20 @@ function syncOffersStripVisibility(){
 function toggleDarkMode(){
   const isDark=document.body.classList.toggle('dark-mode');
   document.getElementById('darkToggleBtn').textContent=isDark?'☀️':'🌙';
-  // Dark mode is NEVER persisted — light mode is always the default on next load
-  try{ localStorage.removeItem('menuDarkMode'); }catch(ex){}
+  try{ localStorage.setItem('menuDarkMode', isDark?'1':'0'); }catch(ex){}
 }
-// Always force light mode on load — clear any previously saved dark preference
+// Restore saved preference
 (function(){
-  try{ localStorage.removeItem('menuDarkMode'); }catch(ex){}
-  document.body.classList.remove('dark-mode');
+  try{
+    if(localStorage.getItem('menuDarkMode')==='1'){
+      document.body.classList.add('dark-mode');
+      // btn emoji set after DOM ready
+      document.addEventListener('DOMContentLoaded',()=>{
+        const btn=document.getElementById('darkToggleBtn');
+        if(btn) btn.textContent='☀️';
+      });
+    }
+  }catch(ex){}
 })();
 
 // ═══════════════════════════════════════════════════
@@ -1661,7 +1690,48 @@ function showFatalError(msg){
 }
 
 
+// ── Hardcoded fallback data ──
+const HARDCODED_INFO = [
+  ['name','description','location','logo','banner','cafeteria number','rider number','track url','name_ar','description_ar'],
+  [
+   'Rukn Al Shawarma Cafeteria','A Syrian restaurant with a Levantine flavor','120th St - Al Nakheel - Ras Al Khaimah','https://drive.google.com/file/d/1Sk2Qf2hDd0E77LLzYRLVYADuct_PlLHB/view?usp=sharing',
+   'https://drive.google.com/file/d/1HGhOIVtjOYnhQC-XrwQBR_Nh697qTRG1/view?usp=sharing','971509517012','971522847006','https://wa.me/971522847006',
+   'كافتيريا المشاهير','مطعم سوري بنكهة الشامية'
+  ]
+];
 
+const HARDCODED_ITEMS = [
+// [cat_en, Name_en, desc_en, price, offer_price, cat_icon, image_url, tags, cat_ar, Name_ar, desc_ar]
+['Arabic Food','Falafel Plate','Crispy deep-fried chickpea balls served with pita and dips','10','8','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','veg','أكلات عربية','طبق فلافل','كرات حمص مقلية مقرمشة تقدم مع الخبز والصلصات'],
+['Breakfast','Egg Sandwich','Fresh sandwich filled with seasoned eggs','6','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','فطور','ساندويتش بيض','ساندويتش طازج محشو بالبيض المتبل'],
+['Arabic Food','Foul Medames','Slow-cooked fava beans with olive oil and spices','8','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','veg','أكلات عربية','فول مدمس','فول مطبوخ ببطء مع زيت الزيتون والتوابل'],
+['Rice Meals','Chicken Biryani','Spiced rice with tender chicken and aromatic herbs','18','15','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','popular','وجبات أرز','برياني دجاج','أرز متبل مع دجاج طري وأعشاب عطرية'],
+['Rice Meals','Lamb Mandi','Traditional rice dish with slow-cooked lamb','25','20','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','وجبات أرز','مندي لحم','طبق أرز تقليدي مع لحم مطهو ببطء'],
+['Grills','Mixed Grill Platter','Assorted grilled meats served with rice or bread','30','25','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','popular','مشاوي','طبق مشاوي مشكل','تشكيلة من اللحوم المشوية تقدم مع الأرز أو الخبز'],
+['Grills','Grilled Chicken Meal','Juicy grilled chicken served with sides','20','10','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','popular,veg,spicy','مشاوي','وجبة دجاج مشوي','دجاج مشوي طري يقدم مع المقبلات'],
+['Grills','Beef Steak Meal','Grilled beef steak served with sides','35','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشاوي','وجبة ستيك لحم','شريحة لحم مشوية تقدم مع أطباق جانبية'],
+['Shawarma','Chicken Shawarma','Marinated chicken wrapped in pita bread','10','8','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','popular','شاورما','شاورما دجاج','دجاج متبل ملفوف في خبز عربي'],
+['Shawarma','Beef Shawarma','Thinly sliced beef wrapped with garlic sauce','12','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','شاورما','شاورما لحم','لحم مقطع رفيع مع صوص الثوم في خبز'],
+['Shawarma','Shawarma Plate','Shawarma served with fries bread and sauces','18','15','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','شاورما','طبق شاورما','شاورما تقدم مع بطاطس وخبز وصلصات'],
+['Burgers','Classic Burger','Juicy beef burger with lettuce and cheese','15','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','برجر','برجر كلاسيك','برجر لحم طري مع خس وجبن'],
+['Burgers','Chicken Burger','Crispy chicken burger with mayo and lettuce','14','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','برجر','برجر دجاج','برجر دجاج مقرمش مع مايونيز وخس'],
+['Burgers','Double Cheese Burger','Double beef patties with melted cheese','20','18','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','popular','برجر','برجر دبل جبن','برجر مزدوج مع لحم وجبن ذائب'],
+['Drinks','Orange Juice','Freshly squeezed orange juice','8','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشروبات','عصير برتقال','عصير برتقال طازج'],
+['Drinks','Mango Juice','Sweet and refreshing mango juice','10','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشروبات','عصير مانجو','عصير مانجو حلو ومنعش'],
+['Drinks','Avocado Juice','Creamy avocado juice blended with milk','12','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشروبات','عصير أفوكادو','عصير أفوكادو كريمي مع الحليب'],
+['Grills','Chicken Kebab','Grilled skewers of marinated chicken','18','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشاوي','كباب دجاج','أسياخ دجاج مشوي متبل'],
+['Grills','Beef Kebab','Grilled skewers of seasoned beef','20','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشاوي','كباب لحم','أسياخ لحم مشوي متبل'],
+['Grills','Mixed BBQ','Variety of grilled meats and kebabs','28','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','popular','مشاوي','مشاوي مشكلة','تشكيلة من المشاوي والكباب'],
+['Rice Meals','Chicken Mandi','Traditional Yemeni rice with chicken','20','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','وجبات أرز','مندي دجاج','أرز مندي يمني مع دجاج'],
+['Rice Meals','Lamb Mandi','Rice dish with slow-cooked lamb','25','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','وجبات أرز','مندي لحم','أرز مندي مع لحم مطهو ببطء'],
+['Rice Meals','Kabsa','Saudi spiced rice dish with meat or chicken','22','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','وجبات أرز','كبسة','طبق أرز سعودي متبل مع لحم أو دجاج'],
+['Desserts','Baklava','Sweet pastry with nuts and honey syrup','10','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','حلويات','بقلاوة','حلوى محشوة بالمكسرات ومغطاة بالعسل'],
+['Desserts','Kunafa','Crispy pastry filled with cheese and syrup','12','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','حلويات','كنافة','كنافة مقرمشة محشوة بالجبن ومغطاة بالقطر'],
+['Desserts','Umm Ali','Traditional bread pudding with nuts and milk','14','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','حلويات','أم علي','حلوى تقليدية من الخبز بالحليب والمكسرات'],
+['Hot Drinks','Arabic Coffee','Traditional Arabic coffee with cardamom','6','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشروبات ساخنة','قهوة عربية','قهوة عربية تقليدية بالهيل'],
+['Hot Drinks','Tea','Hot brewed tea','4','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشروبات ساخنة','شاي','شاي ساخن'],
+['Hot Drinks','Cappuccino','Coffee with steamed milk foam','10','','https://drive.google.com/file/d/1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE/view?usp=sharing','https://drive.google.com/thumbnail?id=1vkyB4XjIAS8abFiLjGyuA8SlRSLc70YE&sz=w1000','','مشروبات ساخنة','كابتشينو','قهوة بالحليب مع رغوة كثيفة']
+];
 
 // ═══════════════════════════════════════════════════
 //  IMAGE LIGHTBOX — zoom-from-source with swipe dismiss
