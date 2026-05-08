@@ -641,34 +641,45 @@ body.rtl .item-price{font-size:15px}
 .item-thumb{cursor:zoom-in}
 
 /* ═══════════════════════════════════════
-   DELIVERY BUTTONS — inline in hdr-row2
+   DELIVERY PLATFORMS SECTION
    ═══════════════════════════════════════ */
-.hdr-delivery-btn{
-  display:flex;align-items:center;gap:4px;
-  padding:4px 8px;border-radius:20px;
+.delivery-section{
+  background:var(--white);
+  padding:10px 18px 14px;
+  border-bottom:1px solid var(--border);
+}
+.delivery-label{
+  font-size:10px;font-weight:700;color:var(--muted);
+  text-transform:uppercase;letter-spacing:.5px;
+  margin-bottom:8px;text-align:center;
+}
+.delivery-btns{
+  display:flex;gap:8px;justify-content:center;
+  flex-wrap:wrap;
+}
+.delivery-btn{
+  display:flex;align-items:center;gap:6px;
+  padding:7px 13px;border-radius:10px;
   border:1.5px solid var(--border);
   background:var(--white);cursor:pointer;
   text-decoration:none;color:var(--txt);
-  font-size:10px;font-weight:600;
+  font-size:12px;font-weight:600;
   transition:transform .15s,box-shadow .15s,border-color .15s;
-  flex-shrink:0;white-space:nowrap;
-  height:28px;
+  flex-shrink:0;
 }
-.hdr-delivery-btn:hover{transform:translateY(-2px);box-shadow:0 3px 10px rgba(0,0,0,.13)}
-.hdr-delivery-btn img{width:14px;height:14px;border-radius:3px;object-fit:contain;flex-shrink:0}
-.hdr-delivery-btn.noon{border-color:#f5a623;color:#d4891a}
-.hdr-delivery-btn.talabat{border-color:#ff6000;color:#ff6000}
-.hdr-delivery-btn.deliveroo{border-color:#00ccbc;color:#009688}
-.hdr-delivery-btn.keeta{border-color:#e31c25;color:#e31c25}
-body.dark-mode .hdr-delivery-btn{background:#2a2a2a;border-color:#444;color:#e8e8e8}
-body.dark-mode .hdr-delivery-btn.noon{border-color:#f5a623;color:#f5a623}
-body.dark-mode .hdr-delivery-btn.talabat{border-color:#ff6000;color:#ff6000}
-body.dark-mode .hdr-delivery-btn.deliveroo{border-color:#00ccbc;color:#00ccbc}
-body.dark-mode .hdr-delivery-btn.keeta{border-color:#e31c25;color:#e31c25}
-@media(min-width:540px){
-  .hdr-delivery-btn{font-size:11px;padding:5px 10px;height:30px}
-  .hdr-delivery-btn img{width:16px;height:16px}
-}
+.delivery-btn:hover{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.12)}
+.delivery-btn img{width:22px;height:22px;border-radius:5px;object-fit:contain;flex-shrink:0}
+.delivery-btn.noon{border-color:#f5a623;color:#d4891a}
+.delivery-btn.talabat{border-color:#ff6000;color:#ff6000}
+.delivery-btn.deliveroo{border-color:#00ccbc;color:#009688}
+.delivery-btn.keeta{border-color:#e31c25;color:#e31c25}
+body.dark-mode .delivery-btn{background:#2a2a2a;border-color:#444;color:#e8e8e8}
+body.dark-mode .delivery-btn.noon{border-color:#f5a623;color:#f5a623}
+body.dark-mode .delivery-btn.talabat{border-color:#ff6000;color:#ff6000}
+body.dark-mode .delivery-btn.deliveroo{border-color:#00ccbc;color:#00ccbc}
+body.dark-mode .delivery-btn.keeta{border-color:#e31c25;color:#e31c25}
+@media(min-width:768px){.delivery-section{padding:10px 32px 14px}}
+@media(min-width:1024px){.delivery-section{padding:10px 48px 14px}}
 
 /* ═══════════════════════════════════════
    LIGHTBOX ADD-TO-CART + TAGS + OFFER
@@ -821,33 +832,17 @@ body.dark-mode .lb-qty-btn{background:#2e8b57}
     </div>
     <!-- Row 2: All action buttons in one line -->
     <div class="hdr-row2">
-
-      <button class="icon-btn" title="Back to Menu"
-        onclick="window.location.href='https://ruknalshawarma.github.io/main'">
-        ⬅️
-      </button>
-
-      <a class="hdr-delivery-btn noon" href="#" target="_blank" rel="noopener" id="noonBtn" title="Order on Noon Food">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Noon_%28e-commerce%29_logo.svg/200px-Noon_%28e-commerce%29_logo.svg.png" alt="Noon" onerror="this.style.display='none'">
-        <span>Noon</span>
-      </a>
-      <a class="hdr-delivery-btn talabat" href="#" target="_blank" rel="noopener" id="talabatBtn" title="Order on Talabat">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Talabat_logo.svg/200px-Talabat_logo.svg.png" alt="Talabat" onerror="this.style.display='none'">
-        <span>Talabat</span>
-      </a>
-      <a class="hdr-delivery-btn deliveroo" href="#" target="_blank" rel="noopener" id="deliverooBtn" title="Order on Deliveroo">
-        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Deliveroo_logo.svg/200px-Deliveroo_logo.svg.png" alt="Deliveroo" onerror="this.style.display='none'">
-        <span>Deliveroo</span>
-      </a>
-      <a class="hdr-delivery-btn keeta" href="#" target="_blank" rel="noopener" id="keetaBtn" title="Order on Keeta">
-        <img src="https://play-lh.googleusercontent.com/Yf7Q5sYoZDNH5cz8nFWJA1pBMzIc8kNy0P2sWoV8eFVgC7QdIXO8qmfZkAkRAGcfhg=w240-h480" alt="Keeta" onerror="this.style.display='none'">
-        <span>Keeta</span>
-      </a>
-
+	
+	<button class="icon-btn" title="Back to Menu" 
+        onclick="window.location.href='https://ruknalshawarma.github.io/main'" 
+        style="margin-right: auto;">
+	  ⬅️
+	</button>	
+	
       <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
       <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
       <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
-
+	  
     </div>
   </div>
   <div class="divider-bar"></div>
@@ -876,6 +871,28 @@ body.dark-mode .lb-qty-btn{background:#2e8b57}
     <div class="offers-strip-inner" id="offersChipsBottom"></div>
   </div>
 
+  <!-- DELIVERY PLATFORMS -->
+  <div class="delivery-section">
+    <div class="delivery-label">🛵 Order on Delivery Platforms</div>
+    <div class="delivery-btns">
+      <a class="delivery-btn noon" href="#" target="_blank" rel="noopener" id="noonBtn" title="Order on Noon Food">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Noon_%28e-commerce%29_logo.svg/200px-Noon_%28e-commerce%29_logo.svg.png" alt="Noon" onerror="this.style.display='none'">
+        Noon
+      </a>
+      <a class="delivery-btn talabat" href="#" target="_blank" rel="noopener" id="talabatBtn" title="Order on Talabat">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4d/Talabat_logo.svg/200px-Talabat_logo.svg.png" alt="Talabat" onerror="this.style.display='none'">
+        Talabat
+      </a>
+      <a class="delivery-btn deliveroo" href="#" target="_blank" rel="noopener" id="deliverooBtn" title="Order on Deliveroo">
+        <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/4b/Deliveroo_logo.svg/200px-Deliveroo_logo.svg.png" alt="Deliveroo" onerror="this.style.display='none'">
+        Deliveroo
+      </a>
+      <a class="delivery-btn keeta" href="#" target="_blank" rel="noopener" id="keetaBtn" title="Order on Keeta">
+        <img src="https://play-lh.googleusercontent.com/Yf7Q5sYoZDNH5cz8nFWJA1pBMzIc8kNy0P2sWoV8eFVgC7QdIXO8qmfZkAkRAGcfhg=w240-h480" alt="Keeta" onerror="this.style.display='none'">
+        Keeta
+      </a>
+    </div>
+  </div>
 </header>
 
 <!-- ITEMS -->
@@ -1661,23 +1678,19 @@ function sendToWhatsApp(){
 
 
 
-function generateOrderNumber(total){
+// 🧾 GENERATE ORDER NUMBER
+function generateOrderNumber() {
   const now = new Date();
 
-  // TIME → HHMM
-  const time =
-    String(now.getHours()).padStart(2,'0') +
-    String(now.getMinutes()).padStart(2,'0');
-
-  // DATE → DDMM
-  const date =
-    String(now.getDate()).padStart(2,'0') +
-    String(now.getMonth()+1).padStart(2,'0');
-
-  // AMOUNT → ROUND
-  const amount = Math.round(total);
-
-  return `RAS${time}${amount}${date}`;
+  return (
+    now.getFullYear().toString() +
+    String(now.getMonth() + 1).padStart(2, '0') +
+    String(now.getDate()).padStart(2, '0') +
+    String(now.getHours()).padStart(2, '0') +
+    String(now.getMinutes()).padStart(2, '0') +
+    String(now.getSeconds()).padStart(2, '0') +
+    String(now.getMilliseconds()).padStart(3, '0')
+  );
 }
 
 
@@ -1721,15 +1734,18 @@ function sendToWhatsApp(){
     lines.push(`• ${nm} × ${qty}  —  ${CUR} ${sub.toFixed(2)}`);
   });
 
-  // 🧾 GENERATE ORDER NUMBER AFTER TOTAL IS READY
-  const orderNo = generateOrderNumber(total);
 
-  // ADD ORDER NUMBER
-  lines.unshift(
-    isAr
-      ? `🧾 رقم الطلب: *${orderNo}*`
-      : `🧾 Order No: *${orderNo}*`
-  );
+
+// CREATE ORDER NUMBER
+const orderNo = generateOrderNumber();
+
+// ADD ORDER NUMBER
+lines.unshift(
+  isAr
+    ? `🧾 رقم الطلب: *${orderNo}*`
+    : `🧾 Order No: *${orderNo}*`
+);
+
 
   // NOTE
   if(customerNote){
@@ -1749,6 +1765,7 @@ function sendToWhatsApp(){
       : `💰 *Total: ${CUR} ${total.toFixed(2)}*`
   );
 
+
   const dest = INFO.cafeteria_wa || '';
 
   if(!dest){
@@ -1767,6 +1784,39 @@ function sendToWhatsApp(){
   updateFooter();
   closeCart();
   renderCurrentView();
+
+
+
+
+
+
+
+// ── SAVE TO SHEET ──────────────────────────────
+const GAS_URL = "https://script.google.com/macros/s/AKfycbyq3SNvTTJgkkmkrkfh1VtPtKO6RPaefmYpr4miCLwOuImg_7W7r6A08muS_qBWOPJ0/exec"; // ← paste your deployed URL
+
+const itemsPayload = entries.map(([id, qty]) => {
+  const item = MENU.find(i => i.id === id);
+  return {
+    category:  item ? item.category : "",
+    name:      item ? item.name     : id,
+    qty:       qty,
+    unitPrice: item ? item.finalPrice : 0
+  };
+});
+
+fetch(GAS_URL, {
+  method: "POST",
+  headers: { "Content-Type": "application/x-www-form-urlencoded" },
+  body: new URLSearchParams({
+    action:   "saveOrder",
+    orderID:  orderNo,
+    custName: customerName,
+    note:     customerNote,
+    items:    JSON.stringify(itemsPayload)
+  })
+}).catch(err => console.warn("Sheet save failed:", err));
+// ───────────────────────────────────────────────
+
 }
 
 
