@@ -229,9 +229,6 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-s
   .header-inner.big .restaurant-info h1{font-size:22px}
 }
 
-/* When contact strip is docked (banner hidden), add space below header for docked strip */
-body.strip-is-docked .section-heading{ scroll-margin-top:200px }
-
 /* DIVIDER */
 .divider-bar{height:7px;background:linear-gradient(90deg,#1a5c3a,#2e8b57,#c9a84c,#2e8b57,#1a5c3a)}
 
@@ -783,64 +780,27 @@ body.dark-mode .lb-qty-btn{background:#2e8b57}
 }
 
 /* ═══════════════════════════════════════════
-   CONTACT INFO STRIP
-   STATE 1 (default): inside banner — absolute at bottom, transparent bg
-   STATE 2 (.strip-docked): banner hidden — position:fixed, full green bar below header
+   CONTACT INFO STRIP — timings + owner contact
    ═══════════════════════════════════════════ */
 .contact-strip{
-  /* Inside banner — sits at bottom of banner */
-  position:absolute;
-  bottom:0; left:0; right:0;
-  z-index:5;
-  padding:7px 16px;
+  width:100%;
+  background:linear-gradient(90deg,#0f3d25 0%,#1d6e46 50%,#0f3d25 100%);
+  padding:9px 16px;
   display:flex;
   align-items:center;
   justify-content:space-between;
   gap:8px;
-  flex-wrap:nowrap;
+  flex-wrap:nowrap;   /* never stack into single column */
   direction:ltr;
-  /* Semi-transparent dark gradient so text is readable over banner image */
-  background:linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.25) 100%);
-  backdrop-filter:blur(0px);
-  transition:background .3s, backdrop-filter .3s, box-shadow .3s;
+  position:relative;
+  overflow:hidden;
 }
-.contact-strip::before{ display:none } /* disable pattern overlay in banner mode */
-
-/* STATE 2: banner hidden → fixed green bar, sticks just below .site-header */
-.contact-strip.strip-docked{
-  position:fixed;
-  /* site-header is sticky top:0; its height is ~52px mobile / ~60px desktop */
-  top:52px;
-  bottom:auto;
-  left:0; right:0;
-  z-index:99;   /* just below header z-index:100 */
-  background:linear-gradient(90deg,#0f3d25 0%,#1d6e46 50%,#0f3d25 100%);
-  box-shadow:0 2px 10px rgba(0,0,0,0.25);
-  backdrop-filter:none;
-  padding:8px 16px;
-}
-.contact-strip.strip-docked::before{
-  display:block;
+.contact-strip::before{
   content:'';
   position:absolute;inset:0;
   background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23fff' fill-opacity='.04'%3E%3Ccircle cx='20' cy='20' r='10'/%3E%3C/g%3E%3C/svg%3E");
   pointer-events:none;
 }
-
-/* Adjust header top offset on desktop */
-@media(min-width:540px){
-  .contact-strip.strip-docked{ top:60px }
-}
-@media(min-width:768px){
-  .contact-strip.strip-docked{ top:62px; padding:9px 32px }
-}
-@media(min-width:1024px){
-  .contact-strip.strip-docked{ top:64px; padding:9px 48px }
-}
-
-/* When strip is docked, push main content down so it doesn't hide behind it */
-body.strip-is-docked .site-header{ margin-bottom:0 }
-
 .contact-timing{
   display:flex;
   align-items:center;
@@ -848,7 +808,7 @@ body.strip-is-docked .site-header{ margin-bottom:0 }
   color:#fff;
   font-size:12px;
   font-weight:500;
-  flex-shrink:1;
+  flex-shrink:1;        /* can shrink but stays on left */
   min-width:0;
   position:relative;
 }
@@ -859,7 +819,7 @@ body.strip-is-docked .site-header{ margin-bottom:0 }
   font-weight:700;
   text-transform:uppercase;
   letter-spacing:.6px;
-  color:rgba(255,255,255,.7);
+  color:rgba(255,255,255,.6);
   display:block;
   margin-bottom:1px;
 }
@@ -875,8 +835,8 @@ body.strip-is-docked .site-header{ margin-bottom:0 }
   display:flex;
   align-items:center;
   gap:6px;
-  flex-shrink:0;
-  flex-wrap:nowrap;
+  flex-shrink:0;        /* never shrink — stays on right */
+  flex-wrap:wrap;       /* wrap pills if needed, but group stays right */
   justify-content:flex-end;
   position:relative;
 }
@@ -916,8 +876,8 @@ body.strip-is-docked .site-header{ margin-bottom:0 }
   display:flex;
   align-items:center;
   gap:4px;
-  background:rgba(255,255,255,.18);
-  border:1px solid rgba(255,255,255,.35);
+  background:rgba(255,255,255,.15);
+  border:1px solid rgba(255,255,255,.3);
   border-radius:6px;
   padding:3px 8px;
   white-space:nowrap;
@@ -932,26 +892,36 @@ body.strip-is-docked .site-header{ margin-bottom:0 }
   letter-spacing:.5px;
   line-height:1;
 }
+/* On very small screens hide complaint label text but keep buttons */
+@media(max-width:380px){
+  .contact-complaint-label{display:none}
+}
 
 /* Dark mode adjustments */
-body.dark-mode .contact-strip.strip-docked{
+body.dark-mode .contact-strip{
   background:linear-gradient(90deg,#071a10 0%,#0f3d25 50%,#071a10 100%);
 }
 body.dark-mode .contact-timing-val{color:#d4f5e0}
 
-/* Small screen tweaks */
+/* Responsive: keep left/right split always — never stack vertically */
 @media(max-width:480px){
-  .contact-strip{padding:6px 12px;gap:6px}
-  .contact-strip.strip-docked{padding:7px 12px}
+  .contact-strip{padding:8px 12px;gap:6px}
   .contact-pill{padding:5px 8px 5px 6px;font-size:10px;gap:4px}
   .contact-pill svg{width:12px;height:12px}
   .contact-timing-val{font-size:11px}
+  .contact-timing-icon{font-size:12px}
   .contact-btns{gap:5px}
 }
 @media(max-width:360px){
+  .contact-strip{padding:7px 10px;gap:5px}
   .contact-pill{padding:4px 7px 4px 5px;font-size:9.5px}
   .contact-timing-val{font-size:10.5px}
-  .contact-complaint-label{display:none}
+}
+@media(min-width:768px){
+  .contact-strip{padding:10px 32px}
+}
+@media(min-width:1024px){
+  .contact-strip{padding:10px 48px}
 }
 </style>
 <script>
@@ -986,52 +956,51 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
     <div class="banner-name" id="bannerName"></div>
     <div class="banner-desc" id="bannerDesc"></div>
   </div>
+</div>
 
-  <!-- ═══════════════════════════════════════
-       CONTACT INFO STRIP — lives inside banner when visible,
-       transitions to below header when banner hides
-       ═══════════════════════════════════════ -->
-  <div class="contact-strip" id="contactStrip">
+<!-- ═══════════════════════════════════════
+     CONTACT INFO STRIP
+     ↳ Update phone & timings in HARDCODED_INFO / T strings below
+     ═══════════════════════════════════════ -->
+<div class="contact-strip" id="contactStrip">
 
-    <!-- Timings -->
-    <div class="contact-timing">
-      <span class="contact-timing-icon">🕐</span>
-      <div class="contact-timing-text">
-        <span class="contact-timing-label" id="contactTimingLabel">Open Hours</span>
-        <span class="contact-timing-val" id="contactTimingVal">11:00 AM – 4:00 AM · Daily</span>
-      </div>
-    </div>
-
-    <!-- Complaint + Contact buttons -->
-    <div class="contact-btns">
-
-      <!-- Complaint label — highly visible -->
-      <div class="contact-complaint-label" id="contactComplaintLabel">
-        <span class="complaint-icon">⚠️</span>
-        <span id="contactComplaintText">Complaints:</span>
-      </div>
-
-      <!-- Call pill -->
-      <a class="contact-pill call-pill" id="contactCallBtn"
-         href="#" title="Call for complaints">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
-        </svg>
-        <span id="contactCallText">Call</span>
-      </a>
-
-      <!-- WhatsApp pill -->
-      <a class="contact-pill wa-pill" id="contactWaBtn"
-         href="#" target="_blank" rel="noopener" title="WhatsApp for complaints">
-        <svg viewBox="0 0 24 24" fill="currentColor">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-        </svg>
-        <span id="contactWaText">WhatsApp</span>
-      </a>
-
+  <!-- Timings -->
+  <div class="contact-timing">
+    <span class="contact-timing-icon">🕐</span>
+    <div class="contact-timing-text">
+      <span class="contact-timing-label" id="contactTimingLabel">Open Hours</span>
+      <span class="contact-timing-val" id="contactTimingVal">11:00 AM – 4:00 AM · Daily</span>
     </div>
   </div>
 
+  <!-- Complaint + Contact buttons -->
+  <div class="contact-btns">
+
+    <!-- Complaint label — highly visible -->
+    <div class="contact-complaint-label" id="contactComplaintLabel">
+      <span class="complaint-icon">⚠️</span>
+      <span id="contactComplaintText">Complaints:</span>
+    </div>
+
+    <!-- Call pill -->
+    <a class="contact-pill call-pill" id="contactCallBtn"
+       href="#" title="Call for complaints">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.67A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.09-1.09a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14.92z"/>
+      </svg>
+      <span id="contactCallText">Call</span>
+    </a>
+
+    <!-- WhatsApp pill -->
+    <a class="contact-pill wa-pill" id="contactWaBtn"
+       href="#" target="_blank" rel="noopener" title="WhatsApp for complaints">
+      <svg viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+      </svg>
+      <span id="contactWaText">WhatsApp</span>
+    </a>
+
+  </div>
 </div>
 
 <!-- STICKY HEADER -->
@@ -1752,7 +1721,6 @@ function itemCardHtml(item){
   const header=document.getElementById('siteHeader');
   const hInner=document.getElementById('headerInner');
   const logoW=document.getElementById('logoWrap');
-  const strip=document.getElementById('contactStrip');
   let bannerHidden=false;
   function getBannerThreshold(){
     return Math.max(banner.offsetHeight - 10, 40);
@@ -1766,9 +1734,6 @@ function itemCardHtml(item){
       hInner.classList.add('big');
       logoW.classList.add('big');
       header.classList.add('scrolled');
-      // Dock the strip below the sticky header
-      strip.classList.add('strip-docked');
-      document.body.classList.add('strip-is-docked');
       syncOffersStripOnScroll(true);
     } else if(y<=10 && bannerHidden){
       bannerHidden=false;
@@ -1776,9 +1741,6 @@ function itemCardHtml(item){
       hInner.classList.remove('big');
       logoW.classList.remove('big');
       header.classList.remove('scrolled');
-      // Return strip inside banner
-      strip.classList.remove('strip-docked');
-      document.body.classList.remove('strip-is-docked');
       syncOffersStripOnScroll(false);
     }
   },{passive:true});
