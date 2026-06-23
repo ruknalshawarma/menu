@@ -2,7 +2,7 @@ const HARDCODED_INFO = [
   ['name','description','location','logo','banner','cafeteria number','rider number','track url','name_ar','description_ar'],
   [
    'Rukn Al Shawarma Cafeteria','A Syrian restaurant with a Levantine flavor','120th St - Al Nakheel - Ras Al Khaimah','https://drive.google.com/file/d/1Sk2Qf2hDd0E77LLzYRLVYADuct_PlLHB/view?usp=sharing',
-   'https://drive.google.com/file/d/1HGhOIVtjOYnhQC-XrwQBR_Nh697qTRG1/view?usp=sharing','971522847006','971556269187','https://wa.me/971556269187',
+   'https://drive.google.com/file/d/1HGhOIVtjOYnhQC-XrwQBR_Nh697qTRG1/view?usp=sharing','97152284','971556269187','https://wa.me/971556269187',
    'كافتيريا ركن الشاورما','مطعم سوري بنكهة الشامية'
   ]
 ];
