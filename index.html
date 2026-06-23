@@ -1123,6 +1123,7 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
   </div>
 </div>
 
+<script src="data.js"></script>
 <script>
 // ═══════════════════════════════════════════════════
 //  CONSTANTS
@@ -2024,47 +2025,6 @@ function showFatalError(msg){
 
 
 // ── Hardcoded fallback data ──
-// ═══════════════════════════════════════════════════
-//  EDIT YOUR RESTAURANT INFO & MENU ITEMS HERE
-//  Info columns: [name, desc, location, logo_url, banner_url,
-//                 cafeteria_wa, rider_number, track_url, name_ar, desc_ar]
-// ═══════════════════════════════════════════════════
-const HARDCODED_INFO = [
-  ["name","desc","location","logo_url","banner_url","cafeteria_wa","rider_number","track_url","name_ar","desc_ar"],
-  [
-    "Rukn Al Shawarma",                          // 0: name (EN)
-    "Authentic Lebanese Shawarma & Grills",      // 1: desc (EN)
-    "Ras Al Khaimah, UAE",                       // 2: location (Google Maps search or full URL)
-    "",                                          // 3: logo image URL (leave blank to use emoji)
-    "",                                          // 4: banner image URL (leave blank for default)
-    "971501234567",                              // 5: WhatsApp/call number (digits only, with country code)
-    "",                                          // 6: rider number (optional)
-    "",                                          // 7: order tracking URL (optional)
-    "ركن الشاورما",                              // 8: name (AR)
-    "شاورما لبنانية أصيلة ومشاوي"               // 9: desc (AR)
-  ]
-];
-
-// ═══════════════════════════════════════════════════
-//  MENU ITEMS
-//  Columns: [Category(EN), Item Name(EN), Desc(EN), Price, Offer Price,
-//            Cat Icon, Image URL, Tags,
-//            Category(AR), Item Name(AR), Desc(AR)]
-//  Tags: new, popular, spicy, veg, non-veg, most-selling, bestseller
-//  Offer Price: leave "" or 0 for no offer
-// ═══════════════════════════════════════════════════
-const HARDCODED_ITEMS = [
-  ["Category","Name","Description","Price","Offer Price","Cat Icon","Image","Tags","Category AR","Name AR","Desc AR"],
-  ["Shawarma","Chicken Shawarma","Tender marinated chicken wrapped in fresh bread with garlic sauce",20,"","🌯","","popular","الشاورما","شاورما دجاج","دجاج متبل طري مع صوص الثوم"],
-  ["Shawarma","Meat Shawarma","Juicy beef & lamb shawarma with pickles and tahini",25,"","🌯","","most-selling","الشاورما","شاورما لحم","لحم بقر وضأن مع المخلل والطحينة"],
-  ["Shawarma","Mix Shawarma","Chicken & meat combo shawarma, loaded with toppings",28,"22","🌯","","popular,spicy","الشاورما","شاورما مكسي","مزيج دجاج ولحم مع جميع الإضافات"],
-  ["Grills","Shish Tawook","Grilled marinated chicken skewers served with garlic dip",35,"","🍢","","popular","المشاوي","شيش طاووق","سيخ دجاج مشوي متبل مع صوص الثوم"],
-  ["Grills","Mixed Grill Platter","Assorted grilled meats — chicken, kebab & kofta",65,"55","🍖","","most-selling","المشاوي","مشاوي مشكلة","تشكيلة من الدجاج والكباب والكفتة المشوية"],
-  ["Grills","Lamb Kofta","Spiced minced lamb kofta grilled to perfection",40,"","🥩","","spicy","المشاوي","كفتة لحم","كفتة لحم ضأن متبلة مشوية على الفحم"],
-  ["Sides & Drinks","Hummus","Creamy homemade hummus with olive oil & pita",12,"","🫘","","veg","الجانبيات والمشروبات","حمص","حمص بيتي كريمي مع زيت الزيتون والخبز"],
-  ["Sides & Drinks","Fattoush Salad","Fresh garden salad with crispy pita chips & sumac dressing",15,"","🥗","","veg","الجانبيات والمشروبات","سلطة فتوش","سلطة طازجة مع قطع الخبز المقرمشة وصوص السماق"],
-  ["Sides & Drinks","Soft Drink","Pepsi, 7UP, or Mirinda — 330ml can",5,"","🥤","","veg","الجانبيات والمشروبات","مشروب غازي","بيبسي أو سفن أب أو ميرندا"]
-];
 
 
 
