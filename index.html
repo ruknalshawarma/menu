@@ -488,6 +488,18 @@ body.rtl .item-price{font-size:15px}
 
 
 
+/* ITEM OPTION TOGGLES */
+.item-toggles{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0 2px}
+.toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1);flex-shrink:0}
+.toggle-opt{padding:3px 10px;font-size:11px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
+.toggle-opt:not(:last-child){border-right:1px solid var(--g1)}
+.toggle-opt.active{background:var(--g1);color:var(--white)}
+body.dark-mode .toggle-opt{background:#2a2a2a;color:#4ade80;border-color:#3a8c5a}
+body.dark-mode .toggle-group{border-color:#3a8c5a}
+body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
+body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
+body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:10px}
+
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
 .qty-btn{width:26px;height:26px;border:none;background:var(--white);color:var(--g1);font-size:17px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;font-weight:500;transition:background .12s;flex-shrink:0}
@@ -1148,7 +1160,7 @@ const CUR = 'AED';
 //  STATE
 // ═══════════════════════════════════════════════════
 let MENU=[], CATEGORIES=[], OFFERS=[], INFO={};
-let cart={}, currentCat='all', catBarVisible=true;
+let cart={}, itemToggles={}, currentCat='all', catBarVisible=true;
 let scrollSpyObserver=null;
 let lang='en'; // 'en' or 'ar'
 
@@ -1162,6 +1174,13 @@ const TAG_CONFIG={
   'most-selling':{label:'⭐ Most Selling',label_ar:'⭐ الأكثر مبيعاً',cls:'most-selling'},
   bestseller:    {label:'⭐ Best Seller',  label_ar:'⭐ الأفضل',      cls:'most-selling'},
   'best-seller': {label:'⭐ Best Seller',  label_ar:'⭐ الأفضل',      cls:'most-selling'},
+};
+
+// Toggle option definitions: cat_icon value → {options:[en,ar], options_ar:[ar,ar]}
+const TOGGLE_OPTIONS={
+  '1':{ opts_en:['Normal','Spicy'],   opts_ar:['عادي','حار']   },
+  '2':{ opts_en:['Chicken','Beef'],   opts_ar:['دجاج','لحم']   },
+  '3':{ opts_en:['Small','Large'],    opts_ar:['صغير','كبير']  }
 };
 
 // UI strings
@@ -1353,12 +1372,16 @@ function parseItemsSheet(rows){
       catMap[catId]={ id:catId, name:catName, name_ar:catNameAr, icon:catIcon };
     }
     const tags = tagsRaw ? tagsRaw.split(',').map(t=>t.trim().toLowerCase()).filter(Boolean) : [];
+    // Parse toggle types from cat_icon: comma-separated values like "1,2" or "1,2,3"
+    const toggleTypes = catIcon
+      ? catIcon.split(',').map(v=>v.trim()).filter(v=>TOGGLE_OPTIONS[v])
+      : [];
 
     items.push({
       id:String(idx+1), name:itemName, name_ar:itemNameAr,
       desc, desc_ar:descAr, price, finalPrice, oldPrice,
       hasOffer, discPct, saveAmt, discLabel, saveLabel, saveLabelAr,
-      cats:[catId], cat:catId, image_url:imgUrl, tags, available:true
+      cats:[catId], cat:catId, image_url:imgUrl, tags, toggleTypes, available:true
     });
   });
 
@@ -1693,6 +1716,21 @@ function itemCardHtml(item){
   // Tags inside the image box
   const tagsHtml = tagHtml ? `<div class="item-tags">${tagHtml}</div>` : '';
 
+  // Toggle buttons for this item (Normal/Spicy, Chicken/Beef, Small/Large)
+  let togglesHtml = '';
+  if(item.toggleTypes && item.toggleTypes.length){
+    const groups = item.toggleTypes.map(typeKey=>{
+      const cfg = TOGGLE_OPTIONS[typeKey];
+      const opts = isAr ? cfg.opts_ar : cfg.opts_en;
+      const current = (itemToggles[item.id] && itemToggles[item.id][typeKey]) || opts[0];
+      const btns = opts.map(opt=>
+        `<button class="toggle-opt${opt===current?' active':''}" onclick="setToggle('${e(item.id)}','${typeKey}','${opt}',event)">${e(opt)}</button>`
+      ).join('');
+      return `<div class="toggle-group">${btns}</div>`;
+    }).join('');
+    togglesHtml = `<div class="item-toggles">${groups}</div>`;
+  }
+
   // Image box: offer badge + tags overlaid on top of image
   const thumbBox = `<div class="item-thumb" onclick="openLightbox('${e(item.id)}',this)" role="button" tabindex="0" aria-label="View image of ${e(nm)}">
     ${offerBadge}
@@ -1703,6 +1741,7 @@ function itemCardHtml(item){
   return`<div class="item-card" id="card-${e(item.id)}">
     <div class="item-body">
       <div class="item-name">${e(nm)}</div>
+      ${togglesHtml}
       <div class="item-desc">${e(dsc)}</div>
       <div class="item-footer">
         ${priceHtml}
@@ -1801,6 +1840,31 @@ function changeQty(id,delta){
 }
 
 // ═══════════════════════════════════════════════════
+//  ITEM OPTION TOGGLE
+// ═══════════════════════════════════════════════════
+function setToggle(itemId, typeKey, selected, evt){
+  if(evt) evt.stopPropagation();
+  if(!itemToggles[itemId]) itemToggles[itemId]={};
+  itemToggles[itemId][typeKey]=selected;
+  // Update just the buttons inside this card's toggle-group for this typeKey
+  document.querySelectorAll(`#card-${itemId} .toggle-group`).forEach(group=>{
+    const btns=[...group.querySelectorAll('.toggle-opt')];
+    // Determine which group this is by matching options
+    const item=MENU.find(i=>i.id===itemId);
+    if(!item) return;
+    const isAr=lang==='ar';
+    const grpTypeKey=item.toggleTypes.find(t=>{
+      const cfg=TOGGLE_OPTIONS[t];
+      const opts=isAr?cfg.opts_ar:cfg.opts_en;
+      return btns.length===opts.length && btns.every((b,i2)=>b.textContent===opts[i2]);
+    });
+    if(grpTypeKey===typeKey){
+      btns.forEach(b=>b.classList.toggle('active',b.textContent===selected));
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════
 //  FOOTER TOTAL
 // ═══════════════════════════════════════════════════
 function updateFooter(){
@@ -1837,10 +1901,16 @@ function refreshCart(){
     const sub=item.finalPrice*qty; total+=sub;
     const nm=(isAr&&item.name_ar)?item.name_ar:item.name;
     const thumb=item.image_url?`<img src="${e(item.image_url)}" alt="">`:'';
-    return`<div class="cart-row">
+    // Toggle selections summary for cart display
+    let toggleSummary='';
+    if(item.toggleTypes&&item.toggleTypes.length&&itemToggles[id]){
+      const parts=item.toggleTypes.map(t=>itemToggles[id][t]).filter(Boolean);
+      if(parts.length) toggleSummary=`<div style="font-size:11px;color:var(--g1);font-weight:600;margin-top:1px">${parts.join(' · ')}</div>`;
+    }    return`<div class="cart-row">
       <div class="cart-row-thumb">${thumb||'🍽️'}</div>
       <div class="cart-row-info">
         <div class="cart-row-name">${e(nm)}</div>
+        ${toggleSummary}
         <div class="cart-row-price">${CUR} ${item.finalPrice.toFixed(2)} ${isAr?'للقطعة':'each'}</div>
       </div>
       <div class="cart-row-qty">
@@ -1913,7 +1983,16 @@ function sendToWhatsApp(){
     total += sub;
 
     const nm = isAr && item.name_ar ? item.name_ar : item.name;
-    lines.push(`• ${nm} × ${qty}  —  ${CUR} ${sub.toFixed(2)}`);
+    // Append toggle selections if any
+    let toggleNote = '';
+    if(item.toggleTypes && item.toggleTypes.length && itemToggles[id]){
+      const parts = item.toggleTypes.map(t=>{
+        const val = itemToggles[id][t];
+        return val || null;
+      }).filter(Boolean);
+      if(parts.length) toggleNote = ` (${parts.join(', ')})`;
+    }
+    lines.push(`• ${nm}${toggleNote} × ${qty}  —  ${CUR} ${sub.toFixed(2)}`);
   });
 
 
