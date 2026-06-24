@@ -46,168 +46,150 @@ body.dark-mode .soc-copy{background:#2e8b57}
 .site-header{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);transition:box-shadow .3s;direction:ltr}
 .site-header.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.10)}
 
-/* Wrapper: column on mobile */
-.header-inner{display:flex;flex-direction:column;padding:8px 12px 6px;gap:5px;direction:ltr}
+/* ── Mobile: column layout — row1 + socials row below ── */
+.header-inner{display:flex;flex-direction:column;padding:8px 12px 6px;gap:0;direction:ltr}
 .header-inner.big{padding:10px 14px 8px}
 
-/* Row 1: logo + name — full width */
-.hdr-row1{display:flex;align-items:center;gap:10px;width:100%;min-width:0;overflow:hidden}
+/* ── Single header row: logo | name (flex-grow) | action buttons ── */
+.hdr-row1{
+  display:flex;align-items:center;gap:8px;
+  width:100%;min-width:0;
+  padding-bottom:6px;
+}
 
 /* Logo */
-.logo-wrap{flex-shrink:0;width:40px;height:40px;transition:width .3s,height .3s}
-.logo-wrap.big{width:48px;height:48px}
-.logo-circle{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--acc));display:flex;align-items:center;justify-content:center;font-size:19px;border:3px solid rgba(201,168,76,.4);overflow:hidden;transition:font-size .3s}
-.logo-wrap.big .logo-circle{font-size:23px;border-width:4px;border-color:rgba(201,168,76,.6)}
+.logo-wrap{flex-shrink:0;width:38px;height:38px;transition:width .3s,height .3s}
+.logo-wrap.big{width:46px;height:46px}
+.logo-circle{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--acc));display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid rgba(201,168,76,.4);overflow:hidden;transition:font-size .3s}
+.logo-wrap.big .logo-circle{font-size:22px;border-width:4px;border-color:rgba(201,168,76,.6)}
 .logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 
-/* Restaurant info */
+/* Restaurant info — takes all remaining space */
 .restaurant-info{flex:1 1 0;min-width:0;overflow:hidden;direction:ltr}
 .restinfo-name-row{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;direction:ltr}
-.restaurant-info h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .3s;min-width:0;text-align:left;line-height:1.2}
-.restaurant-info p{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
-.header-inner.big .restaurant-info h1{font-size:17px}
-.header-inner.big .restaurant-info p{font-size:12px}
+.restaurant-info h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .3s;min-width:0;text-align:left;line-height:1.2}
+.restaurant-info p{font-size:10px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.header-inner.big .restaurant-info h1{font-size:16px}
+.header-inner.big .restaurant-info p{font-size:11px}
 
 /* Location icon */
-.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
+.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
 .location-link:hover{background:var(--g1);color:var(--white);border-color:var(--g1)}
 
-/* ── Row 2: Mobile — back btn left | lang+menu stacked right ── */
-.hdr-row2{
-  display:flex;
-  align-items:center;
-  gap:6px;
-  width:100%;
-  order:2;
-}
-/* back button pushes lang+menu stack to the right */
-.hdr-row2 .icon-btn:first-child{margin-right:auto}
-
-/* Lang + Menu — horizontal row on both mobile and desktop */
-.hdr-btn-stack{
-  display:flex;
-  flex-direction:row;
-  gap:5px;
-  flex-shrink:0;
-  align-items:center;
-}
-.hdr-btn-stack .lang-btn,
-.hdr-btn-stack .cat-toggle-btn{width:auto}
-
-/* search icon sits beside the stack */
-.hdr-search-btn{flex-shrink:0}
+/* Action buttons — inline right side of hdr-row1 */
+.hdr-actions-group{display:flex;align-items:center;gap:5px;flex-shrink:0}
 
 /* Action icon buttons */
-.icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:5px 9px;background:var(--white);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px}
+.icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:4px 8px;background:var(--white);cursor:pointer;font-size:14px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px;white-space:nowrap}
 .icon-btn:hover{background:var(--g3);border-color:var(--g1)}
 
 /* Lang button */
-.lang-btn{border:1.5px solid var(--gold);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;text-align:center;direction:ltr;height:30px;min-width:58px}
+.lang-btn{border:1.5px solid var(--gold);border-radius:8px;padding:4px 9px;font-size:11px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;text-align:center;direction:ltr;height:30px;min-width:52px}
 .lang-btn:hover{background:var(--gold);color:#fff}
 .lang-btn.ar-active{background:var(--gold);color:#fff;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 
 /* Cat toggle button */
-.cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 10px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:30px}
+.cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 9px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:30px}
 .cat-toggle-btn:hover{background:var(--txt);color:var(--white)}
 
-/* ── Social icons row ── order:3 on mobile = below row2 */
+/* ── Social icons row — mobile: second row, desktop: hidden here (shown in main row) ── */
 .hdr-socials{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:9px;
-  width:100%;
-  flex-shrink:0;
-  order:3;
-  padding:5px 0 4px;
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;width:100%;flex-shrink:0;
+  padding:6px 0 4px;
   border-top:1px solid var(--border);
 }
 
-/* Social icon buttons */
+/* ── Social icon buttons — colorful branded ── */
 .soc-btn{
   display:flex;align-items:center;justify-content:center;
-  width:34px;height:34px;
-  border-radius:50%;border:none;
-  cursor:pointer;
-  transition:transform .18s,box-shadow .18s,filter .18s;
-  flex-shrink:0;text-decoration:none;padding:0;
+  width:32px;height:32px;border-radius:50%;border:none;
+  cursor:pointer;flex-shrink:0;text-decoration:none;padding:0;
+  transition:transform .18s,box-shadow .2s;
   box-shadow:0 2px 6px rgba(0,0,0,.18);
 }
-.soc-btn svg{width:17px;height:17px;fill:currentColor;display:block;flex-shrink:0}
-.soc-btn:hover{transform:translateY(-3px) scale(1.12);box-shadow:0 6px 16px rgba(0,0,0,.30)}
-.soc-btn:active{transform:scale(.92)}
+.soc-btn svg{width:15px;height:15px;fill:currentColor;display:block;flex-shrink:0}
+.soc-btn:hover{transform:translateY(-3px) scale(1.1)}
+.soc-btn:active{transform:scale(.9)}
+
 .soc-instagram{
-  background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);
-  color:#fff;
-  box-shadow:0 2px 8px rgba(214,36,159,.35);
+  background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%);
+  color:#fff;box-shadow:0 2px 8px rgba(214,36,159,.4);
 }
-.soc-instagram:hover{box-shadow:0 6px 18px rgba(214,36,159,.5)}
+.soc-instagram:hover{box-shadow:0 5px 16px rgba(214,36,159,.55)}
+
 .soc-facebook{
   background:#1877f2;color:#fff;
-  box-shadow:0 2px 8px rgba(24,119,242,.35);
+  box-shadow:0 2px 8px rgba(24,119,242,.4);
 }
-.soc-facebook:hover{box-shadow:0 6px 18px rgba(24,119,242,.5)}
+.soc-facebook:hover{box-shadow:0 5px 16px rgba(24,119,242,.55)}
+
 .soc-tiktok{
-  background:linear-gradient(135deg,#010101 0%,#161616 60%,#69C9D0 200%);
-  color:#fff;
-  box-shadow:0 2px 8px rgba(0,0,0,.40);
-  position:relative;
+  background:#010101;color:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.35);
 }
-.soc-tiktok:hover{box-shadow:0 6px 18px rgba(105,201,208,.45)}
+.soc-tiktok:hover{box-shadow:0 5px 16px rgba(105,201,208,.5)}
+
 .soc-whatsapp{
-  background:linear-gradient(135deg,#25D366,#128C7E);
-  color:#fff;
-  box-shadow:0 2px 8px rgba(37,211,102,.35);
+  background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;
+  box-shadow:0 2px 8px rgba(37,211,102,.4);
 }
-.soc-whatsapp:hover{box-shadow:0 6px 18px rgba(37,211,102,.55)}
+.soc-whatsapp:hover{box-shadow:0 5px 16px rgba(37,211,102,.55)}
+
 .soc-copy{
-  background:linear-gradient(135deg,var(--g1),var(--acc));
-  color:#fff;
-  box-shadow:0 2px 8px rgba(46,139,87,.30);
+  background:linear-gradient(135deg,var(--g1),var(--acc));color:#fff;
+  box-shadow:0 2px 8px rgba(46,139,87,.35);
 }
-.soc-copy:hover{box-shadow:0 6px 16px rgba(46,139,87,.50)}
+.soc-copy:hover{box-shadow:0 5px 14px rgba(46,139,87,.5)}
 .soc-copy .icon-check{display:none}
 
 /* OLD stubs */
 .hdr-actions{display:contents}
 .hdr-bottom-row{display:contents}
+.hdr-row2{display:contents}
+.hdr-btn-stack{display:contents}
+.hdr-search-btn{}
 
 /* ── DESKTOP (≥600px): single row — [logo+name] [socials centered] [buttons] ── */
 @media(min-width:600px){
-  .header-inner{flex-direction:row;align-items:center;padding:10px 20px;gap:10px;min-height:62px}
-  .header-inner.big{min-height:72px;padding:12px 24px}
-  /* logo+name: fixed width, no grow */
-  .hdr-row1{flex:0 0 auto;width:auto}
-  /* socials: take the center space */
-  .hdr-socials{flex:1 1 0;order:2;width:auto;border-top:none;padding:0;gap:8px}
-  /* buttons: fixed width, right */
-  .hdr-row2{flex:0 0 auto;order:3;width:auto;justify-content:flex-end}
-  /* btn-stack already row by default; widen gap slightly on desktop */
-  .hdr-btn-stack{gap:6px}
+  .header-inner{flex-direction:row;align-items:center;padding:10px 20px;gap:10px;min-height:60px}
+  .header-inner.big{min-height:70px;padding:12px 24px}
+  /* row1 becomes the entire flex row — no padding-bottom needed */
+  .hdr-row1{padding-bottom:0;flex:1 1 0;min-width:0}
+  /* restaurant-info constrained so it doesn't crowd socials */
+  .restaurant-info{max-width:180px}
+  /* socials float inline between name and buttons, centered */
+  .hdr-socials{
+    flex:1 1 0;order:0;width:auto;
+    border-top:none;padding:0;gap:9px;
+    justify-content:center;
+  }
+  /* action buttons stay right */
+  .hdr-actions-group{flex-shrink:0}
   /* sizes */
-  .logo-wrap{width:46px;height:46px}
-  .logo-wrap.big{width:56px;height:56px}
-  .logo-circle{font-size:21px}
-  .logo-wrap.big .logo-circle{font-size:26px}
-  .restaurant-info h1{font-size:16px}
-  .header-inner.big .restaurant-info h1{font-size:19px}
-  .icon-btn{padding:6px 11px;font-size:16px;height:34px}
-  .cat-toggle-btn{font-size:12px;padding:5px 13px;height:34px}
-  .lang-btn{font-size:12px;padding:5px 12px;height:34px;min-width:64px}
+  .logo-wrap{width:44px;height:44px}
+  .logo-wrap.big{width:54px;height:54px}
+  .logo-circle{font-size:20px}
+  .logo-wrap.big .logo-circle{font-size:25px}
+  .restaurant-info h1{font-size:15px}
+  .header-inner.big .restaurant-info h1{font-size:18px}
+  .icon-btn{padding:5px 10px;font-size:15px;height:32px}
+  .cat-toggle-btn{font-size:11px;padding:5px 11px;height:32px}
+  .lang-btn{font-size:11px;padding:5px 10px;height:32px;min-width:58px}
   .soc-btn{width:34px;height:34px}
   .soc-btn svg{width:16px;height:16px}
 }
 @media(min-width:768px){
-  .header-inner{padding:12px 32px}
-  .header-inner.big{padding:14px 32px}
+  .header-inner{padding:11px 32px}
+  .restaurant-info{max-width:220px}
   .soc-btn{width:36px;height:36px}
   .soc-btn svg{width:17px;height:17px}
 }
 @media(min-width:1024px){
-  .header-inner{padding:12px 48px}
-  .header-inner.big{padding:14px 48px}
-  .restaurant-info h1{font-size:18px}
-  .header-inner.big .restaurant-info h1{font-size:21px}
+  .header-inner{padding:11px 48px}
+  .restaurant-info{max-width:none}
+  .restaurant-info h1{font-size:17px}
+  .header-inner.big .restaurant-info h1{font-size:20px}
   .soc-btn{width:38px;height:38px}
   .soc-btn svg{width:18px;height:18px}
 }
@@ -1051,21 +1033,27 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
 <!-- STICKY HEADER -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner" id="headerInner">
-    <!-- Row 1: Logo + Restaurant Name/Desc/Location -->
+    <!-- Single row: Logo + Name + Action buttons -->
     <div class="hdr-row1">
-	
       <div class="logo-wrap" id="logoWrap"><div class="logo-circle" id="logoCircle">🍽️</div></div>
       <div class="restaurant-info">
         <div class="restinfo-name-row">
           <h1 id="restaurantName">Loading…</h1>
           <a id="locationLink" class="location-link" href="#" target="_blank" rel="noopener" title="Open in Maps" style="display:none">
-            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </a>
         </div>
         <p id="restaurantDesc"></p>
       </div>
+      <!-- Action buttons inline right -->
+      <div class="hdr-actions-group">
+        <button class="icon-btn" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'">⬅️</button>
+        <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
+        <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
+        <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
+      </div>
     </div>
-    <!-- Social icons row — center of header on desktop, second row on mobile -->
+    <!-- Social icons — second row on mobile, inline center on desktop -->
     <div class="hdr-socials">
       <a class="soc-btn soc-instagram" href="https://www.instagram.com/rukn_alshawerma?igsh=MW4waXlvaXVsNXBjMw==" target="_blank" rel="noopener noreferrer" title="Instagram">
         <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
@@ -1083,16 +1071,6 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
         <svg class="icon-copy" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
         <svg class="icon-check" viewBox="0 0 24 24" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
       </button>
-    </div>
-
-    <!-- Row 2: back btn left | search + lang/menu stack right -->
-    <div class="hdr-row2">
-      <button class="icon-btn" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'">⬅️</button>
-      <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
-      <div class="hdr-btn-stack">
-        <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
-        <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
-      </div>
     </div>
   </div>
   <div class="divider-bar"></div>
