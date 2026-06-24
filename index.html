@@ -89,49 +89,64 @@ body.dark-mode .soc-copy{background:#2e8b57}
   order:2;
 }
 
-/* ── Social icon buttons ── */
-.soc-btn{
+/* ── Logo — base sizes (mobile) ── */
+.logo-wrap{flex-shrink:0;width:38px;height:38px;transition:width .3s,height .3s}
+.logo-wrap.big{width:46px;height:46px}
+.logo-circle{
+  width:100%;height:100%;border-radius:50%;
+  background:linear-gradient(135deg,var(--g1),var(--acc));
   display:flex;align-items:center;justify-content:center;
-  width:30px;height:30px;border-radius:50%;
-  border:none;cursor:pointer;
-  transition:transform .18s,box-shadow .18s,filter .15s;
-  flex-shrink:0;text-decoration:none;
-  padding:0;
+  font-size:18px;
+  border:3px solid rgba(201,168,76,.4);
+  overflow:hidden;transition:font-size .3s;
 }
-.soc-btn svg{width:15px;height:15px;fill:currentColor;display:block;flex-shrink:0}
-.soc-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.25)}
-.soc-btn:active{transform:scale(.9)}
+.logo-wrap.big .logo-circle{font-size:22px;border-width:4px;border-color:rgba(201,168,76,.6)}
+.logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 
-.soc-instagram{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);color:#fff}
-.soc-facebook{background:#1877f2;color:#fff}
-.soc-tiktok{background:#010101;color:#fff}
-.soc-whatsapp{background:#25D366;color:#fff}
-.soc-copy{background:var(--g1);color:#fff}
-.soc-copy .icon-check{display:none}
+/* ── Restaurant info ── */
+.restaurant-info{flex:1 1 0;min-width:0;overflow:hidden;direction:ltr}
+.restinfo-name-row{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;direction:ltr}
+.restaurant-info h1{
+  font-family:'Playfair Display',Georgia,'Times New Roman',serif;
+  font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+  transition:font-size .3s;min-width:0;text-align:left;line-height:1.2;
+}
+.restaurant-info p{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.header-inner.big .restaurant-info h1{font-size:16px}
+.header-inner.big .restaurant-info p{font-size:12px}
 
-/* Dark mode social buttons — slightly lighter */
-body.dark-mode .soc-copy{background:#2e8b57}
+/* ── Location icon ── */
+.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
+.location-link:hover{background:var(--g1);color:var(--white);border-color:var(--g1)}
 
-/* ── Lang button — bolder & more visible ── */
+/* ── Action icon buttons ── */
+.icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:5px 8px;background:var(--white);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px}
+.icon-btn:hover{background:var(--g3);border-color:var(--g1)}
+
+/* ── Language pill — big, bold, unmissable ── */
 .lang-btn{
-  border:2px solid var(--gold);
-  border-radius:9px;
-  padding:5px 13px;
-  font-size:12px;
+  display:inline-flex;align-items:center;justify-content:center;
+  border:2.5px solid var(--gold);
+  border-radius:20px;
+  padding:0 16px;
+  height:36px;
+  min-width:72px;
+  font-size:13px;
   font-weight:800;
+  letter-spacing:.6px;
   background:var(--white);
   cursor:pointer;
   color:var(--g1);
-  transition:background .15s,color .15s;
+  transition:background .18s,color .18s,box-shadow .18s;
   white-space:nowrap;
-  letter-spacing:.5px;
   text-align:center;
   direction:ltr;
-  height:32px;
-  min-width:60px;
+  box-shadow:0 2px 8px rgba(201,168,76,.2);
 }
-.lang-btn:hover{background:var(--gold);color:#fff}
+.lang-btn:hover{background:var(--gold);color:#fff;box-shadow:0 4px 14px rgba(201,168,76,.4)}
 .lang-btn.ar-active{background:var(--gold);color:#fff;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
+body.dark-mode .lang-btn{background:#2a2a2a;color:#c9a84c;border-color:#c9a84c}
+body.dark-mode .lang-btn:hover{background:var(--gold);color:#fff}
 
 /* ── cat-toggle-btn ── */
 .cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 10px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:700;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:32px}
@@ -152,28 +167,18 @@ body.dark-mode .soc-copy{background:#2e8b57}
   }
   .header-inner.big{min-height:70px;padding:12px 24px}
   .hdr-row1{flex:0 0 auto;width:auto;min-width:0}
-  .hdr-socials{
-    flex:1 1 0;
-    order:2;
-    justify-content:center;
-    width:auto;
-  }
-  .hdr-row2{
-    flex:0 0 auto;
-    order:3;
-    width:auto;
-    justify-content:flex-end;
-  }
-  .logo-wrap{width:48px;height:48px}
-  .logo-wrap.big{width:58px;height:58px}
-  .logo-circle{font-size:22px}
-  .logo-wrap.big .logo-circle{font-size:27px}
-  .restaurant-info h1{font-size:17px}
-  .header-inner.big .restaurant-info h1{font-size:20px}
+  .hdr-socials{flex:1 1 0;order:2;justify-content:center;width:auto}
+  .hdr-row2{flex:0 0 auto;order:3;width:auto;justify-content:flex-end}
+  .logo-wrap{width:46px;height:46px}
+  .logo-wrap.big{width:56px;height:56px}
+  .logo-circle{font-size:21px}
+  .logo-wrap.big .logo-circle{font-size:26px}
+  .restaurant-info h1{font-size:16px}
+  .header-inner.big .restaurant-info h1{font-size:19px}
   .restaurant-info p{font-size:12px}
-  .icon-btn{padding:7px 11px;font-size:17px;height:34px}
-  .cat-toggle-btn{font-size:13px;padding:6px 13px;height:34px}
-  .lang-btn{font-size:13px;padding:6px 14px;height:34px;min-width:70px}
+  .icon-btn{padding:6px 11px;font-size:16px;height:34px}
+  .cat-toggle-btn{font-size:12px;padding:6px 13px;height:34px}
+  .lang-btn{height:38px;min-width:80px;font-size:14px;padding:0 18px}
   .soc-btn{width:34px;height:34px}
   .soc-btn svg{width:16px;height:16px}
 }
@@ -186,8 +191,8 @@ body.dark-mode .soc-copy{background:#2e8b57}
 @media(min-width:1024px){
   .header-inner{padding:12px 48px}
   .header-inner.big{padding:14px 48px}
-  .restaurant-info h1{font-size:19px}
-  .header-inner.big .restaurant-info h1{font-size:22px}
+  .restaurant-info h1{font-size:18px}
+  .header-inner.big .restaurant-info h1{font-size:21px}
   .soc-btn{width:38px;height:38px}
   .soc-btn svg{width:18px;height:18px}
 }
