@@ -83,37 +83,25 @@ body.dark-mode .soc-copy{background:#2e8b57}
 /* back button pushes lang+menu stack to the right */
 .hdr-row2 .icon-btn:first-child{margin-right:auto}
 
-/* Lang + Menu vertical stack on mobile */
+/* Lang + Menu — horizontal row on both mobile and desktop */
 .hdr-btn-stack{
   display:flex;
-  flex-direction:column;
-  gap:4px;
+  flex-direction:row;
+  gap:5px;
   flex-shrink:0;
+  align-items:center;
 }
 .hdr-btn-stack .lang-btn,
-.hdr-btn-stack .cat-toggle-btn{width:100%}
+.hdr-btn-stack .cat-toggle-btn{width:auto}
 
 /* search icon sits beside the stack */
 .hdr-search-btn{flex-shrink:0}
-
-/* ── Social icons row ── order:3 on mobile = below row2 */
-.hdr-socials{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:7px;
-  width:100%;
-  flex-shrink:0;
-  order:3;
-  padding:2px 0 1px;
-  border-top:1px solid var(--border);
-}
 
 /* Action icon buttons */
 .icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:5px 9px;background:var(--white);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px}
 .icon-btn:hover{background:var(--g3);border-color:var(--g1)}
 
-/* Lang button — original style, clear and readable */
+/* Lang button */
 .lang-btn{border:1.5px solid var(--gold);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;text-align:center;direction:ltr;height:30px;min-width:58px}
 .lang-btn:hover{background:var(--gold);color:#fff}
 .lang-btn.ar-active{background:var(--gold);color:#fff;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
@@ -122,16 +110,62 @@ body.dark-mode .soc-copy{background:#2e8b57}
 .cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 10px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:30px}
 .cat-toggle-btn:hover{background:var(--txt);color:var(--white)}
 
+/* ── Social icons row ── order:3 on mobile = below row2 */
+.hdr-socials{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  width:100%;
+  flex-shrink:0;
+  order:3;
+  padding:5px 0 4px;
+  border-top:1px solid var(--border);
+}
+
 /* Social icon buttons */
-.soc-btn{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:50%;border:none;cursor:pointer;transition:transform .18s,box-shadow .18s;flex-shrink:0;text-decoration:none;padding:0}
-.soc-btn svg{width:15px;height:15px;fill:currentColor;display:block;flex-shrink:0}
-.soc-btn:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.25)}
-.soc-btn:active{transform:scale(.9)}
-.soc-instagram{background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);color:#fff}
-.soc-facebook{background:#1877f2;color:#fff}
-.soc-tiktok{background:#010101;color:#fff}
-.soc-whatsapp{background:#25D366;color:#fff}
-.soc-copy{background:var(--g1);color:#fff}
+.soc-btn{
+  display:flex;align-items:center;justify-content:center;
+  width:34px;height:34px;
+  border-radius:50%;border:none;
+  cursor:pointer;
+  transition:transform .18s,box-shadow .18s,filter .18s;
+  flex-shrink:0;text-decoration:none;padding:0;
+  box-shadow:0 2px 6px rgba(0,0,0,.18);
+}
+.soc-btn svg{width:17px;height:17px;fill:currentColor;display:block;flex-shrink:0}
+.soc-btn:hover{transform:translateY(-3px) scale(1.12);box-shadow:0 6px 16px rgba(0,0,0,.30)}
+.soc-btn:active{transform:scale(.92)}
+.soc-instagram{
+  background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285AEB 90%);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(214,36,159,.35);
+}
+.soc-instagram:hover{box-shadow:0 6px 18px rgba(214,36,159,.5)}
+.soc-facebook{
+  background:#1877f2;color:#fff;
+  box-shadow:0 2px 8px rgba(24,119,242,.35);
+}
+.soc-facebook:hover{box-shadow:0 6px 18px rgba(24,119,242,.5)}
+.soc-tiktok{
+  background:linear-gradient(135deg,#010101 0%,#161616 60%,#69C9D0 200%);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(0,0,0,.40);
+  position:relative;
+}
+.soc-tiktok:hover{box-shadow:0 6px 18px rgba(105,201,208,.45)}
+.soc-whatsapp{
+  background:linear-gradient(135deg,#25D366,#128C7E);
+  color:#fff;
+  box-shadow:0 2px 8px rgba(37,211,102,.35);
+}
+.soc-whatsapp:hover{box-shadow:0 6px 18px rgba(37,211,102,.55)}
+.soc-copy{
+  background:linear-gradient(135deg,var(--g1),var(--acc));
+  color:#fff;
+  box-shadow:0 2px 8px rgba(46,139,87,.30);
+}
+.soc-copy:hover{box-shadow:0 6px 16px rgba(46,139,87,.50)}
 .soc-copy .icon-check{display:none}
 
 /* OLD stubs */
@@ -148,10 +182,8 @@ body.dark-mode .soc-copy{background:#2e8b57}
   .hdr-socials{flex:1 1 0;order:2;width:auto;border-top:none;padding:0;gap:8px}
   /* buttons: fixed width, right */
   .hdr-row2{flex:0 0 auto;order:3;width:auto;justify-content:flex-end}
-  /* undo mobile stack — buttons side by side on desktop */
-  .hdr-btn-stack{flex-direction:row;gap:6px}
-  .hdr-btn-stack .lang-btn,
-  .hdr-btn-stack .cat-toggle-btn{width:auto}
+  /* btn-stack already row by default; widen gap slightly on desktop */
+  .hdr-btn-stack{gap:6px}
   /* sizes */
   .logo-wrap{width:46px;height:46px}
   .logo-wrap.big{width:56px;height:56px}
