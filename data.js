@@ -9,9 +9,9 @@ const HARDCODED_INFO = [
 
 const HARDCODED_ITEMS = [
 // [cat_en, Name_en, desc_en, price, offer_price, cat_icon, image_url, tags, cat_ar, Name_ar, desc_ar]
-['Chicken Shawerma','Sandwich (Small)','','7','','1,2','https://drive.google.com/thumbnail?id=14Qd1U2YUtTOov7K9qbvKHdOdxK7fDjNl&sz=w1000','','شاورما دجاج','ساندويش صغير',''],
-['Chicken Shawerma','Sandwich (Large)','','12','','1,2','https://drive.google.com/thumbnail?id=15MrLINiryh9iGodVhWZ7QXkHHT1IC-ie&sz=w1000','','شاورما دجاج','ساندويش (كبير)',''],
-['Chicken Shawerma','Samoon Saroukh Sandwich','','13','','','https://drive.google.com/thumbnail?id=1zX8KaCNE4gVTriJkvuAsF4UYCPfHocPZ&sz=w1000','','شاورما دجاج','ساندويش صمون صاروخ',''],
+['Chicken Shawerma','Sandwich (Small)','','7','','1,2,4','https://drive.google.com/thumbnail?id=14Qd1U2YUtTOov7K9qbvKHdOdxK7fDjNl&sz=w1000','','شاورما دجاج','ساندويش صغير',''],
+['Chicken Shawerma','Sandwich (Large)','','12','','1,2,4','https://drive.google.com/thumbnail?id=15MrLINiryh9iGodVhWZ7QXkHHT1IC-ie&sz=w1000','','شاورما دجاج','ساندويش (كبير)',''],
+['Chicken Shawerma','Samoon Saroukh Sandwich','','13','4','','https://drive.google.com/thumbnail?id=1zX8KaCNE4gVTriJkvuAsF4UYCPfHocPZ&sz=w1000','','شاورما دجاج','ساندويش صمون صاروخ',''],
 ['Chicken Shawerma','Shawarma Tortilla Sandwich','','13','','','https://drive.google.com/thumbnail?id=1oMvdyLbFZjDTaK3lOP2ynkqRBwve8Hru&sz=w1000','','شاورما دجاج','ساندويش شاورما توراتيلا',''],
 ['Chicken Shawerma','Arab','','19','','','https://drive.google.com/thumbnail?id=1CpytnLn_gtfweIQ-OvkrNC3iDocY5aFe&sz=w1000','popular','شاورما دجاج','عربي',''],
 ['Chicken Shawerma','Double Arabic','','23','22','1,2,3','https://drive.google.com/thumbnail?id=14L6WWk30aOEDxiKaSUKChOMp9prqX5CL&sz=w1000','popular','شاورما دجاج','عربي دبل',''],
