@@ -517,11 +517,15 @@ body.dark-mode .item-old-price{color:rgba(255,255,255,.32)}
 body.dark-mode .save-label{color:#e87b35}
 body.dark-mode .item-thumb{background:#3a3a3a}
 
-/* ── RTL / ARABIC — image on right, text on left ── */
-body.rtl .item-body{padding:14px 10px 14px 16px;text-align:right}
+/* ── RTL / ARABIC — perfect mirror of LTR card ── */
+/* The whole card flips to RTL — image top, body below, all content right→left */
+body.rtl .item-card{direction:rtl}
+/* Image stays on top (same as LTR), body below — everything inside body mirrors right→left */
+body.rtl .item-body{padding:10px 12px 12px;text-align:right}
 body.rtl .item-name{text-align:right}
 body.rtl .item-desc{text-align:right}
-body.rtl .item-thumb{order:1;margin:8px 8px 8px 0}
+/* Remove any old horizontal-layout overrides */
+body.rtl .item-thumb{order:unset;margin:0}
 
 /* Arabic item name — larger, bolder, Kufi font for elegance */
 body.rtl .item-name{
