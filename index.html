@@ -84,24 +84,27 @@ body.dark-mode .soc-copy{background:#2e8b57}
 .hdr-back-btn{}
 
 /* Row2 btn-stack on mobile: show only cat-toggle; hide search+lang */
-.hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px}
+.hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px;margin-left:auto}
 .hdr-row2 .hdr-btn-stack .hdr-search-btn{display:none}
 .hdr-row2 .hdr-btn-stack .lang-btn{display:none}
 
-/* ── ROW 2 (mobile): [⬅️ back] [socials centered] ── */
+/* ── ROW 2 (mobile): [⬅️ back] [socials TRULY centered] [btn-stack right] ── */
 .hdr-row2{
   display:flex;align-items:center;gap:8px;
   width:100%;
   padding:6px 0 6px;
   border-top:1px solid var(--border);
+  position:relative;
 }
 
-/* Social icons — grow to fill space between back btn and edge */
+/* Social icons — absolutely centered in the row regardless of siblings */
 .hdr-socials{
-  flex:1 1 0;
+  position:absolute;
+  left:50%;
+  transform:translateX(-50%);
   display:flex;align-items:center;justify-content:center;
   gap:8px;
-  flex-shrink:0;
+  pointer-events:auto;
 }
 
 /* ── Button base styles ── */
@@ -154,8 +157,8 @@ body.dark-mode .soc-copy{background:#2e8b57}
   /* Row1 shrinks to logo+name only, no padding */
   .hdr-row1{flex:0 0 auto;width:auto;padding-bottom:0}
 
-  /* Socials move to center of the single row */
-  .hdr-socials{flex:1 1 0;justify-content:center;gap:9px}
+  /* Socials move to center of the single row — normal flow on desktop */
+  .hdr-socials{position:static;transform:none;flex:1 1 0;justify-content:center;gap:9px}
 
   /* Row1: hide entire btn-stack on desktop (search+lang move to row2) */
   .hdr-row1 .hdr-btn-stack{display:none}
@@ -1612,6 +1615,47 @@ function selectCat(btn,catId){
   if(catId==='all') renderAllSections();
   else if(catId==='__offers__') renderOffersSection();
   else renderSingleSection(catId);
+}
+
+// ═══════════════════════════════════════════════════
+//  COPY LINK
+// ═══════════════════════════════════════════════════
+function copyLink(btn) {
+  var url = window.location.href;
+  var arLbl = btn.querySelector('.lbl-ar');
+  var enLbl = btn.querySelector('.lbl-en');
+  function showCopied() {
+    btn.querySelector('.icon-copy').style.display = 'none';
+    btn.querySelector('.icon-check').style.display = 'block';
+    if (arLbl) arLbl.textContent = 'تم النسخ!';
+    if (enLbl) enLbl.textContent = 'Copied!';
+    btn.style.background = 'rgba(74,222,128,0.35)';
+    btn.style.borderColor = 'rgba(74,222,128,0.6)';
+    setTimeout(function () {
+      btn.querySelector('.icon-copy').style.display = 'block';
+      btn.querySelector('.icon-check').style.display = 'none';
+      if (arLbl) arLbl.textContent = 'نسخ الرابط';
+      if (enLbl) enLbl.textContent = 'Copy Link';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  }
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(showCopied).catch(function () {
+      fallbackCopy(url); showCopied();
+    });
+  } else {
+    fallbackCopy(url); showCopied();
+  }
+}
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
 }
 
 // ═══════════════════════════════════════════════════
