@@ -79,9 +79,12 @@ body.dark-mode .soc-copy{background:#2e8b57}
 /* Lang + Menu buttons — right side of row1 on mobile */
 .hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0}
 
-/* Back + Search — search hidden on mobile, visible on desktop inside hdr-btn-stack */
+/* Search btn: visible on mobile row1, back btn: only in row2 on mobile */
+.hdr-search-btn{display:flex}
 .hdr-back-btn{}
-.hdr-search-btn{display:none} /* hidden on mobile */
+
+/* Row2 btn-stack hidden on mobile — only shown on desktop */
+.hdr-row2 .hdr-btn-stack{display:none}
 
 /* ── ROW 2 (mobile): [⬅️ back] [socials centered] ── */
 .hdr-row2{
@@ -152,7 +155,7 @@ body.dark-mode .soc-copy{background:#2e8b57}
   /* Socials move to center of the single row */
   .hdr-socials{flex:1 1 0;justify-content:center;gap:9px}
 
-  /* Row1: hide lang/menu on desktop (they move to row2) */
+  /* Row1: hide entire btn-stack on desktop (search+lang+menu move to row2) */
   .hdr-row1 .hdr-btn-stack{display:none}
 
   /* Row2 becomes the right-side button group — inline, no border, no padding */
@@ -162,10 +165,7 @@ body.dark-mode .soc-copy{background:#2e8b57}
     justify-content:flex-end;gap:6px;
   }
 
-  /* Show search on desktop (it's inside hdr-btn-stack in row2) */
-  .hdr-btn-stack .hdr-search-btn{display:flex}
-
-  /* Show lang+menu in row2 on desktop */
+  /* Show lang+menu+search in row2 on desktop */
   .hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;gap:6px}
 
   /* Sizes */
@@ -1048,8 +1048,9 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
         </div>
         <p id="restaurantDesc"></p>
       </div>
-      <!-- Lang + Menu always visible on row1 -->
+      <!-- Lang + Menu always visible on row1, search also on mobile -->
       <div class="hdr-btn-stack">
+        <button class="icon-btn hdr-search-btn" id="searchBtn" title="Search" onclick="toggleSearch()">🔍</button>
         <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
         <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
       </div>
