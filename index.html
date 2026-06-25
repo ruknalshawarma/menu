@@ -2451,6 +2451,44 @@ function showFatalError(msg){
 
 })();
 
+
+  function showCopied() {
+    btn.querySelector('.icon-copy').style.display = 'none';
+    btn.querySelector('.icon-check').style.display = 'block';
+    if (arLbl) arLbl.textContent = 'تم النسخ!';
+    if (enLbl) enLbl.textContent = 'Copied!';
+    btn.style.background = 'rgba(74,222,128,0.35)';
+    btn.style.borderColor = 'rgba(74,222,128,0.6)';
+    setTimeout(function () {
+      btn.querySelector('.icon-copy').style.display = 'block';
+      btn.querySelector('.icon-check').style.display = 'none';
+      if (arLbl) arLbl.textContent = 'نسخ الرابط';
+      if (enLbl) enLbl.textContent = 'Copy Link';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+    }, 2000);
+  }
+
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(url).then(showCopied).catch(function () {
+      fallbackCopy(url); showCopied();
+    });
+  } else {
+    fallbackCopy(url); showCopied();
+  }
+}
+
+function fallbackCopy(text) {
+  var ta = document.createElement('textarea');
+  ta.value = text;
+  ta.style.cssText = 'position:fixed;opacity:0;top:0;left:0';
+  document.body.appendChild(ta);
+  ta.focus(); ta.select();
+  try { document.execCommand('copy'); } catch(e) {}
+  document.body.removeChild(ta);
+}
+  
+  
 // ═══════════════════════════════════════════════════
 //  BOOT — load directly from hardcoded data
 // ═══════════════════════════════════════════════════
