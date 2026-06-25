@@ -46,150 +46,152 @@ body.dark-mode .soc-copy{background:#2e8b57}
 .site-header{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);transition:box-shadow .3s;direction:ltr}
 .site-header.scrolled{box-shadow:0 2px 16px rgba(0,0,0,.10)}
 
-/* ── Mobile: column layout — row1 + socials row below ── */
-.header-inner{display:flex;flex-direction:column;padding:8px 12px 6px;gap:0;direction:ltr}
-.header-inner.big{padding:10px 14px 8px}
+/* ── Mobile: two rows stacked ── */
+.header-inner{display:flex;flex-direction:column;padding:8px 12px 0;gap:0;direction:ltr}
+.header-inner.big{padding:10px 14px 0}
 
-/* ── Single header row: logo | name (flex-grow) | action buttons ── */
+/* ── ROW 1 (mobile): [logo] [name] [lang] [menu] ── */
 .hdr-row1{
   display:flex;align-items:center;gap:8px;
   width:100%;min-width:0;
-  padding-bottom:6px;
+  padding-bottom:7px;
 }
 
 /* Logo */
-.logo-wrap{flex-shrink:0;width:38px;height:38px;transition:width .3s,height .3s}
-.logo-wrap.big{width:46px;height:46px}
-.logo-circle{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--acc));display:flex;align-items:center;justify-content:center;font-size:18px;border:3px solid rgba(201,168,76,.4);overflow:hidden;transition:font-size .3s}
-.logo-wrap.big .logo-circle{font-size:22px;border-width:4px;border-color:rgba(201,168,76,.6)}
+.logo-wrap{flex-shrink:0;width:40px;height:40px;transition:width .3s,height .3s}
+.logo-wrap.big{width:48px;height:48px}
+.logo-circle{width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,var(--g1),var(--acc));display:flex;align-items:center;justify-content:center;font-size:19px;border:3px solid rgba(201,168,76,.4);overflow:hidden;transition:font-size .3s}
+.logo-wrap.big .logo-circle{font-size:23px;border-width:4px;border-color:rgba(201,168,76,.6)}
 .logo-circle img{width:100%;height:100%;object-fit:cover;border-radius:50%}
 
-/* Restaurant info — takes all remaining space */
+/* Restaurant info — fills available space */
 .restaurant-info{flex:1 1 0;min-width:0;overflow:hidden;direction:ltr}
 .restinfo-name-row{display:flex;align-items:center;gap:5px;min-width:0;overflow:hidden;direction:ltr}
-.restaurant-info h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:14px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .3s;min-width:0;text-align:left;line-height:1.2}
-.restaurant-info p{font-size:10px;color:var(--muted);margin-top:1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
-.header-inner.big .restaurant-info h1{font-size:16px}
-.header-inner.big .restaurant-info p{font-size:11px}
+.restaurant-info h1{font-family:'Playfair Display',Georgia,'Times New Roman',serif;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:font-size .3s;min-width:0;text-align:left;line-height:1.2}
+.restaurant-info p{font-size:11px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-align:left}
+.header-inner.big .restaurant-info h1{font-size:17px}
+.header-inner.big .restaurant-info p{font-size:12px}
 
 /* Location icon */
-.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
+.location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
 .location-link:hover{background:var(--g1);color:var(--white);border-color:var(--g1)}
 
-/* Action buttons — inline right side of hdr-row1 */
-.hdr-actions-group{display:flex;align-items:center;gap:5px;flex-shrink:0}
+/* Lang + Menu buttons — right side of row1 on mobile */
+.hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0}
 
-/* Action icon buttons */
-.icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:4px 8px;background:var(--white);cursor:pointer;font-size:14px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px;white-space:nowrap}
-.icon-btn:hover{background:var(--g3);border-color:var(--g1)}
+/* Back + Search — hidden on mobile row1, visible in row2 */
+.hdr-back-btn{}
+.hdr-search-btn{display:none} /* hidden on mobile */
 
-/* Lang button */
-.lang-btn{border:1.5px solid var(--gold);border-radius:8px;padding:4px 9px;font-size:11px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;text-align:center;direction:ltr;height:30px;min-width:52px}
-.lang-btn:hover{background:var(--gold);color:#fff}
-.lang-btn.ar-active{background:var(--gold);color:#fff;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
-
-/* Cat toggle button */
-.cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 9px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:30px}
-.cat-toggle-btn:hover{background:var(--txt);color:var(--white)}
-
-/* ── Social icons row — mobile: second row, desktop: hidden here (shown in main row) ── */
-.hdr-socials{
-  display:flex;align-items:center;justify-content:center;
-  gap:8px;width:100%;flex-shrink:0;
-  padding:6px 0 4px;
+/* ── ROW 2 (mobile): [⬅️ back] [socials centered] ── */
+.hdr-row2{
+  display:flex;align-items:center;gap:8px;
+  width:100%;
+  padding:6px 0 6px;
   border-top:1px solid var(--border);
 }
 
-/* ── Social icon buttons — colorful branded ── */
+/* Social icons — grow to fill space between back btn and edge */
+.hdr-socials{
+  flex:1 1 0;
+  display:flex;align-items:center;justify-content:center;
+  gap:8px;
+  flex-shrink:0;
+}
+
+/* ── Button base styles ── */
+.icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:5px 9px;background:var(--white);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px;white-space:nowrap}
+.icon-btn:hover{background:var(--g3);border-color:var(--g1)}
+
+.lang-btn{border:1.5px solid var(--gold);border-radius:8px;padding:4px 10px;font-size:11px;font-weight:700;background:var(--white);cursor:pointer;color:var(--g1);transition:background .15s,color .15s;white-space:nowrap;letter-spacing:.3px;text-align:center;direction:ltr;height:30px;min-width:58px}
+.lang-btn:hover{background:var(--gold);color:#fff}
+.lang-btn.ar-active{background:var(--gold);color:#fff;font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
+
+.cat-toggle-btn{border:1.5px solid var(--txt);border-radius:8px;padding:4px 10px;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;font-size:11px;font-weight:600;background:var(--white);cursor:pointer;color:var(--txt);transition:background .15s,color .15s;white-space:nowrap;height:30px}
+.cat-toggle-btn:hover{background:var(--txt);color:var(--white)}
+
+/* ── Social icon buttons — branded & colorful ── */
 .soc-btn{
   display:flex;align-items:center;justify-content:center;
   width:32px;height:32px;border-radius:50%;border:none;
   cursor:pointer;flex-shrink:0;text-decoration:none;padding:0;
   transition:transform .18s,box-shadow .2s;
-  box-shadow:0 2px 6px rgba(0,0,0,.18);
+  box-shadow:0 2px 6px rgba(0,0,0,.15);
 }
 .soc-btn svg{width:15px;height:15px;fill:currentColor;display:block;flex-shrink:0}
-.soc-btn:hover{transform:translateY(-3px) scale(1.1)}
+.soc-btn:hover{transform:translateY(-2px) scale(1.08)}
 .soc-btn:active{transform:scale(.9)}
 
 .soc-instagram{
   background:radial-gradient(circle at 30% 107%,#fdf497 0%,#fdf497 5%,#fd5949 45%,#d6249f 60%,#285aeb 90%);
-  color:#fff;box-shadow:0 2px 8px rgba(214,36,159,.4);
+  color:#fff;box-shadow:0 2px 8px rgba(214,36,159,.35);
 }
-.soc-instagram:hover{box-shadow:0 5px 16px rgba(214,36,159,.55)}
-
-.soc-facebook{
-  background:#1877f2;color:#fff;
-  box-shadow:0 2px 8px rgba(24,119,242,.4);
-}
-.soc-facebook:hover{box-shadow:0 5px 16px rgba(24,119,242,.55)}
-
-.soc-tiktok{
-  background:#010101;color:#fff;
-  box-shadow:0 2px 8px rgba(0,0,0,.35);
-}
-.soc-tiktok:hover{box-shadow:0 5px 16px rgba(105,201,208,.5)}
-
-.soc-whatsapp{
-  background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;
-  box-shadow:0 2px 8px rgba(37,211,102,.4);
-}
-.soc-whatsapp:hover{box-shadow:0 5px 16px rgba(37,211,102,.55)}
-
-.soc-copy{
-  background:linear-gradient(135deg,var(--g1),var(--acc));color:#fff;
-  box-shadow:0 2px 8px rgba(46,139,87,.35);
-}
-.soc-copy:hover{box-shadow:0 5px 14px rgba(46,139,87,.5)}
+.soc-instagram:hover{box-shadow:0 5px 14px rgba(214,36,159,.5)}
+.soc-facebook{background:#1877f2;color:#fff;box-shadow:0 2px 8px rgba(24,119,242,.35)}
+.soc-facebook:hover{box-shadow:0 5px 14px rgba(24,119,242,.5)}
+.soc-tiktok{background:#010101;color:#fff;box-shadow:0 2px 8px rgba(0,0,0,.3)}
+.soc-tiktok:hover{box-shadow:0 5px 14px rgba(105,201,208,.45)}
+.soc-whatsapp{background:linear-gradient(135deg,#25d366,#128c7e);color:#fff;box-shadow:0 2px 8px rgba(37,211,102,.35)}
+.soc-whatsapp:hover{box-shadow:0 5px 14px rgba(37,211,102,.5)}
+.soc-copy{background:linear-gradient(135deg,var(--g1),var(--acc));color:#fff;box-shadow:0 2px 8px rgba(46,139,87,.3)}
+.soc-copy:hover{box-shadow:0 5px 14px rgba(46,139,87,.45)}
 .soc-copy .icon-check{display:none}
 
 /* OLD stubs */
 .hdr-actions{display:contents}
 .hdr-bottom-row{display:contents}
-.hdr-row2{display:contents}
-.hdr-btn-stack{display:contents}
-.hdr-search-btn{}
 
-/* ── DESKTOP (≥600px): single row — [logo+name] [socials centered] [buttons] ── */
+/* ── DESKTOP (≥600px): single row [logo+name] | [socials] | [back+search+lang+menu] ── */
 @media(min-width:600px){
-  .header-inner{flex-direction:row;align-items:center;padding:10px 20px;gap:10px;min-height:60px}
-  .header-inner.big{min-height:70px;padding:12px 24px}
-  /* row1 becomes the entire flex row — no padding-bottom needed */
-  .hdr-row1{padding-bottom:0;flex:1 1 0;min-width:0}
-  /* restaurant-info constrained so it doesn't crowd socials */
-  .restaurant-info{max-width:180px}
-  /* socials float inline between name and buttons, centered */
-  .hdr-socials{
-    flex:1 1 0;order:0;width:auto;
-    border-top:none;padding:0;gap:9px;
-    justify-content:center;
+  .header-inner{flex-direction:row;align-items:center;padding:10px 20px;gap:10px;min-height:62px}
+  .header-inner.big{min-height:72px;padding:12px 24px}
+
+  /* Row1 shrinks to logo+name only, no padding */
+  .hdr-row1{flex:0 0 auto;width:auto;padding-bottom:0}
+
+  /* Socials move to center of the single row */
+  .hdr-socials{flex:1 1 0;justify-content:center;gap:9px}
+
+  /* Row1: hide lang/menu on desktop (they move to row2) */
+  .hdr-row1 .hdr-btn-stack{display:none}
+
+  /* Row2 becomes the right-side button group — inline, no border, no padding */
+  .hdr-row2{
+    flex:0 0 auto;width:auto;
+    border-top:none;padding:0;
+    justify-content:flex-end;gap:6px;
   }
-  /* action buttons stay right */
-  .hdr-actions-group{flex-shrink:0}
-  /* sizes */
-  .logo-wrap{width:44px;height:44px}
-  .logo-wrap.big{width:54px;height:54px}
-  .logo-circle{font-size:20px}
-  .logo-wrap.big .logo-circle{font-size:25px}
-  .restaurant-info h1{font-size:15px}
-  .header-inner.big .restaurant-info h1{font-size:18px}
-  .icon-btn{padding:5px 10px;font-size:15px;height:32px}
-  .cat-toggle-btn{font-size:11px;padding:5px 11px;height:32px}
-  .lang-btn{font-size:11px;padding:5px 10px;height:32px;min-width:58px}
+
+  /* Show search on desktop */
+  .hdr-search-btn{display:flex}
+
+  /* Show lang+menu in row2 on desktop */
+  .hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;gap:6px}
+
+  /* Sizes */
+  .logo-wrap{width:46px;height:46px}
+  .logo-wrap.big{width:56px;height:56px}
+  .logo-circle{font-size:21px}
+  .logo-wrap.big .logo-circle{font-size:26px}
+  .restaurant-info h1{font-size:16px}
+  .header-inner.big .restaurant-info h1{font-size:19px}
+  .icon-btn{padding:6px 11px;font-size:16px;height:34px}
+  .cat-toggle-btn{font-size:12px;padding:5px 13px;height:34px}
+  .lang-btn{font-size:12px;padding:5px 12px;height:34px;min-width:64px}
   .soc-btn{width:34px;height:34px}
   .soc-btn svg{width:16px;height:16px}
 }
 @media(min-width:768px){
-  .header-inner{padding:11px 32px}
-  .restaurant-info{max-width:220px}
+  .header-inner{padding:12px 32px}
+  .header-inner.big{padding:14px 32px}
   .soc-btn{width:36px;height:36px}
   .soc-btn svg{width:17px;height:17px}
 }
 @media(min-width:1024px){
-  .header-inner{padding:11px 48px}
-  .restaurant-info{max-width:none}
-  .restaurant-info h1{font-size:17px}
-  .header-inner.big .restaurant-info h1{font-size:20px}
+  .header-inner{padding:12px 48px}
+  .header-inner.big{padding:14px 48px}
+  .restaurant-info h1{font-size:18px}
+  .header-inner.big .restaurant-info h1{font-size:21px}
   .soc-btn{width:38px;height:38px}
   .soc-btn svg{width:18px;height:18px}
 }
@@ -1033,45 +1035,57 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
 <!-- STICKY HEADER -->
 <header class="site-header" id="siteHeader">
   <div class="header-inner" id="headerInner">
-    <!-- Single row: Logo + Name + Action buttons -->
+
+    <!-- ROW 1: [logo] [name/desc] [EN|عر] [☰ Menu] -->
     <div class="hdr-row1">
       <div class="logo-wrap" id="logoWrap"><div class="logo-circle" id="logoCircle">🍽️</div></div>
       <div class="restaurant-info">
         <div class="restinfo-name-row">
           <h1 id="restaurantName">Loading…</h1>
           <a id="locationLink" class="location-link" href="#" target="_blank" rel="noopener" title="Open in Maps" style="display:none">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           </a>
         </div>
         <p id="restaurantDesc"></p>
       </div>
-      <!-- Action buttons inline right -->
-      <div class="hdr-actions-group">
-        <button class="icon-btn" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'">⬅️</button>
-        <button class="icon-btn" title="Search" onclick="toggleSearch()">🔍</button>
+      <!-- Lang + Menu always visible on row1 -->
+      <div class="hdr-btn-stack">
         <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
         <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
       </div>
     </div>
-    <!-- Social icons — second row on mobile, inline center on desktop -->
-    <div class="hdr-socials">
-      <a class="soc-btn soc-instagram" href="https://www.instagram.com/rukn_alshawerma?igsh=MW4waXlvaXVsNXBjMw==" target="_blank" rel="noopener noreferrer" title="Instagram">
-        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
-      </a>
-      <a class="soc-btn soc-facebook" href="https://www.facebook.com/kaftyrya.rkn.alshawrma" target="_blank" rel="noopener noreferrer" title="Facebook">
-        <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
-      </a>
-      <a class="soc-btn soc-tiktok" href="https://www.tiktok.com/@shawarmacornerrestaurant?_r=1&_t=ZS-97R1FgQUEoH" target="_blank" rel="noopener noreferrer" title="TikTok">
-        <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.93a8.17 8.17 0 0 0 4.78 1.52V7.01a4.85 4.85 0 0 1-1.01-.32z"/></svg>
-      </a>
-      <a class="soc-btn soc-whatsapp" href="https://wa.me/971522847006" target="_blank" rel="noopener noreferrer" title="WhatsApp">
-        <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-      </a>
-      <button class="soc-btn soc-copy" id="copy-btn" onclick="copyLink(this)" title="Copy link">
-        <svg class="icon-copy" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-        <svg class="icon-check" viewBox="0 0 24 24" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-      </button>
+
+    <!-- ROW 2 mobile: [⬅️ back] [socials centered]
+         ROW 2 desktop: right-side controls [⬅️] [🔍] [lang] [menu] — socials move to center -->
+    <div class="hdr-row2">
+      <button class="icon-btn hdr-back-btn" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'">⬅️</button>
+      <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
+      <!-- Social icons: centered in row2 on mobile; move to center slot on desktop -->
+      <div class="hdr-socials">
+        <a class="soc-btn soc-instagram" href="https://www.instagram.com/rukn_alshawerma?igsh=MW4waXlvaXVsNXBjMw==" target="_blank" rel="noopener noreferrer" title="Instagram">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zm0 10.162a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+        </a>
+        <a class="soc-btn soc-facebook" href="https://www.facebook.com/kaftyrya.rkn.alshawrma" target="_blank" rel="noopener noreferrer" title="Facebook">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073C24 5.404 18.627 0 12 0S0 5.404 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.93-1.956 1.886v2.268h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        </a>
+        <a class="soc-btn soc-tiktok" href="https://www.tiktok.com/@shawarmacornerrestaurant?_r=1&_t=ZS-97R1FgQUEoH" target="_blank" rel="noopener noreferrer" title="TikTok">
+          <svg viewBox="0 0 24 24"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.93a8.17 8.17 0 0 0 4.78 1.52V7.01a4.85 4.85 0 0 1-1.01-.32z"/></svg>
+        </a>
+        <a class="soc-btn soc-whatsapp" href="https://wa.me/971522847006" target="_blank" rel="noopener noreferrer" title="WhatsApp">
+          <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        </a>
+        <button class="soc-btn soc-copy" id="copy-btn" onclick="copyLink(this)" title="Copy link">
+          <svg class="icon-copy" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+          <svg class="icon-check" viewBox="0 0 24 24" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </button>
+      </div>
+      <!-- Lang + Menu — hidden on mobile (shown in row1), visible on desktop -->
+      <div class="hdr-btn-stack">
+        <button class="lang-btn" id="langBtn2" onclick="toggleLang()" title="Switch language">EN | عر</button>
+        <button class="cat-toggle-btn" id="catToggleBtn2" onclick="toggleCategoryBar()">☰ Menu</button>
+      </div>
     </div>
+
   </div>
   <div class="divider-bar"></div>
 
