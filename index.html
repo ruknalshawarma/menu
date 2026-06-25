@@ -173,10 +173,7 @@ body.dark-mode .soc-copy{background:#2e8b57}
 
   /* back btn — shows as direct flex child, far left of the right group */
   .hdr-row2 .hdr-back-btn{
-    display:flex;flex-shrink:0;
-    border:1.5px solid var(--border);border-radius:8px;
-    padding:6px 11px;background:var(--white);cursor:pointer;
-    font-size:16px;height:34px;align-items:center;justify-content:center;
+    display:none;
   }
 
   /* Socials — flex:1 so they fill the center and self-center */
@@ -194,6 +191,8 @@ body.dark-mode .soc-copy{background:#2e8b57}
   }
   .hdr-row2 .hdr-btn-stack .hdr-search-btn{display:flex}
   .hdr-row2 .hdr-btn-stack .lang-btn{display:flex}
+  .hdr-row2 .hdr-back-btn{display:none}
+  .hdr-row2 .hdr-btn-stack .hdr-back-btn-desktop{display:flex!important}
 
   /* Sizes */
   .logo-wrap{width:46px;height:46px}
@@ -541,17 +540,22 @@ body.rtl .item-price{font-size:15px}
 
 
 
-/* ITEM OPTION TOGGLES */
-.item-toggles{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0 2px}
-.toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1);flex-shrink:0}
-.toggle-opt{padding:3px 10px;font-size:11px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
+/* ITEM OPTION TOGGLES — small, top-right corner of card */
+.item-toggles{
+  position:absolute;top:6px;right:6px;
+  display:flex;flex-direction:column;align-items:flex-end;gap:3px;
+  z-index:2;pointer-events:auto;
+}
+.toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--g1);flex-shrink:0}
+.toggle-opt{padding:2px 7px;font-size:9px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
 .toggle-opt:not(:last-child){border-right:1px solid var(--g1)}
 .toggle-opt.active{background:var(--g1);color:var(--white)}
 body.dark-mode .toggle-opt{background:#2a2a2a;color:#4ade80;border-color:#3a8c5a}
 body.dark-mode .toggle-group{border-color:#3a8c5a}
 body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
 body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
-body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:10px}
+body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:9px}
+body.rtl .item-toggles{right:auto;left:6px;align-items:flex-start}
 
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
@@ -1105,8 +1109,9 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
           <svg class="icon-check" viewBox="0 0 24 24" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
         </button>
       </div>
-      <!-- cat-toggle visible on mobile in row2; full set [search+lang+menu] on desktop -->
+      <!-- cat-toggle visible on mobile in row2; full set [back+search+lang+menu] on desktop -->
       <div class="hdr-btn-stack">
+        <button class="icon-btn hdr-back-btn-desktop" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'" style="display:none">⬅️</button>
         <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
         <button class="lang-btn" id="langBtn2" onclick="toggleLang()" title="Switch language">EN | عر</button>
         <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
@@ -1850,9 +1855,9 @@ function itemCardHtml(item){
   </div>`;
 
   return`<div class="item-card" id="card-${e(item.id)}">
+    ${togglesHtml}
     <div class="item-body">
       <div class="item-name">${e(nm)}</div>
-      ${togglesHtml}
       <div class="item-desc">${e(dsc)}</div>
       <div class="item-footer">
         ${priceHtml}
