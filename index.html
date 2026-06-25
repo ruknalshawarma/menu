@@ -540,12 +540,18 @@ body.rtl .item-price{font-size:15px}
 
 
 
-/* ITEM OPTION TOGGLES — small, top-right corner of card */
+/* ITEM OPTION TOGGLES — small, top corner of the text/body side of card */
 .item-toggles{
   position:absolute;top:6px;right:6px;
   display:flex;flex-direction:column;align-items:flex-end;gap:3px;
   z-index:2;pointer-events:auto;
 }
+/* In LTR: image is on the LEFT (order:-1), body is on the RIGHT.
+   Toggles sit top-right = over the body (text) side ✓ */
+/* In RTL: image flips to RIGHT, body is on the LEFT.
+   So toggles must move to top-left = over the body (text) side */
+body.rtl .item-toggles{right:auto;left:6px;align-items:flex-start}
+
 .toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--g1);flex-shrink:0}
 .toggle-opt{padding:2px 7px;font-size:9px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
 .toggle-opt:not(:last-child){border-right:1px solid var(--g1)}
@@ -555,7 +561,6 @@ body.dark-mode .toggle-group{border-color:#3a8c5a}
 body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
 body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
 body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:9px}
-body.rtl .item-toggles{right:auto;left:6px;align-items:flex-start}
 
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
@@ -1835,12 +1840,18 @@ function itemCardHtml(item){
   // Toggle buttons for this item (Normal/Spicy, Chicken/Beef, Small/Large)
   let togglesHtml = '';
   if(item.toggleTypes && item.toggleTypes.length){
+    // Ensure defaults are initialised (index 0 = first option)
+    if(!itemToggles[item.id]){
+      itemToggles[item.id]={};
+      item.toggleTypes.forEach(typeKey=>{ itemToggles[item.id][typeKey]=0; });
+    }
     const groups = item.toggleTypes.map(typeKey=>{
       const cfg = TOGGLE_OPTIONS[typeKey];
       const opts = isAr ? cfg.opts_ar : cfg.opts_en;
-      const current = (itemToggles[item.id] && itemToggles[item.id][typeKey]) || opts[0];
-      const btns = opts.map(opt=>
-        `<button class="toggle-opt${opt===current?' active':''}" onclick="setToggle('${e(item.id)}','${typeKey}','${opt}',event)">${e(opt)}</button>`
+      const selectedIdx = (itemToggles[item.id] && itemToggles[item.id][typeKey] != null)
+        ? itemToggles[item.id][typeKey] : 0;
+      const btns = opts.map((opt,idx)=>
+        `<button class="toggle-opt${idx===selectedIdx?' active':''}" onclick="setToggle('${e(item.id)}','${typeKey}',${idx},event)">${e(opt)}</button>`
       ).join('');
       return `<div class="toggle-group">${btns}</div>`;
     }).join('');
@@ -1958,14 +1969,13 @@ function changeQty(id,delta){
 // ═══════════════════════════════════════════════════
 //  ITEM OPTION TOGGLE
 // ═══════════════════════════════════════════════════
-function setToggle(itemId, typeKey, selected, evt){
+function setToggle(itemId, typeKey, selectedIdx, evt){
   if(evt) evt.stopPropagation();
   if(!itemToggles[itemId]) itemToggles[itemId]={};
-  itemToggles[itemId][typeKey]=selected;
-  // Update just the buttons inside this card's toggle-group for this typeKey
-  document.querySelectorAll(`#card-${itemId} .toggle-group`).forEach(group=>{
+  itemToggles[itemId][typeKey]=selectedIdx;
+  // Update active class on buttons by index
+  document.querySelectorAll(`#card-${itemId} .item-toggles .toggle-group`).forEach(group=>{
     const btns=[...group.querySelectorAll('.toggle-opt')];
-    // Determine which group this is by matching options
     const item=MENU.find(i=>i.id===itemId);
     if(!item) return;
     const isAr=lang==='ar';
@@ -1975,7 +1985,7 @@ function setToggle(itemId, typeKey, selected, evt){
       return btns.length===opts.length && btns.every((b,i2)=>b.textContent===opts[i2]);
     });
     if(grpTypeKey===typeKey){
-      btns.forEach(b=>b.classList.toggle('active',b.textContent===selected));
+      btns.forEach((b,i2)=>b.classList.toggle('active',i2===selectedIdx));
     }
   });
 }
@@ -2020,7 +2030,13 @@ function refreshCart(){
     // Toggle selections summary for cart display
     let toggleSummary='';
     if(item.toggleTypes&&item.toggleTypes.length&&itemToggles[id]){
-      const parts=item.toggleTypes.map(t=>itemToggles[id][t]).filter(Boolean);
+      const parts=item.toggleTypes.map(t=>{
+        const idx=itemToggles[id][t];
+        const cfg=TOGGLE_OPTIONS[t];
+        if(idx==null||!cfg) return null;
+        const opts=isAr?cfg.opts_ar:cfg.opts_en;
+        return opts[idx]||null;
+      }).filter(Boolean);
       if(parts.length) toggleSummary=`<div style="font-size:11px;color:var(--g1);font-weight:600;margin-top:1px">${parts.join(' · ')}</div>`;
     }    return`<div class="cart-row">
       <div class="cart-row-thumb">${thumb||'🍽️'}</div>
@@ -2103,8 +2119,11 @@ function sendToWhatsApp(){
     let toggleNote = '';
     if(item.toggleTypes && item.toggleTypes.length && itemToggles[id]){
       const parts = item.toggleTypes.map(t=>{
-        const val = itemToggles[id][t];
-        return val || null;
+        const idx = itemToggles[id][t];
+        const cfg = TOGGLE_OPTIONS[t];
+        if(idx==null||!cfg) return null;
+        const opts = isAr ? cfg.opts_ar : cfg.opts_en;
+        return opts[idx]||null;
       }).filter(Boolean);
       if(parts.length) toggleNote = ` (${parts.join(', ')})`;
     }
