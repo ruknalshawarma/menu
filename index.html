@@ -76,15 +76,17 @@ body.dark-mode .soc-copy{background:#2e8b57}
 .location-link{flex-shrink:0;display:flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:var(--g3);color:var(--g1);border:1.5px solid rgba(26,92,58,.2);transition:background .15s,border-color .15s}
 .location-link:hover{background:var(--g1);color:var(--white);border-color:var(--g1)}
 
-/* Lang + Menu buttons — right side of row1 on mobile */
-.hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0}
+/* Row1 right: search + lang stacked vertically on mobile */
+.hdr-btn-stack{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex-shrink:0}
 
-/* Search btn: visible on mobile row1, back btn: only in row2 on mobile */
+/* Search btn visible on mobile row1 */
 .hdr-search-btn{display:flex}
 .hdr-back-btn{}
 
-/* Row2 btn-stack hidden on mobile — only shown on desktop */
-.hdr-row2 .hdr-btn-stack{display:none}
+/* Row2 btn-stack on mobile: show only cat-toggle; hide search+lang */
+.hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px}
+.hdr-row2 .hdr-btn-stack .hdr-search-btn{display:none}
+.hdr-row2 .hdr-btn-stack .lang-btn{display:none}
 
 /* ── ROW 2 (mobile): [⬅️ back] [socials centered] ── */
 .hdr-row2{
@@ -155,7 +157,7 @@ body.dark-mode .soc-copy{background:#2e8b57}
   /* Socials move to center of the single row */
   .hdr-socials{flex:1 1 0;justify-content:center;gap:9px}
 
-  /* Row1: hide entire btn-stack on desktop (search+lang+menu move to row2) */
+  /* Row1: hide entire btn-stack on desktop (search+lang move to row2) */
   .hdr-row1 .hdr-btn-stack{display:none}
 
   /* Row2 becomes the right-side button group — inline, no border, no padding */
@@ -165,8 +167,10 @@ body.dark-mode .soc-copy{background:#2e8b57}
     justify-content:flex-end;gap:6px;
   }
 
-  /* Show lang+menu+search in row2 on desktop */
+  /* Row2 btn-stack on desktop: all buttons horizontal, search+lang visible */
   .hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;gap:6px}
+  .hdr-row2 .hdr-btn-stack .hdr-search-btn{display:flex}
+  .hdr-row2 .hdr-btn-stack .lang-btn{display:flex}
 
   /* Sizes */
   .logo-wrap{width:46px;height:46px}
@@ -1048,15 +1052,14 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
         </div>
         <p id="restaurantDesc"></p>
       </div>
-      <!-- Lang + Menu always visible on row1, search also on mobile -->
+      <!-- Row1 right: search + lang stacked vertically -->
       <div class="hdr-btn-stack">
         <button class="icon-btn hdr-search-btn" id="searchBtn" title="Search" onclick="toggleSearch()">🔍</button>
         <button class="lang-btn" id="langBtn" onclick="toggleLang()" title="Switch language">EN | عر</button>
-        <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
       </div>
     </div>
 
-    <!-- ROW 2 mobile: [⬅️ back] [socials centered]
+    <!-- ROW 2 mobile: [⬅️ back] [socials centered] [☰ Menu]
          ROW 2 desktop: right-side controls [⬅️] [🔍] [lang] [menu] — socials move to center -->
     <div class="hdr-row2">
       <button class="icon-btn hdr-back-btn" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'">⬅️</button>
@@ -1079,11 +1082,11 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
           <svg class="icon-check" viewBox="0 0 24 24" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
         </button>
       </div>
-      <!-- Lang + Menu — hidden on mobile (shown in row1), visible on desktop -->
+      <!-- cat-toggle visible on mobile in row2; full set [search+lang+menu] on desktop -->
       <div class="hdr-btn-stack">
         <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
         <button class="lang-btn" id="langBtn2" onclick="toggleLang()" title="Switch language">EN | عر</button>
-        <button class="cat-toggle-btn" id="catToggleBtn2" onclick="toggleCategoryBar()">☰ Menu</button>
+        <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
       </div>
     </div>
 
@@ -1269,6 +1272,8 @@ function toggleLang(){
   document.body.classList.toggle('rtl', isAr);
   document.getElementById('langBtn').textContent = T[lang].langBtn;
   document.getElementById('langBtn').classList.toggle('ar-active', isAr);
+  const lb2=document.getElementById('langBtn2');
+  if(lb2){lb2.textContent=T[lang].langBtn;lb2.classList.toggle('ar-active',isAr);}
  // document.getElementById('catToggleBtn').textContent = T[lang].menu;
   document.getElementById('searchInput').placeholder = T[lang].search;
   document.getElementById('offersLabelTop').textContent = T[lang].offers;
@@ -1494,9 +1499,10 @@ function buildCategoryBar(){
   }
   CATEGORIES.forEach(cat=>{
     const isUrl=cat.icon&&(cat.icon.startsWith('http')||cat.icon.startsWith('/'));
-    const iconHtml=isUrl
-      ?`<img src="${e(cat.icon)}" alt="" onerror="this.remove()">`
-      :(cat.icon?`<span>${cat.icon}</span>`:'');
+    const isToggleCode=cat.icon&&/^[\d,\s]+$/.test(cat.icon); // e.g. "1", "1,2", "1,2,3"
+    const iconHtml=(!cat.icon||isToggleCode)?''
+      :isUrl?`<img src="${e(cat.icon)}" alt="" onerror="this.remove()">`
+      :`<span>${cat.icon}</span>`;
     const label = (isAr&&cat.name_ar) ? cat.name_ar : cat.name;
     bar.innerHTML+=`<button class="cat-pill" data-cat="${e(cat.id)}" onclick="selectCat(this,'${e(cat.id)}')">${iconHtml}${e(label)}</button>`;
   });
