@@ -79,25 +79,22 @@ body.dark-mode .soc-copy{background:#2e8b57}
 /* Row1 right: search + lang stacked vertically on mobile */
 .hdr-btn-stack{display:flex;flex-direction:column;align-items:stretch;gap:4px;flex-shrink:0}
 
-/* Search btn visible on mobile row1 */
+/* Search visible on mobile row1 */
 .hdr-search-btn{display:flex}
-.hdr-back-btn{}
 
-/* Row2 btn-stack on mobile: show only cat-toggle; hide search+lang */
-.hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px;margin-left:auto}
-.hdr-row2 .hdr-btn-stack .hdr-search-btn{display:none}
-.hdr-row2 .hdr-btn-stack .lang-btn{display:none}
-
-/* ── ROW 2 (mobile): [⬅️ back] [socials TRULY centered] [btn-stack right] ── */
+/* ── ROW 2 (mobile): [⬅️] [socials centered] [☰Menu] ── */
 .hdr-row2{
-  display:flex;align-items:center;gap:8px;
+  display:flex;align-items:center;
   width:100%;
   padding:6px 0 6px;
   border-top:1px solid var(--border);
   position:relative;
 }
 
-/* Social icons — absolutely centered in the row regardless of siblings */
+/* Back btn — far left, no flex grow */
+.hdr-back-btn{flex-shrink:0}
+
+/* Social icons — absolutely centered in row2 on mobile */
 .hdr-socials{
   position:absolute;
   left:50%;
@@ -105,7 +102,17 @@ body.dark-mode .soc-copy{background:#2e8b57}
   display:flex;align-items:center;justify-content:center;
   gap:8px;
   pointer-events:auto;
+  flex-shrink:0;
 }
+
+/* Row2 btn-stack on mobile: only cat-toggle visible, pushed to far right */
+.hdr-row2 .hdr-btn-stack{
+  display:flex;flex-direction:row;align-items:center;gap:5px;
+  margin-left:auto;
+  flex-shrink:0;
+}
+.hdr-row2 .hdr-btn-stack .hdr-search-btn{display:none}
+.hdr-row2 .hdr-btn-stack .lang-btn{display:none}
 
 /* ── Button base styles ── */
 .icon-btn{border:1.5px solid var(--border);border-radius:8px;padding:5px 9px;background:var(--white);cursor:pointer;font-size:15px;transition:background .15s,border-color .15s;display:flex;align-items:center;justify-content:center;height:30px;white-space:nowrap}
@@ -149,29 +156,42 @@ body.dark-mode .soc-copy{background:#2e8b57}
 .hdr-actions{display:contents}
 .hdr-bottom-row{display:contents}
 
-/* ── DESKTOP (≥600px): single row [logo+name] | [socials] | [back+search+lang+menu] ── */
+/* ── DESKTOP (≥600px): single row [logo+name] | [⬅️] | [socials centered] | [🔍 EN Menu] ── */
 @media(min-width:600px){
   .header-inner{flex-direction:row;align-items:center;padding:10px 20px;gap:10px;min-height:62px}
   .header-inner.big{min-height:72px;padding:12px 24px}
 
-  /* Row1 shrinks to logo+name only, no padding */
+  /* Row1 shrinks to logo+name only */
   .hdr-row1{flex:0 0 auto;width:auto;padding-bottom:0}
-
-  /* Socials move to center of the single row — normal flow on desktop */
-  .hdr-socials{position:static;transform:none;flex:1 1 0;justify-content:center;gap:9px}
-
-  /* Row1: hide entire btn-stack on desktop (search+lang move to row2) */
+  /* Hide row1 btn-stack on desktop (search+lang are in row2 btn-stack) */
   .hdr-row1 .hdr-btn-stack{display:none}
 
-  /* Row2 becomes the right-side button group — inline, no border, no padding */
+  /* Row2: hidden as a block — its children are pulled into header-inner via display:contents */
   .hdr-row2{
-    flex:0 0 auto;width:auto;
-    border-top:none;padding:0;
-    justify-content:flex-end;gap:6px;
+    display:contents;
   }
 
-  /* Row2 btn-stack on desktop: all buttons horizontal, search+lang visible */
-  .hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;gap:6px}
+  /* back btn — shows as direct flex child, far left of the right group */
+  .hdr-row2 .hdr-back-btn{
+    display:flex;flex-shrink:0;
+    border:1.5px solid var(--border);border-radius:8px;
+    padding:6px 11px;background:var(--white);cursor:pointer;
+    font-size:16px;height:34px;align-items:center;justify-content:center;
+  }
+
+  /* Socials — flex:1 so they fill the center and self-center */
+  .hdr-socials{
+    position:static;transform:none;
+    flex:1 1 0;
+    justify-content:center;gap:9px;
+    display:flex;align-items:center;
+  }
+
+  /* Row2 btn-stack on desktop: horizontal, all buttons visible, pushed right */
+  .hdr-row2 .hdr-btn-stack{
+    display:flex;flex-direction:row;align-items:center;gap:6px;
+    margin-left:0;flex-shrink:0;
+  }
   .hdr-row2 .hdr-btn-stack .hdr-search-btn{display:flex}
   .hdr-row2 .hdr-btn-stack .lang-btn{display:flex}
 
