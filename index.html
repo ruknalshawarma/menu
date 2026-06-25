@@ -249,7 +249,6 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica
 body.rtl{direction:rtl;text-align:right}
 body.rtl .banner-overlay{text-align:right}
 body.rtl .item-tags{left:auto;right:8px}
-body.rtl .offer-badge{left:8px;right:auto}
 body.rtl .item-footer{flex-direction:row-reverse}
 body.rtl .cart-row-sub{text-align:left}
 body.rtl .search-input-row{flex-direction:row-reverse}
@@ -359,68 +358,144 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 /* ── BASE CARD (light mode) ── */
 .item-card{
   background:#fff;
-  border-radius:14px;
+  border-radius:12px;
   overflow:visible;
   border:1px solid rgba(0,0,0,.07);
   display:flex;
   flex-direction:row;
   align-items:stretch;
   position:relative;
-  min-height:110px;
+  min-height:96px;
   box-shadow:0 1px 6px rgba(0,0,0,.07);
   transition:transform .18s,box-shadow .18s;
   z-index:1;
 }
 .item-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.11)}
-/* While this card's dropdown list is open, lift it above every other
-   card in the grid (and above the sticky footer) so the floating
-   option list is never hidden behind a neighboring item-card. */
+
+/* Fluid card breakpoints */
+@media(min-width:360px){
+  .item-card{border-radius:12px;min-height:100px}
+}
+@media(min-width:540px){
+  .item-card{border-radius:13px;min-height:104px}
+}
+@media(min-width:768px){
+  .item-card{border-radius:14px;min-height:112px}
+}
+@media(min-width:1024px){
+  .item-card{min-height:118px}
+}
+/* Very narrow phones: reduce min-height so card doesn't feel bloated */
+@media(max-width:359px){
+  .item-card{min-height:88px}
+}
 .item-card.dd-elevated{z-index:120}
 
-/* ── CARD BODY — right side in LTR (image is left) ── */
+/* ── CARD BODY — 2-col grid: col1=desc, col2=dropdown; name row + footer span full ── */
 .item-body{
   flex:1;
   min-width:0;
-  padding:14px 16px 10px 10px;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
+  padding:8px 10px 8px 10px;
+  display:grid;
+  grid-template-columns:1fr auto;
+  grid-template-rows:auto auto 1fr auto;
+  grid-template-areas:
+    "name  name"
+    "desc  dd"
+    "desc  dd"
+    "foot  foot";
+  column-gap:8px;
+  row-gap:0;
   position:relative;
 }
+/* Name row: name text + toggles live side-by-side as flex siblings.
+   Name wraps freely; toggles never overlap it and stay pinned right. */
+.item-body-name-row{
+  grid-area:name;
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:8px;
+  min-width:0;
+}
+.item-body-name{ flex:1 1 auto; min-width:0; align-self:start; }
+.item-body-desc{ grid-area:desc; align-self:start; }
+.item-body-dd  { grid-area:dd;   align-self:center; display:flex; align-items:center; justify-content:flex-end; }
+.item-body-foot{ grid-area:foot; align-self:end; padding-top:8px; }
+/* Collapse dd column when empty */
+.item-body:not(:has(.item-body-dd:not(:empty))){ grid-template-columns:1fr; grid-template-areas:"name" "desc" "foot"; }
+@media(min-width:360px){.item-body{padding:9px 11px 8px 10px}}
+@media(min-width:540px){.item-body{padding:11px 14px 9px 11px;column-gap:10px}}
+@media(min-width:768px){.item-body{padding:12px 16px 10px 12px}}
+@media(min-width:1024px){.item-body{padding:14px 18px 11px 13px}}
+@media(max-width:359px){.item-body{padding:7px 8px 7px 8px;column-gap:6px}}
 
 /* ── ITEM NAME (light) ── */
 .item-name{
-  font-size:14px;
+  font-size:13px;
   font-weight:700;
   color:#1a1a1a;
   line-height:1.3;
-  display:-webkit-box;
-  -webkit-line-clamp:2;
-  -webkit-box-orient:vertical;
-  overflow:hidden;
+  overflow-wrap:break-word;
+  word-break:break-word;
 }
-@media(min-width:540px){.item-name{font-size:15px}}
+@media(min-width:540px){.item-name{font-size:14px}}
+@media(min-width:768px){.item-name{font-size:14.5px}}
+@media(min-width:1024px){.item-name{font-size:15px}}
 
 /* ── ITEM DESC (light) ── */
 .item-desc{
-  font-size:11.5px;
+  font-size:10.5px;
   color:#6b7280;
-  margin-top:4px;
-  line-height:1.45;
+  margin-top:3px;
+  line-height:1.4;
   display:-webkit-box;
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
 }
+@media(min-width:540px){.item-desc{font-size:11px;margin-top:4px}}
+@media(min-width:768px){.item-desc{font-size:11.5px}}
 
 /* ── PRICE ROW ── */
 .item-footer{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-top:10px;
+  margin-top:auto;
+  padding-top:8px;
+  gap:6px;
+  flex-wrap:wrap;
+}
+/* ── item-footer inside item-body-foot ── */
+.item-footer{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
   gap:6px;
 }
+/* price-block */
+/* ── Dropdown inside item-body-dd (right column of body grid) ── */
+.item-body-dd .toggle-dropdown{
+  position:relative;
+}
+.item-body-dd .toggle-dd-trigger{
+  font-size:10.5px;
+  padding:4px 8px 4px 10px;
+  height:26px;
+  min-width:78px;
+}
+/* List opens upward so it never clips outside the card */
+.item-body-dd .toggle-dd-list{
+  top:auto;
+  bottom:calc(100% + 6px);
+  right:0;
+  left:auto;
+  min-width:140px;
+  z-index:200;
+  transform-origin:bottom right;
+}
+body.rtl .item-body-dd .toggle-dd-list{right:auto;left:0;transform-origin:bottom left;}
 .price-block{display:flex;flex-direction:column;gap:1px}
 
 /* Light mode: green price */
@@ -432,8 +507,8 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 /* ── IMAGE BOX — left side in LTR, right side in RTL ──
    object-fit:contain = full image visible, never cropped. */
 .item-thumb{
-  flex:0 0 108px;
-  width:108px;
+  flex:0 0 90px;
+  width:90px;
   margin:8px 0 8px 8px;
   border-radius:10px;
   background:#f3f4f6;
@@ -458,7 +533,7 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 .offer-badge{
   position:absolute;
   top:-4px;
-  right:-4px;
+  left:-4px;
   z-index:6;
   background:linear-gradient(135deg,#e53935,#d84315);
   color:#fff;
@@ -470,7 +545,7 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   box-shadow:0 2px 6px rgba(229,57,53,.45);
   white-space:nowrap;
 }
-body.rtl .offer-badge{right:auto;left:-4px}
+body.rtl .offer-badge{left:auto;right:-4px}
 
 /* ── TAGS — inside image box, bottom-left ── */
 .item-tags{
@@ -521,6 +596,7 @@ body.dark-mode .item-thumb{background:#3a3a3a}
 
 /* ── RTL / ARABIC — image on right, text+controls on left ── */
 body.rtl .item-body{padding:14px 10px 14px 16px;text-align:right}
+body.rtl .item-body-name-row{flex-direction:row-reverse}
 body.rtl .item-name{text-align:right}
 body.rtl .item-desc{text-align:right}
 /* Footer: price on RIGHT, qty button on LEFT */
@@ -545,41 +621,160 @@ body.rtl .item-desc{
 body.rtl .item-price{font-size:15px}
 
 /* Responsive image box */
-@media(min-width:540px){.item-thumb{flex:0 0 118px;width:118px}}
+@media(max-width:359px){.item-thumb{flex:0 0 84px;width:84px}}
+@media(min-width:360px){.item-thumb{flex:0 0 90px;width:90px}}
+@media(min-width:540px){.item-thumb{flex:0 0 110px;width:110px}}
+@media(min-width:768px){.item-thumb{flex:0 0 118px;width:118px}}
+@media(min-width:1024px){.item-thumb{flex:0 0 124px;width:124px}}
 
 
 
 /* ITEM OPTION TOGGLES — sits at top of item-body (not overlapping the thumb)
    Uses static flow inside item-body so clicks are never intercepted by the
    lightbox handler on the thumb. */
+
+/* ── ITEM TOGGLES — lives inside the name row, pinned to the right.
+   No longer absolutely positioned: it's a flex sibling of the name text,
+   so it can never overlap wrapped/multi-line names. ── */
 .item-toggles{
   display:flex;
-  flex-wrap:wrap;
+  flex-wrap:nowrap;
   gap:4px;
-  justify-content:flex-start;
-  z-index:3;
-  max-width:100%;
-  margin-bottom:4px;
+  align-items:center;
+  flex-shrink:0;
+  z-index:10;
+  pointer-events:auto;
 }
-.toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--g1);flex-shrink:0}
-.toggle-opt{padding:1px 6px;font-size:9px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.5;white-space:nowrap}
-.toggle-opt:not(:last-child){border-right:1px solid var(--g1)}
-.toggle-opt.active{background:var(--g1);color:var(--white)}
-body.dark-mode .toggle-opt{background:#2a2a2a;color:#4ade80;border-color:#3a8c5a}
-body.dark-mode .toggle-group{border-color:#3a8c5a}
-body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
-body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
-/* RTL: toggles align to the right */
-body.rtl .item-toggles{justify-content:flex-end}
-body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:9px}
 
-/* Color-coded pill states (e.g. Normal = green, Spicy = red) */
-.toggle-opt.active[data-opt-color="green"]{background:#2e8b57;color:#fff}
-.toggle-opt.active[data-opt-color="red"]{background:#e53935;color:#fff}
-body.dark-mode .toggle-opt.active[data-opt-color="green"]{background:#2e8b57;color:#fff}
-body.dark-mode .toggle-opt.active[data-opt-color="red"]{background:#e53935;color:#fff}
-.lb-toggles .toggle-opt.active[data-opt-color="green"]{background:#2e8b57}
-.lb-toggles .toggle-opt.active[data-opt-color="red"]{background:#e53935}
+/* ══════════════════════════════════════════════
+   SWITCH TOGGLE  (2-option pill with sliding knob)
+   ══════════════════════════════════════════════ */
+.toggle-group{
+  display:flex;
+  align-items:center;
+  position:relative;
+  flex-shrink:0;
+  background:rgba(0,0,0,.07);
+  border-radius:100px;
+  padding:2px;
+  gap:0;
+  border:1px solid rgba(0,0,0,.08);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.12);
+  overflow:hidden;
+}
+body.dark-mode .toggle-group{
+  background:rgba(255,255,255,.07);
+  border-color:rgba(255,255,255,.10);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35);
+}
+
+/* Each option slot — compact 24×24 circle knob */
+.toggle-opt{
+  position:relative;
+  z-index:1;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  width:24px;
+  height:24px;
+  border:none;
+  background:transparent;
+  border-radius:100px;
+  cursor:pointer;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+  transition:color .22s ease;
+  line-height:1;
+  color:var(--muted);
+}
+.toggle-opt:hover{ color:var(--txt) }
+body.dark-mode .toggle-opt{ color:rgba(255,255,255,.4) }
+body.dark-mode .toggle-opt:hover{ color:rgba(255,255,255,.75) }
+
+/* White knob via ::before */
+.toggle-opt::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  border-radius:100px;
+  background:transparent;
+  box-shadow:none;
+  transition:background .26s cubic-bezier(.34,1.3,.64,1),
+             box-shadow .26s ease,
+             transform .26s cubic-bezier(.34,1.3,.64,1);
+  transform:scale(0.55);
+  z-index:-1;
+}
+.toggle-opt.active::before{
+  background:#fff;
+  box-shadow:0 1px 6px rgba(0,0,0,.18),0 1px 2px rgba(0,0,0,.10);
+  transform:scale(1);
+}
+body.dark-mode .toggle-opt.active::before{
+  background:#e8e8e8;
+  box-shadow:0 1px 6px rgba(0,0,0,.45);
+}
+
+/* Icon / text inside knob */
+.toggle-opt .tog-icon{
+  font-size:12px;
+  line-height:1;
+  position:relative;
+  z-index:1;
+  transition:transform .26s cubic-bezier(.34,1.56,.64,1), filter .22s ease;
+  filter:grayscale(.5) opacity(.55);
+}
+.toggle-opt.active .tog-icon{
+  filter:grayscale(0) opacity(1);
+  transform:scale(1.2);
+}
+
+/* Text label for Small/Large (same knob, tiny bold text) */
+.toggle-opt .tog-label{
+  font-size:8.5px;
+  font-weight:900;
+  letter-spacing:.02em;
+  line-height:1;
+  position:relative;
+  z-index:1;
+  transition:opacity .2s ease;
+  opacity:.45;
+  text-transform:uppercase;
+}
+.toggle-opt.active .tog-label{ opacity:1; }
+body.rtl .toggle-opt .tog-label{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:7px}
+
+/* Track tints */
+.toggle-opt.active[data-opt-color="green"]::before{
+  background:#fff;
+  box-shadow:0 1px 8px rgba(46,139,87,.45),0 1px 2px rgba(0,0,0,.08);
+}
+.toggle-group:has(.toggle-opt.active[data-opt-color="green"]){
+  background:linear-gradient(135deg,rgba(26,110,60,.16),rgba(46,139,87,.20));
+  border-color:rgba(46,139,87,.28);
+}
+.toggle-opt.active[data-opt-color="red"]::before{
+  background:#fff;
+  box-shadow:0 1px 8px rgba(229,57,53,.45),0 1px 2px rgba(0,0,0,.08);
+}
+.toggle-group:has(.toggle-opt.active[data-opt-color="red"]){
+  background:linear-gradient(135deg,rgba(180,28,28,.16),rgba(229,57,53,.20));
+  border-color:rgba(229,57,53,.28);
+}
+
+/* Active text colour */
+.toggle-opt.active{ color:var(--g1); }
+.toggle-opt.active[data-opt-color="red"]{ color:#c62828; }
+body.dark-mode .toggle-opt.active{ color:#2e8b57; }
+body.dark-mode .toggle-opt.active[data-opt-color="red"]{ color:#e53935; }
+
+/* RTL */
+body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;}
+
+/* Lightbox */
+.lb-toggles .toggle-opt.active[data-opt-color="green"]::before{box-shadow:0 1px 8px rgba(46,139,87,.5)}
+.lb-toggles .toggle-opt.active[data-opt-color="red"]::before{box-shadow:0 1px 8px rgba(229,57,53,.5)}
 
 /* ── Selection confirmation blink — color matches the chosen option ── */
 @keyframes toggleBlink{
@@ -616,13 +811,14 @@ body.dark-mode .toggle-blink[data-opt-color="red"]{animation-name:toggleBlinkRed
   30%, 60%   { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
   75%        { box-shadow: 0 0 0 2px rgba(229,57,53,.5); }
 }
-.attention-blink{
+/* Blink applied directly to toggle-group or toggle-dd-trigger only */
+.toggle-group.attention-blink,
+.toggle-dd-trigger.attention-blink{
   animation:attentionBlink 1.1s ease-in-out;
-  border-radius:12px;
+  border-radius:100px;
 }
-.attention-blink .toggle-group,
-.attention-blink .toggle-dd-trigger{
-  animation:attentionBlink 1.1s ease-in-out;
+.toggle-dd-trigger.attention-blink{
+  border-radius:10px;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -708,6 +904,7 @@ body.rtl .toggle-dd-trigger{padding:5px 12px 5px 9px}
 body.rtl .toggle-dd-trigger-label{text-align:right}
 body.rtl .toggle-dd-list{right:auto;left:0;transform-origin:top left}
 body.rtl .toggle-dd-item{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
+/* RTL item-body-dd — list opens to the left */
 
 /* Lightbox variant — larger touch targets, frosted dark-glass trigger,
    solid light panel for the option list so it stays readable on photos. */
@@ -1434,7 +1631,7 @@ const TAG_CONFIG={
 const TOGGLE_OPTIONS={
   '1':{ type:'buttons',  opts_en:['Normal','Spicy'],   opts_ar:['عادي','حار'],
                           colors:['green','red'] },
-  '2':{ type:'buttons',  opts_en:['Chicken','Beef'],   opts_ar:['دجاج','لحم']   },
+  '2':{ type:'buttons',  opts_en:['Chicken','Beef'],   opts_ar:['دجاج','لحم'],  colors:['green','red'] },
   '3':{ type:'buttons',  opts_en:['Small','Large'],    opts_ar:['صغير','كبير']  },
   '4':{ type:'dropdown', opts_en:['Pepsi','Fanta','Sprite','Laban','Water'],
                           opts_ar:['بيبسي','فانتا','سبرايت','لبن','ماء']        }
@@ -1620,7 +1817,7 @@ function parseItemsSheet(rows){
     const hasOffer   = offerPrice>0 && offerPrice<price;
     const finalPrice = hasOffer ? offerPrice : price;
     const oldPrice   = hasOffer ? price : 0;
-    const discPct    = hasOffer ? Math.round((price-offerPrice)/price*100) : 0;
+    const discPct    = hasOffer ? Math.max(5, Math.round(Math.round((price-offerPrice)/price*100)/5)*5) : 0;
     const saveAmt    = hasOffer ? (price-offerPrice).toFixed(2) : '0';
     const discLabel  = hasOffer ? `${discPct}% OFF` : '';
     const saveLabel  = hasOffer ? `Save ${CUR} ${saveAmt}` : '';
@@ -2017,8 +2214,12 @@ function itemCardHtml(item){
   // Tags inside the image box
   const tagsHtml = tagHtml ? `<div class="item-tags">${tagHtml}</div>` : '';
 
-  // Toggle buttons/dropdowns for this item (Normal/Spicy, Chicken/Beef, Small/Large, Drinks)
+  // Top pill toggles (Normal/Spicy, Chicken/Beef, Small/Large)
   const togglesHtml = buildTogglesHtml(item, isAr, '');
+
+  // Footer dropdown (type 4 — drinks/variants)
+  const footerDdHtml = buildFooterDropdownHtml(item, isAr, '');
+  const hasFooterDd = footerDdHtml.trim().length > 0;
 
   // Image box: offer badge + tags overlaid on top of image
   const thumbBox = `<div class="item-thumb" onclick="openLightbox('${e(item.id)}',this)" role="button" tabindex="0" aria-label="View image of ${e(nm)}">
@@ -2027,15 +2228,26 @@ function itemCardHtml(item){
     ${thumb}
   </div>`;
 
-  return`<div class="item-card" id="card-${e(item.id)}">
-    <div class="item-body">
-      <div class="item-name">${e(nm)}</div>
-      ${togglesHtml}
-      <div class="item-desc">${e(dsc)}</div>
+  const footerContent = `<div class="item-body-foot">
       <div class="item-footer">
         ${priceHtml}
         ${qtyHtml}
       </div>
+    </div>`;
+
+  const ddCol = footerDdHtml
+    ? `<div class="item-body-dd">${footerDdHtml}</div>`
+    : '';
+
+  return`<div class="item-card" id="card-${e(item.id)}">
+    <div class="item-body">
+      <div class="item-body-name-row">
+        <div class="item-body-name item-name">${e(nm)}</div>
+        ${togglesHtml}
+      </div>
+      <div class="item-body-desc item-desc">${e(dsc)}</div>
+      ${ddCol}
+      ${footerContent}
     </div>
     ${thumbBox}
   </div>`;
@@ -2124,6 +2336,7 @@ function changeQty(id,delta){
     const qtyHtml=qty>0
       ?`<div class="qty-control"><button class="qty-btn" onclick="changeQty('${e(id)}',-1)">-</button><span class="qty-num">${qty}</span><button class="qty-btn" onclick="changeQty('${e(id)}',1)">+</button></div>`
       :`<button class="qty-btn add-only" onclick="changeQty('${e(id)}',1)">+</button>`;
+    // Dropdown is now in .item-body-dd (separate grid cell) — footer only has price + qty
     footer.innerHTML=priceHtml+qtyHtml;
   });
   if(document.getElementById('cartModal').classList.contains('open')) refreshCart();
@@ -2171,37 +2384,70 @@ function getItemToggleSummary(item, isAr){
   return item.toggleTypes.map(t=>getToggleText(item, t, isAr)).filter(Boolean);
 }
 
+// Icons per toggle type — all pill switches get an emoji in the knob
+// Dropdown (type 4) has no icons — clean text + checkmark only
+const TOGGLE_ICONS = {
+  '1': ['🌿','🌶️'],   // Normal / Spicy
+  '2': ['🍗','🥩'],   // Chicken / Beef
+  '3': ['🤏','💪'],   // Small / Large — now icon too
+  '4': []             // Dropdown — no icons
+};
+
 function buildTogglesHtml(item, isAr, ctx){
   if(!item.toggleTypes || !item.toggleTypes.length) return '';
   ensureToggleDefaults(item);
   const groups = item.toggleTypes.map(typeKey=>{
     const cfg = TOGGLE_OPTIONS[typeKey];
     if(!cfg) return '';
+    if(cfg.type === 'dropdown') return ''; // Dropdowns go in footer — skip here
     const opts = isAr ? cfg.opts_ar : cfg.opts_en;
+    const icons = TOGGLE_ICONS[typeKey] || [];
     const curIdx = itemToggles[item.id][typeKey] || 0;
-    if(cfg.type === 'dropdown'){
-      const listItemsHtml = opts.map((opt,i)=>
-        `<li class="toggle-dd-item${i===curIdx?' selected':''}" role="option" aria-selected="${i===curIdx}" onclick="event.stopPropagation();selectDropdownOption('${e(item.id)}','${typeKey}','${i}',event)">
-           <span class="toggle-dd-item-label">${e(opt)}</span>
-           <span class="toggle-dd-item-check" aria-hidden="true"></span>
-         </li>`
-      ).join('');
-      return `<div class="toggle-dropdown" data-toggle-type="${e(typeKey)}" data-toggle-ctx="${ctx}">
-        <button type="button" class="toggle-dd-trigger" onclick="event.stopPropagation();toggleDropdownOpen(this,event)" aria-haspopup="listbox" aria-expanded="false">
-          <span class="toggle-dd-trigger-label">${e(opts[curIdx])}</span>
-          <span class="toggle-dd-trigger-arrow" aria-hidden="true"></span>
-        </button>
-        <ul class="toggle-dd-list" role="listbox">${listItemsHtml}</ul>
-      </div>`;
-    }
+    const hasIcons = icons.some(ic=>ic && ic.length>0);
+    // Pill switch buttons
     const btns = opts.map((opt,i)=>{
       const colorAttr = (cfg.colors && cfg.colors[i]) ? ` data-opt-color="${e(cfg.colors[i])}"` : '';
-      return `<button class="toggle-opt${i===curIdx?' active':''}"${colorAttr} onclick="setToggle('${e(item.id)}','${typeKey}','${i}',event)">${e(opt)}</button>`;
+      const ic = hasIcons && icons[i]
+        ? `<span class="tog-icon" aria-hidden="true">${icons[i]}</span>`
+        : `<span class="tog-label">${e(opt)}</span>`;
+      return `<button class="toggle-opt${i===curIdx?' active':''}"${colorAttr}
+          aria-label="${e(opt)}"
+          onclick="setToggle('${e(item.id)}','${typeKey}','${i}',event)">${ic}</button>`;
     }).join('');
     return `<div class="toggle-group" data-toggle-type="${e(typeKey)}">${btns}</div>`;
   }).join('');
+  if(!groups.trim()) return '';
   const wrapClass = ctx === 'lb' ? 'lb-toggles' : 'item-toggles';
   return `<div class="${wrapClass}">${groups}</div>`;
+}
+
+// Build ONLY the dropdown toggles for the item footer
+function buildFooterDropdownHtml(item, isAr, ctx){
+  if(!item.toggleTypes || !item.toggleTypes.length) return '';
+  ensureToggleDefaults(item);
+  const dropdowns = item.toggleTypes.map(typeKey=>{
+    const cfg = TOGGLE_OPTIONS[typeKey];
+    if(!cfg || cfg.type !== 'dropdown') return '';
+    const opts = isAr ? cfg.opts_ar : cfg.opts_en;
+    const curIdx = itemToggles[item.id][typeKey] || 0;
+    const listItemsHtml = opts.map((opt,i)=>
+      `<li class="toggle-dd-item${i===curIdx?' selected':''}" role="option" aria-selected="${i===curIdx}"
+          onclick="event.stopPropagation();selectDropdownOption('${e(item.id)}','${typeKey}','${i}',event)">
+         <span class="toggle-dd-item-label">${e(opt)}</span>
+         <span class="toggle-dd-item-check" aria-hidden="true"></span>
+       </li>`
+    ).join('');
+    return `<div class="toggle-dropdown" data-toggle-type="${e(typeKey)}" data-toggle-ctx="${ctx}">
+      <button type="button" class="toggle-dd-trigger"
+          onclick="event.stopPropagation();toggleDropdownOpen(this,event)"
+          aria-haspopup="listbox" aria-expanded="false">
+        <span class="toggle-dd-trigger-label">${e(opts[curIdx])}</span>
+        <span class="toggle-dd-trigger-arrow" aria-hidden="true"></span>
+      </button>
+      <ul class="toggle-dd-list" role="listbox">${listItemsHtml}</ul>
+    </div>`;
+  }).join('');
+  return dropdowns;
 }
 
 function setToggle(itemId, typeKey, selectedIndex, evt){
@@ -2265,10 +2511,14 @@ function closeDropdown(dd){
   const card = dd.closest('.item-card');
   if(card) card.classList.remove('dd-elevated');
 }
-// Close any open custom dropdown when tapping elsewhere on the page
-document.addEventListener('click', ()=>{
-  document.querySelectorAll('.toggle-dropdown.open').forEach(closeDropdown);
-});
+// Close dropdowns when clicking outside — use capture phase so stopPropagation
+// on inner buttons doesn't prevent this from firing, but only close when the
+// click target is genuinely outside every .toggle-dropdown element.
+document.addEventListener('click', (ev)=>{
+  if(!ev.target.closest('.toggle-dropdown')){
+    document.querySelectorAll('.toggle-dropdown.open').forEach(closeDropdown);
+  }
+}, true);
 
 function selectDropdownOption(itemId, typeKey, selectedIndex, evt){
   if(evt) evt.stopPropagation();
@@ -2325,27 +2575,26 @@ function blinkEl(el){
 // Red "pay attention" blink on every toggle/dropdown of an item — used when
 // adding an item to the cart, to draw the eye to its option pickers.
 function attentionBlinkToggles(itemId){
-  // Use querySelectorAll with attribute selector to catch duplicate card IDs
-  // (items appear in both Offers section and their category section)
-  document.querySelectorAll(`[id="card-${itemId}"]`).forEach(scope=>{
-    scope.querySelectorAll('.item-toggles, .lb-toggles').forEach(wrap=>{
-      wrap.classList.remove('attention-blink');
-      void wrap.offsetWidth;
-      wrap.classList.add('attention-blink');
-      wrap.addEventListener('animationend', ()=>wrap.classList.remove('attention-blink'), {once:true});
+  function blinkTargets(scope){
+    // Blink each toggle-group pill individually
+    scope.querySelectorAll('.toggle-group').forEach(el=>{
+      el.classList.remove('attention-blink');
+      void el.offsetWidth;
+      el.classList.add('attention-blink');
+      el.addEventListener('animationend', ()=>el.classList.remove('attention-blink'), {once:true});
     });
-  });
-  // Also check lightbox if open for this item
+    // Blink each dropdown trigger individually (now lives in .item-body-dd)
+    scope.querySelectorAll('.item-body-dd .toggle-dd-trigger').forEach(el=>{
+      el.classList.remove('attention-blink');
+      void el.offsetWidth;
+      el.classList.add('attention-blink');
+      el.addEventListener('animationend', ()=>el.classList.remove('attention-blink'), {once:true});
+    });
+  }
+  document.querySelectorAll(`[id="card-${itemId}"]`).forEach(blinkTargets);
   if(window.lbCurrentItemId === itemId){
     const lbScope = document.querySelector('#lbInfo');
-    if(lbScope){
-      lbScope.querySelectorAll('.lb-toggles').forEach(wrap=>{
-        wrap.classList.remove('attention-blink');
-        void wrap.offsetWidth;
-        wrap.classList.add('attention-blink');
-        wrap.addEventListener('animationend', ()=>wrap.classList.remove('attention-blink'), {once:true});
-      });
-    }
+    if(lbScope) blinkTargets(lbScope);
   }
 }
 
