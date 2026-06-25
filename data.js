@@ -66,7 +66,7 @@ const HARDCODED_ITEMS = [
 ['Meals','Fajita Meal + Pepsi','','23','','1','https://drive.google.com/thumbnail?id=1wMqVLOGXXqdvAwMiqC-YJjidH3B_ePZW&sz=w1000','','وجبات غربي','وجبة فاهيتا + بيبسي',''],
 ['Meals','Francesco Meal + Pepsi','','23','','1','https://drive.google.com/thumbnail?id=1UHXp6KWlptRNADw19D3PwLcb1ngCZMy4&sz=w1000','','وجبات غربي','وجبة فرانشيسكو + بيبسي',''],
 ['Meals','Mexicano Meal + Pepsi','','2','','1','https://drive.google.com/thumbnail?id=11GMed4wvmiFqdlBWJUOFA9pYkaIJcL0j&sz=w1000','','وجبات غربي','وجبة مكسيكانو + بيبسي',''],
-['Meals','Arabic Shish Meal','1','318','305','1','https://drive.google.com/thumbnail?id=1_D12RrtInQXoitc7Zwm7jsbwPXDloEIm&sz=w1000','popular','وجبات غربي','وجبة شيش عربي',''],
+['Meals','Arabic Shish Meal','1','318','','1','https://drive.google.com/thumbnail?id=1_D12RrtInQXoitc7Zwm7jsbwPXDloEIm&sz=w1000','popular','وجبات غربي','وجبة شيش عربي',''],
 ['Meals','Shish Meal With Rice','','23','','1','https://drive.google.com/thumbnail?id=1OHe_3MevuZIXh5RF4Y7S1__8MKjypVKh&sz=w1000','','وجبات غربي','وجبة شيش مع أرز',''],
 ['Meals','Half Kg Shish With Appetizers','','37','35','1','https://drive.google.com/thumbnail?id=12QJDxe_75M4DaVpbRvAnHqs5MDvkdUDj&sz=w1000','','وجبات غربي','نصف كيلو شيش مع مقبلات',''],
 ['Meals','1 Kilo Shish With Appetizers','1','62','59','1','https://drive.google.com/thumbnail?id=1DRWTIZMYE0K_MBcchrkSe0EXuaSr76GH&sz=w1000','','وجبات غربي','كيلو شيش مع مقبلات',''],
