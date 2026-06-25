@@ -247,6 +247,9 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica
 /* RTL support */
 body.rtl{direction:rtl;text-align:right}
 body.rtl .banner-overlay{text-align:right}
+body.rtl .item-tags{left:auto;right:8px}
+body.rtl .offer-badge{left:8px;right:auto}
+body.rtl .item-footer{flex-direction:row-reverse}
 body.rtl .cart-row-sub{text-align:left}
 body.rtl .search-input-row{flex-direction:row-reverse}
 body.rtl .lang-btn{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
@@ -367,7 +370,7 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 }
 .item-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.11)}
 
-/* ── IMAGE BOX — full width top of card (mobile), left side on 540px+ ── */
+/* ── IMAGE BOX — full width top of card ── */
 .item-thumb{
   width:100%;
   aspect-ratio:4/3;
@@ -380,16 +383,6 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   position:relative;
   flex-shrink:0;
   order:0;
-}
-/* At 540px+ becomes horizontal bar: image left, rounded left corners only */
-@media(min-width:540px){
-  .item-thumb{
-    flex:0 0 118px;width:118px;
-    aspect-ratio:unset;
-    align-self:stretch;
-    border-radius:14px 0 0 14px;
-  }
-  .item-body{border-radius:0 14px 14px 0}
 }
 .item-thumb img{
   width:100%;
@@ -517,15 +510,63 @@ body.dark-mode .item-old-price{color:rgba(255,255,255,.32)}
 body.dark-mode .save-label{color:#e87b35}
 body.dark-mode .item-thumb{background:#3a3a3a}
 
-/* ── RTL / ARABIC — perfect mirror of LTR card ── */
-/* Card itself flips: image goes to right, body to left */
-body.rtl .item-card{direction:rtl}
-body.rtl .item-thumb{order:1;margin:8px 0 8px 8px;border-radius:0 14px 14px 0}
-body.rtl .item-body{padding:10px 10px 10px 12px;text-align:right;border-radius:14px 0 0 14px}
+/* ── RTL / ARABIC — horizontal bar: text LEFT, image RIGHT ── */
+body.rtl .item-card{
+  flex-direction:row;          /* card becomes a horizontal bar            */
+  align-items:stretch;
+  overflow:hidden;
+  min-height:110px;
+}
+/* Text area — left side */
+body.rtl .item-body{
+  flex:1;
+  min-width:0;
+  padding:10px 12px 10px 10px;
+  text-align:right;
+  direction:rtl;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  position:relative;
+}
+/* Image — right side, fixed square */
+body.rtl .item-thumb{
+  flex:0 0 100px;
+  width:100px;
+  aspect-ratio:unset;          /* let height fill the card row             */
+  align-self:stretch;
+  border-radius:0 14px 14px 0; /* rounded only on right (card's right edge)*/
+  order:2;                     /* image after body in DOM → visually right  */
+  margin:0;
+}
+@media(min-width:400px){
+  body.rtl .item-thumb{flex:0 0 115px;width:115px}
+}
+@media(min-width:540px){
+  body.rtl .item-thumb{flex:0 0 130px;width:130px}
+}
+
 body.rtl .item-name{text-align:right}
 body.rtl .item-desc{text-align:right}
-/* Footer: price on right, + button on left — mirror of LTR (price-left, +-right) */
-body.rtl .item-footer{flex-direction:row-reverse}
+
+/* Footer: price on RIGHT (end), [+] on LEFT (start) in RTL reading order */
+body.rtl .item-footer{
+  flex-direction:row-reverse;  /* price right, qty left                    */
+}
+
+/* Toggles: top-LEFT corner of the text area in RTL */
+body.rtl .item-toggles{
+  right:auto;
+  left:8px;
+  align-items:flex-start;
+  top:8px;
+}
+
+/* Offer badge: top-LEFT of image (which is on the right) */
+body.rtl .offer-badge{right:auto;left:-4px}
+
+/* Tags: bottom-RIGHT of image in RTL */
+body.rtl .item-tags{left:auto;right:5px;align-items:flex-end}
 
 /* Arabic item name — larger, bolder, Kufi font for elegance */
 body.rtl .item-name{
@@ -543,8 +584,8 @@ body.rtl .item-desc{
 /* Arabic price — slightly larger for visual balance */
 body.rtl .item-price{font-size:15px}
 
-
-
+/* Responsive image box */
+@media(min-width:540px){.item-thumb{flex:0 0 118px;width:118px}}
 
 
 
@@ -568,6 +609,9 @@ body.dark-mode .toggle-group{border-color:#3a8c5a}
 body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
 body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
 body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:9px}
+/* RTL: flip toggle separator to left border */
+body.rtl .toggle-opt:not(:last-child){border-right:none;border-left:1px solid var(--g1)}
+body.dark-mode body.rtl .toggle-opt:not(:last-child){border-left-color:#3a8c5a;border-right:none}
 
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
