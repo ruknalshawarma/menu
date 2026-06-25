@@ -79,7 +79,7 @@ body.dark-mode .soc-copy{background:#2e8b57}
 /* Lang + Menu buttons — right side of row1 on mobile */
 .hdr-btn-stack{display:flex;flex-direction:row;align-items:center;gap:5px;flex-shrink:0}
 
-/* Back + Search — hidden on mobile row1, visible in row2 */
+/* Back + Search — search hidden on mobile, visible on desktop inside hdr-btn-stack */
 .hdr-back-btn{}
 .hdr-search-btn{display:none} /* hidden on mobile */
 
@@ -162,8 +162,8 @@ body.dark-mode .soc-copy{background:#2e8b57}
     justify-content:flex-end;gap:6px;
   }
 
-  /* Show search on desktop */
-  .hdr-search-btn{display:flex}
+  /* Show search on desktop (it's inside hdr-btn-stack in row2) */
+  .hdr-btn-stack .hdr-search-btn{display:flex}
 
   /* Show lang+menu in row2 on desktop */
   .hdr-row2 .hdr-btn-stack{display:flex;flex-direction:row;gap:6px}
@@ -1059,7 +1059,6 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
          ROW 2 desktop: right-side controls [⬅️] [🔍] [lang] [menu] — socials move to center -->
     <div class="hdr-row2">
       <button class="icon-btn hdr-back-btn" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'">⬅️</button>
-      <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
       <!-- Social icons: centered in row2 on mobile; move to center slot on desktop -->
       <div class="hdr-socials">
         <a class="soc-btn soc-instagram" href="https://www.instagram.com/rukn_alshawerma?igsh=MW4waXlvaXVsNXBjMw==" target="_blank" rel="noopener noreferrer" title="Instagram">
@@ -1081,6 +1080,7 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
       </div>
       <!-- Lang + Menu — hidden on mobile (shown in row1), visible on desktop -->
       <div class="hdr-btn-stack">
+        <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
         <button class="lang-btn" id="langBtn2" onclick="toggleLang()" title="Switch language">EN | عر</button>
         <button class="cat-toggle-btn" id="catToggleBtn2" onclick="toggleCategoryBar()">☰ Menu</button>
       </div>
