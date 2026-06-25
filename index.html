@@ -398,7 +398,6 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  padding-top:18px;
 }
 @media(min-width:540px){.item-name{font-size:15px}}
 
@@ -550,17 +549,17 @@ body.rtl .item-price{font-size:15px}
 
 
 
-/* ITEM OPTION TOGGLES — absolute top-right corner in LTR, top-left in RTL */
+/* ITEM OPTION TOGGLES — sits at top of item-body (not overlapping the thumb)
+   Uses static flow inside item-body so clicks are never intercepted by the
+   lightbox handler on the thumb. */
 .item-toggles{
-  position:absolute;
-  top:6px;
-  right:6px;
   display:flex;
   flex-wrap:wrap;
   gap:4px;
-  justify-content:flex-end;
-  z-index:2;
-  max-width:calc(100% - 12px);
+  justify-content:flex-start;
+  z-index:3;
+  max-width:100%;
+  margin-bottom:4px;
 }
 .toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--g1);flex-shrink:0}
 .toggle-opt{padding:1px 6px;font-size:9px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.5;white-space:nowrap}
@@ -570,8 +569,8 @@ body.dark-mode .toggle-opt{background:#2a2a2a;color:#4ade80;border-color:#3a8c5a
 body.dark-mode .toggle-group{border-color:#3a8c5a}
 body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
 body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
-/* RTL: toggles at top-LEFT corner */
-body.rtl .item-toggles{right:auto;left:6px;justify-content:flex-start}
+/* RTL: toggles align to the right */
+body.rtl .item-toggles{justify-content:flex-end}
 body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:9px}
 
 /* Color-coded pill states (e.g. Normal = green, Spicy = red) */
@@ -2211,11 +2210,8 @@ function setToggle(itemId, typeKey, selectedIndex, evt){
   if(!itemToggles[itemId]) itemToggles[itemId]={};
   itemToggles[itemId][typeKey]=idx;
 
-  // Sync + blink every rendered instance of this toggle (card grid + lightbox, if open)
-  [`#card-${itemId}`, `#lbInfo`].forEach(scopeSel=>{
-    const scope = document.querySelector(scopeSel);
-    if(!scope) return;
-    if(scopeSel==='#lbInfo' && window.lbCurrentItemId !== itemId) return;
+  // Sync + blink every rendered instance of this card (covers offer+category duplicates)
+  document.querySelectorAll(`[id="card-${itemId}"]`).forEach(scope=>{
     const group = scope.querySelector(`.toggle-group[data-toggle-type="${typeKey}"]`);
     if(group){
       const btns=[...group.querySelectorAll('.toggle-opt')];
@@ -2225,6 +2221,20 @@ function setToggle(itemId, typeKey, selectedIndex, evt){
       });
     }
   });
+  // Also sync lightbox if open for this item
+  if(window.lbCurrentItemId === itemId){
+    const lbScope = document.querySelector('#lbInfo');
+    if(lbScope){
+      const group = lbScope.querySelector(`.toggle-group[data-toggle-type="${typeKey}"]`);
+      if(group){
+        const btns=[...group.querySelectorAll('.toggle-opt')];
+        btns.forEach((b,i)=>{
+          b.classList.toggle('active', i===idx);
+          if(i===idx) blinkEl(b);
+        });
+      }
+    }
+  }
 }
 
 /* ── Custom dropdown (no native <select>) ── */
@@ -2268,10 +2278,8 @@ function selectDropdownOption(itemId, typeKey, selectedIndex, evt){
   const item = MENU.find(i=>i.id===itemId);
   const isAr = lang==='ar';
 
-  [`#card-${itemId}`, `#lbInfo`].forEach(scopeSel=>{
-    const scope = document.querySelector(scopeSel);
-    if(!scope) return;
-    if(scopeSel==='#lbInfo' && window.lbCurrentItemId !== itemId) return;
+  // Sync all rendered card instances (handles offer+category duplicates)
+  document.querySelectorAll(`[id="card-${itemId}"]`).forEach(scope=>{
     const dd = scope.querySelector(`.toggle-dropdown[data-toggle-type="${typeKey}"]`);
     if(!dd) return;
     const label = item ? getToggleText(item, typeKey, isAr) : '';
@@ -2284,6 +2292,24 @@ function selectDropdownOption(itemId, typeKey, selectedIndex, evt){
     closeDropdown(dd);
     blinkEl(dd.querySelector('.toggle-dd-trigger'));
   });
+  // Also sync lightbox if open
+  if(window.lbCurrentItemId === itemId){
+    const lbScope = document.querySelector('#lbInfo');
+    if(lbScope){
+      const dd = lbScope.querySelector(`.toggle-dropdown[data-toggle-type="${typeKey}"]`);
+      if(dd){
+        const label = item ? getToggleText(item, typeKey, isAr) : '';
+        const triggerLabel = dd.querySelector('.toggle-dd-trigger-label');
+        if(triggerLabel) triggerLabel.textContent = label;
+        dd.querySelectorAll('.toggle-dd-item').forEach((li,i)=>{
+          li.classList.toggle('selected', i===idx);
+          li.setAttribute('aria-selected', i===idx ? 'true' : 'false');
+        });
+        closeDropdown(dd);
+        blinkEl(dd.querySelector('.toggle-dd-trigger'));
+      }
+    }
+  }
 }
 
 // Brief highlight flash to confirm a selection was made
@@ -2299,10 +2325,9 @@ function blinkEl(el){
 // Red "pay attention" blink on every toggle/dropdown of an item — used when
 // adding an item to the cart, to draw the eye to its option pickers.
 function attentionBlinkToggles(itemId){
-  [`#card-${itemId}`, `#lbInfo`].forEach(scopeSel=>{
-    const scope = document.querySelector(scopeSel);
-    if(!scope) return;
-    if(scopeSel==='#lbInfo' && window.lbCurrentItemId !== itemId) return;
+  // Use querySelectorAll with attribute selector to catch duplicate card IDs
+  // (items appear in both Offers section and their category section)
+  document.querySelectorAll(`[id="card-${itemId}"]`).forEach(scope=>{
     scope.querySelectorAll('.item-toggles, .lb-toggles').forEach(wrap=>{
       wrap.classList.remove('attention-blink');
       void wrap.offsetWidth;
@@ -2310,6 +2335,18 @@ function attentionBlinkToggles(itemId){
       wrap.addEventListener('animationend', ()=>wrap.classList.remove('attention-blink'), {once:true});
     });
   });
+  // Also check lightbox if open for this item
+  if(window.lbCurrentItemId === itemId){
+    const lbScope = document.querySelector('#lbInfo');
+    if(lbScope){
+      lbScope.querySelectorAll('.lb-toggles').forEach(wrap=>{
+        wrap.classList.remove('attention-blink');
+        void wrap.offsetWidth;
+        wrap.classList.add('attention-blink');
+        wrap.addEventListener('animationend', ()=>wrap.classList.remove('attention-blink'), {once:true});
+      });
+    }
+  }
 }
 
 
