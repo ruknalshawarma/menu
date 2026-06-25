@@ -173,7 +173,10 @@ body.dark-mode .soc-copy{background:#2e8b57}
 
   /* back btn — shows as direct flex child, far left of the right group */
   .hdr-row2 .hdr-back-btn{
-    display:none;
+    display:flex;flex-shrink:0;
+    border:1.5px solid var(--border);border-radius:8px;
+    padding:6px 11px;background:var(--white);cursor:pointer;
+    font-size:16px;height:34px;align-items:center;justify-content:center;
   }
 
   /* Socials — flex:1 so they fill the center and self-center */
@@ -191,8 +194,6 @@ body.dark-mode .soc-copy{background:#2e8b57}
   }
   .hdr-row2 .hdr-btn-stack .hdr-search-btn{display:flex}
   .hdr-row2 .hdr-btn-stack .lang-btn{display:flex}
-  .hdr-row2 .hdr-back-btn{display:none}
-  .hdr-row2 .hdr-btn-stack .hdr-back-btn-desktop{display:flex!important}
 
   /* Sizes */
   .logo-wrap{width:46px;height:46px}
@@ -362,48 +363,26 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   overflow:visible;
   border:1px solid rgba(0,0,0,.07);
   display:flex;
-  flex-direction:column;
+  flex-direction:row;
   align-items:stretch;
   position:relative;
+  min-height:110px;
   box-shadow:0 1px 6px rgba(0,0,0,.07);
   transition:transform .18s,box-shadow .18s;
 }
 .item-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.11)}
 
-/* ── IMAGE BOX — full width top of card ── */
-.item-thumb{
-  width:100%;
-  aspect-ratio:4/3;
-  border-radius:14px 14px 0 0;
-  background:#f3f4f6;
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  position:relative;
-  flex-shrink:0;
-  order:0;
-}
-.item-thumb img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  display:block;
-}
-.item-thumb .thumb-emoji{font-size:42px}
-
-/* ── CARD BODY — below image ── */
+/* ── CARD BODY — right side in LTR (image is left) ── */
 .item-body{
   flex:1;
   min-width:0;
-  padding:10px 12px 12px;
+  padding:14px 16px 14px 10px;
   display:flex;
   flex-direction:column;
-  justify-content:space-between;
-  position:relative;
+  justify-content:center;
 }
 
-/* ── ITEM NAME ── */
+/* ── ITEM NAME (light) ── */
 .item-name{
   font-size:14px;
   font-weight:700;
@@ -413,15 +392,14 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   -webkit-line-clamp:2;
   -webkit-box-orient:vertical;
   overflow:hidden;
-  padding-right:0;
 }
 @media(min-width:540px){.item-name{font-size:15px}}
 
-/* ── ITEM DESC ── */
+/* ── ITEM DESC (light) ── */
 .item-desc{
   font-size:11.5px;
   color:#6b7280;
-  margin-top:3px;
+  margin-top:4px;
   line-height:1.45;
   display:-webkit-box;
   -webkit-line-clamp:2;
@@ -429,12 +407,12 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   overflow:hidden;
 }
 
-/* ── PRICE + QTY ROW — price bottom-left, qty bottom-right ── */
+/* ── PRICE ROW ── */
 .item-footer{
   display:flex;
   align-items:center;
   justify-content:space-between;
-  margin-top:8px;
+  margin-top:10px;
   gap:6px;
 }
 .price-block{display:flex;flex-direction:column;gap:1px}
@@ -444,6 +422,31 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 .item-price.offer-price{color:#d84315}
 .item-old-price{font-size:11px;color:#9ca3af;text-decoration:line-through;line-height:1}
 .save-label{font-size:9.5px;font-weight:700;color:#d84315;margin-top:1px}
+
+/* ── IMAGE BOX — left side in LTR, right side in RTL ──
+   object-fit:contain = full image visible, never cropped. */
+.item-thumb{
+  flex:0 0 108px;
+  width:108px;
+  margin:8px 0 8px 8px;
+  border-radius:10px;
+  background:#f3f4f6;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  flex-shrink:0;
+  order:-1;
+}
+.item-thumb img{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+  padding:4px;
+}
+.item-thumb .thumb-emoji{font-size:36px}
 
 /* ── OFFER BADGE — top-right of image box ── */
 .offer-badge{
@@ -510,63 +513,16 @@ body.dark-mode .item-old-price{color:rgba(255,255,255,.32)}
 body.dark-mode .save-label{color:#e87b35}
 body.dark-mode .item-thumb{background:#3a3a3a}
 
-/* ── RTL / ARABIC — horizontal bar: text LEFT, image RIGHT ── */
-body.rtl .item-card{
-  flex-direction:row;          /* card becomes a horizontal bar            */
-  align-items:stretch;
-  overflow:hidden;
-  min-height:110px;
-}
-/* Text area — left side */
-body.rtl .item-body{
-  flex:1;
-  min-width:0;
-  padding:10px 12px 10px 10px;
-  text-align:right;
-  direction:rtl;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  position:relative;
-}
-/* Image — right side, fixed square */
-body.rtl .item-thumb{
-  flex:0 0 100px;
-  width:100px;
-  aspect-ratio:unset;          /* let height fill the card row             */
-  align-self:stretch;
-  border-radius:0 14px 14px 0; /* rounded only on right (card's right edge)*/
-  order:2;                     /* image after body in DOM → visually right  */
-  margin:0;
-}
-@media(min-width:400px){
-  body.rtl .item-thumb{flex:0 0 115px;width:115px}
-}
-@media(min-width:540px){
-  body.rtl .item-thumb{flex:0 0 130px;width:130px}
-}
-
+/* ── RTL / ARABIC — image on right, text+controls on left ── */
+body.rtl .item-body{padding:14px 10px 14px 16px;text-align:right}
 body.rtl .item-name{text-align:right}
 body.rtl .item-desc{text-align:right}
-
-/* Footer: price on RIGHT (end), [+] on LEFT (start) in RTL reading order */
-body.rtl .item-footer{
-  flex-direction:row-reverse;  /* price right, qty left                    */
-}
-
-/* Toggles: top-LEFT corner of the text area in RTL */
-body.rtl .item-toggles{
-  right:auto;
-  left:8px;
-  align-items:flex-start;
-  top:8px;
-}
-
-/* Offer badge: top-LEFT of image (which is on the right) */
-body.rtl .offer-badge{right:auto;left:-4px}
-
-/* Tags: bottom-RIGHT of image in RTL */
-body.rtl .item-tags{left:auto;right:5px;align-items:flex-end}
+/* Footer: price on RIGHT, qty button on LEFT */
+body.rtl .item-footer{flex-direction:row-reverse}
+/* Toggles: wrap to the right so they sit under name/desc aligned right */
+body.rtl .item-toggles{justify-content:flex-end}
+/* Image: moves to the right side, margin flipped */
+body.rtl .item-thumb{order:1;margin:8px 8px 8px 0}
 
 /* Arabic item name — larger, bolder, Kufi font for elegance */
 body.rtl .item-name{
@@ -589,29 +545,17 @@ body.rtl .item-price{font-size:15px}
 
 
 
-/* ITEM OPTION TOGGLES — top-right corner of the body (text) area */
-.item-toggles{
-  position:absolute;
-  top:8px;
-  right:8px;
-  display:flex;flex-direction:column;align-items:flex-end;gap:3px;
-  z-index:2;pointer-events:auto;
-}
-/* RTL: body is still below image, but text aligns right→left, toggles go top-left */
-body.rtl .item-toggles{right:auto;left:8px;align-items:flex-start}
-
-.toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--g1);flex-shrink:0}
-.toggle-opt{padding:2px 7px;font-size:9px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
+/* ITEM OPTION TOGGLES */
+.item-toggles{display:flex;flex-wrap:wrap;gap:4px;margin:5px 0 2px}
+.toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1);flex-shrink:0}
+.toggle-opt{padding:3px 10px;font-size:11px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
 .toggle-opt:not(:last-child){border-right:1px solid var(--g1)}
 .toggle-opt.active{background:var(--g1);color:var(--white)}
 body.dark-mode .toggle-opt{background:#2a2a2a;color:#4ade80;border-color:#3a8c5a}
 body.dark-mode .toggle-group{border-color:#3a8c5a}
 body.dark-mode .toggle-opt:not(:last-child){border-right-color:#3a8c5a}
 body.dark-mode .toggle-opt.active{background:#2e8b57;color:#fff}
-body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:9px}
-/* RTL: flip toggle separator to left border */
-body.rtl .toggle-opt:not(:last-child){border-right:none;border-left:1px solid var(--g1)}
-body.dark-mode body.rtl .toggle-opt:not(:last-child){border-left-color:#3a8c5a;border-right:none}
+body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font-size:10px}
 
 /* QTY */
 .qty-control{display:flex;align-items:center;border-radius:20px;overflow:hidden;border:1.5px solid var(--g1)}
@@ -1165,9 +1109,8 @@ body.dark-mode .contact-timing-val{color:#d4f5e0}
           <svg class="icon-check" viewBox="0 0 24 24" style="display:none"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
         </button>
       </div>
-      <!-- cat-toggle visible on mobile in row2; full set [back+search+lang+menu] on desktop -->
+      <!-- cat-toggle visible on mobile in row2; full set [search+lang+menu] on desktop -->
       <div class="hdr-btn-stack">
-        <button class="icon-btn hdr-back-btn-desktop" title="Back to Menu" onclick="window.location.href='https://ruknalshawarma.github.io/main'" style="display:none">⬅️</button>
         <button class="icon-btn hdr-search-btn" title="Search" onclick="toggleSearch()">🔍</button>
         <button class="lang-btn" id="langBtn2" onclick="toggleLang()" title="Switch language">EN | عر</button>
         <button class="cat-toggle-btn" id="catToggleBtn" onclick="toggleCategoryBar()">☰ Menu</button>
@@ -1891,18 +1834,12 @@ function itemCardHtml(item){
   // Toggle buttons for this item (Normal/Spicy, Chicken/Beef, Small/Large)
   let togglesHtml = '';
   if(item.toggleTypes && item.toggleTypes.length){
-    // Ensure defaults are initialised (index 0 = first option)
-    if(!itemToggles[item.id]){
-      itemToggles[item.id]={};
-      item.toggleTypes.forEach(typeKey=>{ itemToggles[item.id][typeKey]=0; });
-    }
     const groups = item.toggleTypes.map(typeKey=>{
       const cfg = TOGGLE_OPTIONS[typeKey];
       const opts = isAr ? cfg.opts_ar : cfg.opts_en;
-      const selectedIdx = (itemToggles[item.id] && itemToggles[item.id][typeKey] != null)
-        ? itemToggles[item.id][typeKey] : 0;
-      const btns = opts.map((opt,idx)=>
-        `<button class="toggle-opt${idx===selectedIdx?' active':''}" onclick="setToggle('${e(item.id)}','${typeKey}',${idx},event)">${e(opt)}</button>`
+      const current = (itemToggles[item.id] && itemToggles[item.id][typeKey]) || opts[0];
+      const btns = opts.map(opt=>
+        `<button class="toggle-opt${opt===current?' active':''}" onclick="setToggle('${e(item.id)}','${typeKey}','${opt}',event)">${e(opt)}</button>`
       ).join('');
       return `<div class="toggle-group">${btns}</div>`;
     }).join('');
@@ -1917,9 +1854,9 @@ function itemCardHtml(item){
   </div>`;
 
   return`<div class="item-card" id="card-${e(item.id)}">
-    ${togglesHtml}
     <div class="item-body">
       <div class="item-name">${e(nm)}</div>
+      ${togglesHtml}
       <div class="item-desc">${e(dsc)}</div>
       <div class="item-footer">
         ${priceHtml}
@@ -2020,13 +1957,14 @@ function changeQty(id,delta){
 // ═══════════════════════════════════════════════════
 //  ITEM OPTION TOGGLE
 // ═══════════════════════════════════════════════════
-function setToggle(itemId, typeKey, selectedIdx, evt){
+function setToggle(itemId, typeKey, selected, evt){
   if(evt) evt.stopPropagation();
   if(!itemToggles[itemId]) itemToggles[itemId]={};
-  itemToggles[itemId][typeKey]=selectedIdx;
-  // Update active class on buttons by index
-  document.querySelectorAll(`#card-${itemId} .item-toggles .toggle-group`).forEach(group=>{
+  itemToggles[itemId][typeKey]=selected;
+  // Update just the buttons inside this card's toggle-group for this typeKey
+  document.querySelectorAll(`#card-${itemId} .toggle-group`).forEach(group=>{
     const btns=[...group.querySelectorAll('.toggle-opt')];
+    // Determine which group this is by matching options
     const item=MENU.find(i=>i.id===itemId);
     if(!item) return;
     const isAr=lang==='ar';
@@ -2036,7 +1974,7 @@ function setToggle(itemId, typeKey, selectedIdx, evt){
       return btns.length===opts.length && btns.every((b,i2)=>b.textContent===opts[i2]);
     });
     if(grpTypeKey===typeKey){
-      btns.forEach((b,i2)=>b.classList.toggle('active',i2===selectedIdx));
+      btns.forEach(b=>b.classList.toggle('active',b.textContent===selected));
     }
   });
 }
@@ -2081,13 +2019,7 @@ function refreshCart(){
     // Toggle selections summary for cart display
     let toggleSummary='';
     if(item.toggleTypes&&item.toggleTypes.length&&itemToggles[id]){
-      const parts=item.toggleTypes.map(t=>{
-        const idx=itemToggles[id][t];
-        const cfg=TOGGLE_OPTIONS[t];
-        if(idx==null||!cfg) return null;
-        const opts=isAr?cfg.opts_ar:cfg.opts_en;
-        return opts[idx]||null;
-      }).filter(Boolean);
+      const parts=item.toggleTypes.map(t=>itemToggles[id][t]).filter(Boolean);
       if(parts.length) toggleSummary=`<div style="font-size:11px;color:var(--g1);font-weight:600;margin-top:1px">${parts.join(' · ')}</div>`;
     }    return`<div class="cart-row">
       <div class="cart-row-thumb">${thumb||'🍽️'}</div>
@@ -2170,11 +2102,8 @@ function sendToWhatsApp(){
     let toggleNote = '';
     if(item.toggleTypes && item.toggleTypes.length && itemToggles[id]){
       const parts = item.toggleTypes.map(t=>{
-        const idx = itemToggles[id][t];
-        const cfg = TOGGLE_OPTIONS[t];
-        if(idx==null||!cfg) return null;
-        const opts = isAr ? cfg.opts_ar : cfg.opts_en;
-        return opts[idx]||null;
+        const val = itemToggles[id][t];
+        return val || null;
       }).filter(Boolean);
       if(parts.length) toggleNote = ` (${parts.join(', ')})`;
     }
