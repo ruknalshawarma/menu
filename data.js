@@ -57,7 +57,7 @@ const HARDCODED_ITEMS = [
 ['Sandwich','Chicken Burger','','14','','','https://drive.google.com/thumbnail?id=11E5qrn1FzcT8hA-ZE2Tlx_R80IDc1ILi&sz=w1000','','ساندويش غربي ','برجر دجاج',''],
 ['Sandwich','Beef Burger','','16','','','https://drive.google.com/thumbnail?id=1I_dYq5q_sMj9L4J2iwJWkO4Nw6s6ffwm&sz=w1000','','ساندويش غربي ','برجر لحم',''],
 ['','','','','','','','','','',''],
-['Meals','Crispy Meal + Pepsi','1','23','22','1,4','https://drive.google.com/thumbnail?id=1pRsorpSiKVaS7wRnxOLo8RM6u0jCjVLM&sz=w1000','','وجبات غربي','وجبة كريسبي + بيبسي',''],
+['Meals','Crispy Meal and Pepsi','1','23','22','1,4','https://drive.google.com/thumbnail?id=1pRsorpSiKVaS7wRnxOLo8RM6u0jCjVLM&sz=w1000','','وجبات غربي','وجبة كريسبي + بيبسي',''],
 ['Meals','Crispy Meal 4 Pieces','1','26','25','1','https://drive.google.com/thumbnail?id=1ZNYAkjNUTL6JlXymjzmDplTSjLEo9xkN&sz=w1000','','وجبات غربي','وجبة كريسبي 4 قطع',''],
 ['Meals','Crispy Meal 8 Pieces','','43','42','','https://drive.google.com/thumbnail?id=1wCKJ_Toh3b0pG3kql0omf_gQ5RGvLDJh&sz=w1000','','وجبات غربي','وجبة كريسبي 8 قطع',''],
 ['Meals','Scallop Meal + Pepsi','','23','','1,4','https://drive.google.com/thumbnail?id=1bTGNDoRfnYhpgmansGM3WXZnXDL4Ps1N&sz=w1000','','وجبات غربي','وجبة سكالوب + بيبسي',''],
