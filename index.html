@@ -247,8 +247,6 @@ body{font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica
 /* RTL support */
 body.rtl{direction:rtl;text-align:right}
 body.rtl .banner-overlay{text-align:right}
-body.rtl .item-tags{left:auto;right:8px}
-body.rtl .offer-badge{left:8px;right:auto}
 body.rtl .cart-row-sub{text-align:left}
 body.rtl .search-input-row{flex-direction:row-reverse}
 body.rtl .lang-btn{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
@@ -369,7 +367,7 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 }
 .item-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.11)}
 
-/* ── IMAGE BOX — full width top of card ── */
+/* ── IMAGE BOX — full width top of card (mobile), left side on 540px+ ── */
 .item-thumb{
   width:100%;
   aspect-ratio:4/3;
@@ -382,6 +380,16 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   position:relative;
   flex-shrink:0;
   order:0;
+}
+/* At 540px+ becomes horizontal bar: image left, rounded left corners only */
+@media(min-width:540px){
+  .item-thumb{
+    flex:0 0 118px;width:118px;
+    aspect-ratio:unset;
+    align-self:stretch;
+    border-radius:14px 0 0 14px;
+  }
+  .item-body{border-radius:0 14px 14px 0}
 }
 .item-thumb img{
   width:100%;
@@ -400,7 +408,6 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   flex-direction:column;
   justify-content:space-between;
   position:relative;
-  overflow:visible;
 }
 
 /* ── ITEM NAME ── */
@@ -414,10 +421,6 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   -webkit-box-orient:vertical;
   overflow:hidden;
   padding-right:0;
-}
-/* Give space under the toggle buttons when present */
-.item-card:has(.item-toggles) .item-name{
-  padding-top:2px;
 }
 @media(min-width:540px){.item-name{font-size:15px}}
 
@@ -433,17 +436,14 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   overflow:hidden;
 }
 
-/* ── PRICE + QTY ROW — price bottom-left, qty bottom-right (LTR) ── */
+/* ── PRICE + QTY ROW — price bottom-left, qty bottom-right ── */
 .item-footer{
   display:flex;
   align-items:center;
   justify-content:space-between;
   margin-top:8px;
   gap:6px;
-  direction:ltr;
 }
-/* RTL: flip the footer so price is on right, + button on left */
-body.rtl .item-footer{direction:rtl;}
 .price-block{display:flex;flex-direction:column;gap:1px}
 
 /* Light mode: green price */
@@ -518,14 +518,14 @@ body.dark-mode .save-label{color:#e87b35}
 body.dark-mode .item-thumb{background:#3a3a3a}
 
 /* ── RTL / ARABIC — perfect mirror of LTR card ── */
-/* The whole card flips to RTL — image top, body below, all content right→left */
+/* Card itself flips: image goes to right, body to left */
 body.rtl .item-card{direction:rtl}
-/* Image stays on top (same as LTR), body below — everything inside body mirrors right→left */
-body.rtl .item-body{padding:10px 12px 12px;text-align:right}
+body.rtl .item-thumb{order:1;margin:8px 0 8px 8px;border-radius:0 14px 14px 0}
+body.rtl .item-body{padding:10px 10px 10px 12px;text-align:right;border-radius:14px 0 0 14px}
 body.rtl .item-name{text-align:right}
 body.rtl .item-desc{text-align:right}
-/* Remove any old horizontal-layout overrides */
-body.rtl .item-thumb{order:unset;margin:0}
+/* Footer: price on right, + button on left — mirror of LTR (price-left, +-right) */
+body.rtl .item-footer{flex-direction:row-reverse}
 
 /* Arabic item name — larger, bolder, Kufi font for elegance */
 body.rtl .item-name{
@@ -543,21 +543,21 @@ body.rtl .item-desc{
 /* Arabic price — slightly larger for visual balance */
 body.rtl .item-price{font-size:15px}
 
-/* Responsive image box */
-@media(min-width:540px){.item-thumb{flex:0 0 118px;width:118px}}
 
 
 
-/* ITEM OPTION TOGGLES — top-right corner of the body (text) area (LTR) */
+
+
+/* ITEM OPTION TOGGLES — top-right corner of the body (text) area */
 .item-toggles{
   position:absolute;
-  top:6px;
-  right:6px;
+  top:8px;
+  right:8px;
   display:flex;flex-direction:column;align-items:flex-end;gap:3px;
   z-index:2;pointer-events:auto;
 }
-/* RTL: toggles go top-left of the body */
-body.rtl .item-toggles{right:auto;left:6px;align-items:flex-start}
+/* RTL: body is still below image, but text aligns right→left, toggles go top-left */
+body.rtl .item-toggles{right:auto;left:8px;align-items:flex-start}
 
 .toggle-group{display:flex;border-radius:20px;overflow:hidden;border:1px solid var(--g1);flex-shrink:0}
 .toggle-opt{padding:2px 7px;font-size:9px;font-weight:600;background:var(--white);color:var(--g1);border:none;cursor:pointer;transition:background .15s,color .15s;line-height:1.4;white-space:nowrap}
@@ -702,15 +702,6 @@ body.rtl .toggle-opt{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif;font
 .lb-price.offer{color:#fb923c}
 .lb-old-price{font-size:14px;color:rgba(255,255,255,.45);text-decoration:line-through}
 .lb-badge{background:linear-gradient(135deg,#e53935,#d84315);color:#fff;font-size:10px;font-weight:700;padding:3px 8px;border-radius:20px}
-/* Lightbox option toggles */
-.lb-toggles{
-  display:flex;flex-direction:column;align-items:center;gap:6px;
-  margin-top:12px;
-}
-.lb-toggles .toggle-group{border-color:rgba(255,255,255,.5)}
-.lb-toggles .toggle-opt{background:rgba(255,255,255,.12);color:rgba(255,255,255,.85);border-color:rgba(255,255,255,.3);font-size:11px;padding:4px 10px}
-.lb-toggles .toggle-opt:not(:last-child){border-right-color:rgba(255,255,255,.3)}
-.lb-toggles .toggle-opt.active{background:var(--g1);color:#fff;border-color:var(--g1)}
 .lb-close-btn{
   position:absolute;top:12px;right:12px;
   width:36px;height:36px;border-radius:50%;
@@ -1882,8 +1873,8 @@ function itemCardHtml(item){
   </div>`;
 
   return`<div class="item-card" id="card-${e(item.id)}">
+    ${togglesHtml}
     <div class="item-body">
-      ${togglesHtml}
       <div class="item-name">${e(nm)}</div>
       <div class="item-desc">${e(dsc)}</div>
       <div class="item-footer">
@@ -1990,51 +1981,6 @@ function setToggle(itemId, typeKey, selectedIdx, evt){
   if(!itemToggles[itemId]) itemToggles[itemId]={};
   itemToggles[itemId][typeKey]=selectedIdx;
   // Update active class on buttons by index
-  document.querySelectorAll(`#card-${itemId} .item-toggles .toggle-group`).forEach(group=>{
-    const btns=[...group.querySelectorAll('.toggle-opt')];
-    const item=MENU.find(i=>i.id===itemId);
-    if(!item) return;
-    const isAr=lang==='ar';
-    const grpTypeKey=item.toggleTypes.find(t=>{
-      const cfg=TOGGLE_OPTIONS[t];
-      const opts=isAr?cfg.opts_ar:cfg.opts_en;
-      return btns.length===opts.length && btns.every((b,i2)=>b.textContent===opts[i2]);
-    });
-    if(grpTypeKey===typeKey){
-      btns.forEach((b,i2)=>b.classList.toggle('active',i2===selectedIdx));
-    }
-  });
-  // Also sync lightbox toggles if open for same item
-  syncLbToggles(itemId, typeKey, selectedIdx);
-}
-
-function setLbToggle(itemId, typeKey, selectedIdx, evt){
-  if(evt) evt.stopPropagation();
-  if(!itemToggles[itemId]) itemToggles[itemId]={};
-  itemToggles[itemId][typeKey]=selectedIdx;
-  // Sync lightbox buttons
-  const lbInfo=document.getElementById('lbInfo');
-  if(lbInfo){
-    lbInfo.querySelectorAll('.lb-toggles .toggle-group').forEach(group=>{
-      const btns=[...group.querySelectorAll('.toggle-opt')];
-      const item=MENU.find(i=>i.id===itemId);
-      if(!item) return;
-      const isAr=lang==='ar';
-      const grpTypeKey=item.toggleTypes.find(t=>{
-        const cfg=TOGGLE_OPTIONS[t];
-        const opts=isAr?cfg.opts_ar:cfg.opts_en;
-        return btns.length===opts.length && btns.every((b,i2)=>b.textContent===opts[i2]);
-      });
-      if(grpTypeKey===typeKey){
-        btns.forEach((b,i2)=>b.classList.toggle('active',i2===selectedIdx));
-      }
-    });
-  }
-  // Also sync card toggles
-  syncLbToggles(itemId, typeKey, selectedIdx);
-}
-
-function syncLbToggles(itemId, typeKey, selectedIdx){
   document.querySelectorAll(`#card-${itemId} .item-toggles .toggle-group`).forEach(group=>{
     const btns=[...group.querySelectorAll('.toggle-opt')];
     const item=MENU.find(i=>i.id===itemId);
@@ -2407,33 +2353,12 @@ function showFatalError(msg){
            <span>🛒</span> ${isAr?'أضف إلى السلة':'Add to Cart'}
          </button>`;
 
-    // Toggles
-    let lbTogglesHtml = '';
-    if(item.toggleTypes && item.toggleTypes.length){
-      if(!itemToggles[item.id]){
-        itemToggles[item.id]={};
-        item.toggleTypes.forEach(typeKey=>{ itemToggles[item.id][typeKey]=0; });
-      }
-      const groups = item.toggleTypes.map(typeKey=>{
-        const cfg = TOGGLE_OPTIONS[typeKey];
-        const opts = isAr ? cfg.opts_ar : cfg.opts_en;
-        const selectedIdx = (itemToggles[item.id] && itemToggles[item.id][typeKey] != null)
-          ? itemToggles[item.id][typeKey] : 0;
-        const btns = opts.map((opt,idx)=>
-          `<button class="toggle-opt${idx===selectedIdx?' active':''}" onclick="setLbToggle('${e(item.id)}','${typeKey}',${idx},event)">${e(opt)}</button>`
-        ).join('');
-        return `<div class="toggle-group">${btns}</div>`;
-      }).join('');
-      lbTogglesHtml = `<div class="lb-toggles">${groups}</div>`;
-    }
-
     lbInfo.innerHTML = `
       <div class="lb-name">${e(nm)}</div>
       ${dsc ? `<div class="lb-desc">${e(dsc)}</div>` : ''}
       ${tagsHtml ? `<div class="lb-tags-row">${tagsHtml}</div>` : ''}
       <div class="lb-price-row">${priceHtml}</div>
       ${offerStripHtml}
-      ${lbTogglesHtml}
       <div id="lb-action">${qtyOrAddHtml}</div>`;
 
     // Swipe hint — hide on desktop
