@@ -448,17 +448,16 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
 .item-thumb img{
   width:100%;
   height:100%;
-  object-fit:contain;
+  object-fit:cover;
   display:block;
-  padding:4px;
 }
 .item-thumb .thumb-emoji{font-size:36px}
 
-/* ── OFFER BADGE — top-right of image box ── */
+/* ── OFFER BADGE — top-right of image box, inside ── */
 .offer-badge{
   position:absolute;
-  top:-4px;
-  right:-4px;
+  top:6px;
+  right:6px;
   z-index:6;
   background:linear-gradient(135deg,#e53935,#d84315);
   color:#fff;
@@ -470,7 +469,7 @@ body.rtl .cat-pill{font-family:'Noto Kufi Arabic',Tahoma,Arial,sans-serif}
   box-shadow:0 2px 6px rgba(229,57,53,.45);
   white-space:nowrap;
 }
-body.rtl .offer-badge{right:auto;left:-4px}
+body.rtl .offer-badge{right:auto;left:6px}
 
 /* ── TAGS — inside image box, bottom-left ── */
 .item-tags{
@@ -607,22 +606,16 @@ body.dark-mode .toggle-blink[data-opt-color="red"]{animation-name:toggleBlinkRed
   100%{box-shadow:0 0 0 0 rgba(255,107,107,0);}
 }
 
-/* ── "Pay attention" blink — red OUTLINE flash on Add, drawing the eye to
-   unconfirmed toggles/dropdowns. Distinct from the selection-confirm blink
-   above: this uses a hard border + box-shadow ring repeated a few times. ── */
+/* ── "Pay attention" blink — subtle glow on toggle-group only ── */
 @keyframes attentionBlink{
   0%, 100%   { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
-  15%, 45%   { box-shadow: 0 0 0 3px rgba(229,57,53,.85); }
-  30%, 60%   { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
-  75%        { box-shadow: 0 0 0 2px rgba(229,57,53,.5); }
+  25%        { box-shadow: 0 0 0 2px rgba(229,57,53,.55); }
+  50%        { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
+  75%        { box-shadow: 0 0 0 2px rgba(229,57,53,.35); }
 }
-.attention-blink{
-  animation:attentionBlink 1.1s ease-in-out;
-  border-radius:12px;
-}
-.attention-blink .toggle-group,
-.attention-blink .toggle-dd-trigger{
-  animation:attentionBlink 1.1s ease-in-out;
+.toggle-group.attention-blink,
+.toggle-dd-trigger.attention-blink{
+  animation:attentionBlink 1.0s ease-in-out;
 }
 
 /* ═══════════════════════════════════════════════════
@@ -1620,7 +1613,8 @@ function parseItemsSheet(rows){
     const hasOffer   = offerPrice>0 && offerPrice<price;
     const finalPrice = hasOffer ? offerPrice : price;
     const oldPrice   = hasOffer ? price : 0;
-    const discPct    = hasOffer ? Math.round((price-offerPrice)/price*100) : 0;
+    const rawPct     = hasOffer ? (price-offerPrice)/price*100 : 0;
+    const discPct    = hasOffer ? Math.max(5, Math.ceil(rawPct/5)*5) : 0;
     const saveAmt    = hasOffer ? (price-offerPrice).toFixed(2) : '0';
     const discLabel  = hasOffer ? `${discPct}% OFF` : '';
     const saveLabel  = hasOffer ? `Save ${CUR} ${saveAmt}` : '';
@@ -2325,25 +2319,24 @@ function blinkEl(el){
 // Red "pay attention" blink on every toggle/dropdown of an item — used when
 // adding an item to the cart, to draw the eye to its option pickers.
 function attentionBlinkToggles(itemId){
-  // Use querySelectorAll with attribute selector to catch duplicate card IDs
-  // (items appear in both Offers section and their category section)
   document.querySelectorAll(`[id="card-${itemId}"]`).forEach(scope=>{
-    scope.querySelectorAll('.item-toggles, .lb-toggles').forEach(wrap=>{
-      wrap.classList.remove('attention-blink');
-      void wrap.offsetWidth;
-      wrap.classList.add('attention-blink');
-      wrap.addEventListener('animationend', ()=>wrap.classList.remove('attention-blink'), {once:true});
+    // Blink each toggle-group directly (not the item-toggles wrapper)
+    scope.querySelectorAll('.item-toggles .toggle-group, .item-toggles .toggle-dd-trigger').forEach(el=>{
+      el.classList.remove('attention-blink');
+      void el.offsetWidth;
+      el.classList.add('attention-blink');
+      el.addEventListener('animationend', ()=>el.classList.remove('attention-blink'), {once:true});
     });
   });
   // Also check lightbox if open for this item
   if(window.lbCurrentItemId === itemId){
     const lbScope = document.querySelector('#lbInfo');
     if(lbScope){
-      lbScope.querySelectorAll('.lb-toggles').forEach(wrap=>{
-        wrap.classList.remove('attention-blink');
-        void wrap.offsetWidth;
-        wrap.classList.add('attention-blink');
-        wrap.addEventListener('animationend', ()=>wrap.classList.remove('attention-blink'), {once:true});
+      lbScope.querySelectorAll('.lb-toggles .toggle-group, .lb-toggles .toggle-dd-trigger').forEach(el=>{
+        el.classList.remove('attention-blink');
+        void el.offsetWidth;
+        el.classList.add('attention-blink');
+        el.addEventListener('animationend', ()=>el.classList.remove('attention-blink'), {once:true});
       });
     }
   }
