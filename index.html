@@ -608,14 +608,27 @@ body.dark-mode .toggle-blink[data-opt-color="red"]{animation-name:toggleBlinkRed
 
 /* ── "Pay attention" blink — subtle glow on toggle-group only ── */
 @keyframes attentionBlink{
-  0%, 100%   { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
-  25%        { box-shadow: 0 0 0 2px rgba(229,57,53,.55); }
-  50%        { box-shadow: 0 0 0 0 rgba(229,57,53,0); }
-  75%        { box-shadow: 0 0 0 2px rgba(229,57,53,.35); }
+  0%, 100%   { box-shadow: 0 0 0 0 rgba(229,57,53,0); border-color: var(--g1); }
+  25%        { box-shadow: 0 0 0 2px rgba(229,57,53,.55); border-color: rgba(229,57,53,.8); }
+  50%        { box-shadow: 0 0 0 0 rgba(229,57,53,0); border-color: var(--g1); }
+  75%        { box-shadow: 0 0 0 2px rgba(229,57,53,.35); border-color: rgba(229,57,53,.55); }
+}
+@keyframes attentionBlinkText{
+  0%, 100%   { color: var(--g1); }
+  25%        { color: rgba(229,57,53,.9); }
+  50%        { color: var(--g1); }
+  75%        { color: rgba(229,57,53,.65); }
 }
 .toggle-group.attention-blink,
 .toggle-dd-trigger.attention-blink{
   animation:attentionBlink 1.0s ease-in-out;
+}
+.toggle-group.attention-blink .toggle-opt{
+  animation:attentionBlinkText 1.0s ease-in-out;
+}
+.toggle-dd-trigger.attention-blink .toggle-dd-trigger-label,
+.toggle-dd-trigger.attention-blink .toggle-dd-trigger-arrow{
+  animation:attentionBlinkText 1.0s ease-in-out;
 }
 
 /* ═══════════════════════════════════════════════════
